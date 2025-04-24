@@ -1,13 +1,14 @@
 import React from 'react';
 import { AdaptivityProvider, AppRoot, ConfigProvider } from '@vkontakte/vkui';
 import { PlatformProvider } from './contexts/PlatformContext';
-import { usePlatform } from './hooks/usePlatform';
 import Navigation from './navigation/Navigation';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const App: React.FC = () => {
-  const platform = usePlatform();
+interface AppProps {
+  platform: 'ios' | 'android' | 'web' | undefined;
+}
 
+const App: React.FC<AppProps> = ({ platform }) => {
   return (
     <PlatformProvider platform={platform}>
       <ConfigProvider>

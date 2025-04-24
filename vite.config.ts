@@ -32,6 +32,11 @@ export default defineConfig({
     }),
   ],
 
+  server: {
+    port: 5173, // Явно указываем порт
+    open: true, // Автоматически открывать браузер по умолчанию при запуске
+  },
+
   build: {
     outDir: 'build',
   },
