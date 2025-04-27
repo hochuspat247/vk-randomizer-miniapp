@@ -1,6 +1,5 @@
 import React from 'react';
 import { Panel, PanelHeader } from '@vkontakte/vkui';
-import VKInput from '../../components/VKInput/VKInput';
 
 interface CreateRaffleProps {
   id: string;
@@ -13,8 +12,6 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
       <div style={{ padding: '16px' }}>
         <h2>Create a New Raffle</h2>
         <p>This is the panel for creating a new raffle.</p>
-        <VKInput title='Название розыгрыша' placeholder=' Введите название' withTitle="yes" type='input'/>
-        <VKInput title='Описание розыгрыша' placeholder=' Введите описание' withTitle="yes" type='textarea' />
       </div>
     </Panel>
   );
