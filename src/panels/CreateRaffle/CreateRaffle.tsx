@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, PanelHeader } from '@vkontakte/vkui';
+import {Panel, PanelHeader } from '@vkontakte/vkui';
 
 interface CreateRaffleProps {
   id: string;
