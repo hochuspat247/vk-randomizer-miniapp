@@ -1,0 +1,49 @@
+@import url('https://fonts.cdnfonts.com/css/vk-sans-display');
+
+
+.container {
+    display: flex;
+    height: 28px;
+    padding: 5px 10px 5px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    border-radius: 6px;
+    box-sizing: border-box;
+
+}
+
+.containerYellow {
+    border: 1px solid var(--Warning, #FFC256);
+    color: var(--Warning, #FFC256);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.048px;
+
+}
+
+.containerRed {
+    border: 1px solid var(--Dark-Stroke-Stroke-Negative, #FF5C5C);
+    color: var(--Light-Text-Text-Negative, #E64646);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.048px;
+}
+
+.containerGreen {
+    border: 1px solid var(--Green, #D4F94E);
+    color: var(--Green, #D4F94E);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.048px;
+
+}

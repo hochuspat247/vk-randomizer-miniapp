@@ -1,1 +1,9 @@
-/* Глобальные стили */
+@font-face {
+    font-family: "VK Sans Display Expanded";  /* Имя шрифта */
+    src: url('/assets/fonts/vk-sans-display-expanded.ttf') format('truetype'),
+}
+
+* {
+    font-family: "VK Sans Display Expanded", sans-serif; /* Используем шрифт на всем сайте */
+    box-sizing: border-box;    
+  }
