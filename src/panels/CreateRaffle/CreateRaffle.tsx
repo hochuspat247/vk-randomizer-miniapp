@@ -1,8 +1,9 @@
 import React from 'react';
 import { Panel, PanelHeader } from '@vkontakte/vkui';
 import CommunityCard from "../../components/CommunityCard/CommunityCard"
-import avatar from '../../assets/images/↳ Picture.png';
+import avatar from '../../assets/images/Picture.png';
 
+import styles from "./CreateRaffle.web.module.css"
 
 interface CreateRaffleProps {
   id: string;
@@ -15,11 +16,11 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
       <div style={{ padding: '16px' }}>
         <h2>Create a New Raffle</h2>
         <p>This is the panel for creating a new raffle.</p>
-        <div style={{display: "flex", gap: "4px"}}>
+        <div className={styles.container}>
           <CommunityCard
             membersCount="592 582" 
             raffleCount="52" 
-            adminType="owner" 
+            adminType="admin" 
             status="green"
             avatarUrl={avatar}
             name='Москва 24 – Новости'

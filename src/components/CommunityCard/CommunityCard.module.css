@@ -1,10 +1,3 @@
-@import url('https://fonts.cdnfonts.com/css/vk-sans-display');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-body {
-  box-sizing: border-box;
-}
-
 /* Контейнер карточки */
 .container {
   display: flex;
@@ -38,7 +31,7 @@ body {
 /* Отдельный бейдж */
 .badge {
   display: flex;
-  padding: 4px 1.66vw;
+  padding: 4px 6px;
   justify-content: center;
   align-items: center;
   gap: 4px;
@@ -86,11 +79,9 @@ body {
   height: 48px;
   aspect-ratio: 1/1;
   border-radius: 24px;
-  background-size: cover;
   background-position: center;
   position: relative;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: var(--avatar-url) lightgray 50% / cover no-repeat;
 }
 
 .avatar {
@@ -205,7 +196,6 @@ body {
 .WidgetStatusCont {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   justify-content: center;
   gap: 21px;
   width: 100%;

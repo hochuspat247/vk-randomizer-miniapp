@@ -1,1 +1,4 @@
-/* Стили для веб-версии */
+.container {
+    display: flex;
+    gap: 4px;
+}

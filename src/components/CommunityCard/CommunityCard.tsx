@@ -1,26 +1,25 @@
 import React from 'react';
 import styles from './CommunityCard.module.css';
 
-
 import {
   Icon20Users3Outline,
   Icon20DiamondOutline,
+  Icon20GearOutline,
 } from '@vkontakte/icons';
 
-import crown from '../../assets/icons/crown_16.svg';
-import lockG from "../../assets/icons/lock_circle_fill_blue_16.svg"
-import lockY from "../../assets/icons/lock_circle_fill_blue_16 (1).svg"
-import lockR from "../../assets/icons/lock_circle_fill_blue_16 (2).svg"
-import arrowRAct from "../../assets/icons/Icon.svg"
-import arrowRNoact from "../../assets/icons/Icon (1).svg"
-import gearsNoact from "../../assets/icons/gear_outline_20.svg"
-import gearsAct from "../../assets/icons/gear_outline_20 (1).svg"
+import { ADMIN, OWNER, RAFFLE, Change_Widget } from '../../constants/Text';
+
 import WidgetStatusBadge from '../WidgetStatusBadge/WidgetStatusBadge';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
-import update from "../../assets/icons/ArrowsClockwise.svg"
-
 
 import { Icon16DeleteOutline, Icon24CupOutline  } from '@vkontakte/icons';
+import Crown from '../../assets/icons/Crown';
+import LockG from '../../assets/icons/LockG';
+import LockY from '../../assets/icons/LockY';
+import LockR from '../../assets/icons/LockR';
+import ArrowRNoact from '../../assets/icons/ArrowRNoact';
+import ArrowRAct from '../../assets/icons/ArrowRAct';
+import Update from '../../assets/icons/Update';
 
 
 
@@ -46,54 +45,57 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
   nickname,
   buttonDesc
 }) => {
+
+  const containerClasses = [
+    styles.container,
+    status === 'yellow' && styles.containerYellow,
+    status === 'red' && styles.containerRed,
+  ].filter(Boolean).join(' ');
+  
   return (
-    <div className={`${styles.container} ${
-      status === 'yellow'
-        ? styles.containerYellow
-        : status === 'red'
-        ? styles.containerRed
-        : ''
-    }`}>
+    <div className={containerClasses}>
       <div className={styles.badges}>
         {/* MEMBERS */}
-        <div className={styles.badge}>
-          <Icon20Users3Outline className={styles.icon} />
+        <div className={styles.badge}> 
+          <Icon20Users3Outline className={styles.icon} /> {/* Иконка колличества участников */}
           <span className={styles.text}>{membersCount}</span>
         </div>
 
         {/* ADMIN / OWNER */}
         <div className={styles.badge}>
           {adminType === 'admin' ? (
-            <img src={crown} className={styles.icon} alt="crown" />
+            <>
+            <Crown /> {/* Иконка админа */}
+            </>
           ) : (
-            <Icon20DiamondOutline className={styles.icon} />
+            <>
+            <Icon20DiamondOutline className={styles.icon} /> {/* Иконка владельца */}
+            </>
           )}
           <span className={styles.text}>
-            {adminType === 'admin' ? 'АДМИН' : 'ВЛАДЕЛЕЦ'}
+            {adminType === 'admin' ? ADMIN : OWNER}
           </span>
         </div>
 
         {/* RAFFLES */}
         <div className={styles.badge}>
           <span className={styles.text}>{raffleCount}</span>
-          <span className={styles.text}>РОЗЫГРЫША</span>
+          <span className={styles.text}>{RAFFLE}</span>
         </div>
       </div>
 
       {/* Аватар с замком */}
-      <button className={styles.avatarCont}>
-        {/* <div className={styles.avatar}> */}
+      <button type='button' className={styles.avatarCont}>
           <div
             className={styles.avatarImg}
-            style={{ background: `url(${avatarUrl}) lightgray 50% / cover no-repeat` }}
-          >
+            style={{ ['--avatar-url' as any]: `url(${avatarUrl})` }}
+            >
             <div
               className={styles.lockIcon}
-              // style={{ backgroundColor: statusColor[status] }}
             >
-              {status === 'green' && <img src={lockG}/>}
-              {status === 'yellow' && <img src={lockY} />}
-              {status === 'red' && <img src={lockR} />}
+              {status === 'green' && <LockG/>} {/* Иконка зеленного замка */}
+              {status === 'yellow' && <LockY/>} {/* Иконка желтого замка */}
+              {status === 'red' && <LockR/>} {/* Иконка красного замка */}
             </div>
           </div>
           <div className={styles.avatarInfo}>
@@ -101,13 +103,17 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
             <span className={styles.nickname}>{nickname}</span>
           </div>
         {/* </div> */}
-        <img src={status !== "green" ? arrowRNoact : arrowRAct}/>
+        {status !== "green" ? <ArrowRNoact /> : <ArrowRAct />} {/* Иконки неактивной и активной чтрелок */}
       </button>
       
       <div className={styles.changeWidgetCont}>
-        <button className={`${styles.changeWidget} ${status === 'green' ? styles.activeButton : styles.inactiveButton}`}>
-            <img src={status !== "green" ? gearsNoact : gearsAct}/>
-            <span className={styles.CWtext}>Изменить виджет</span>
+        <button 
+          type='button' 
+          className={`${styles.changeWidget} ${status === 'green' ? styles.activeButton : styles.inactiveButton}`}
+          disabled={status !== 'green'}
+          >
+            {status !== "green" ? <Icon20GearOutline /> : <Icon20GearOutline />} {/* Иконки неактивной и активной шестеренки */}
+            <span className={styles.CWtext}>{Change_Widget}</span>
         </button>
         <span className={styles.CWtext2}>{buttonDesc}</span>
       </div>
@@ -115,11 +121,11 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
       <div className={styles.WidgetStatusCont}>
         <div className={styles.WidgetStatusLpart}>
           <WidgetStatusBadge status={status} text="Виджет не добавлен"/>
-          <img src={update} />
+          <Update />
         </div>
         <div className={styles.IconCont}>
-          <BadgeIcon icon={<Icon24CupOutline  />} />
-          <BadgeIcon icon={<Icon16DeleteOutline />} />
+          <BadgeIcon icon={<Icon24CupOutline  />} /> {/* Иконка кубка */}
+          <BadgeIcon icon={<Icon16DeleteOutline />} /> {/* Иконка удаления */}
         </div>
       </div>
     </div>
