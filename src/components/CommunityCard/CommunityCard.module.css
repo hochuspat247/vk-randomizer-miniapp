@@ -53,7 +53,7 @@
 .text {
   color: #FFF;
   font-feature-settings: 'liga' off, 'clig' off;
-  font-family: "VK Sans Display", sans-serif;
+  font-family: "VK Sans Display";
   font-size: 9px;
   font-style: normal;
   font-weight: 700;
@@ -128,6 +128,7 @@
   color: var(--Dark-Counter-Secondary-Background, #76787A);
   font-feature-settings: 'liga' off, 'clig' off;
   font-size: 14px;
+  font-family: "VK Sans Display";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -159,12 +160,14 @@
 }
 
 .CWtext {
-  font-feature-settings: 'liga' off, 'clig' off;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 18px;
-  letter-spacing: 0.2px;
+    text-align: center;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: "VK Sans Display Expanded";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px; /* 128.571% */
+    letter-spacing: 0.2px;
 
 }
 
