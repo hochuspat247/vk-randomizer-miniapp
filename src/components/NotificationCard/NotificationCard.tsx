@@ -6,7 +6,6 @@ import CircleIcon from '../../assets/icons/CircleIcon';
 
 import { Icon16DeleteOutline } from '@vkontakte/icons';
 import { Icon16LinkOutline } from '@vkontakte/icons';
-import { Icon28WarningTriangleOutline } from '@vkontakte/icons';
 import ErrorBannerIcon from '../../assets/icons/ErrorBannerIcon';
 
 interface NotificationCardProps {
