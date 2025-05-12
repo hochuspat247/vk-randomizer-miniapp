@@ -4,6 +4,8 @@ import { PlatformProvider } from './contexts/PlatformContext';
 import Navigation from './navigation/Navigation';
 import '@vkontakte/vkui/dist/vkui.css';
 
+import "./assets/styles/global.css"
+
 interface AppProps {
   platform: 'ios' | 'android' | 'web' | undefined;
 }
