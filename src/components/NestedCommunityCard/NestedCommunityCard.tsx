@@ -1,14 +1,15 @@
 import React from 'react';
 import styles from './NestedCommunityCard.module.css'; // Пусть стили будут в отдельном файле
 
-import { Icon20DiamondOutline} from '@vkontakte/icons';
+import {Icon20DiamondOutline} from '@vkontakte/icons';
 import Crown from '../../assets/icons/Crown';
-import { OWNER, ADMIN_Nested, FOLOWERS_Nested} from "../../constants/Text"
+import { OWNER, ADMIN_Nested, FOLOWERS_Nested, ERROR_Nested} from "../../constants/Text"
 import WidgetStatusBadge from '../WidgetStatusBadge/WidgetStatusBadge';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
 import { Icon48Linked } from '@vkontakte/icons';
 import { Icon16PenOutline } from '@vkontakte/icons';
 import { Icon16InfoOutline } from '@vkontakte/icons';
+import ErrorNested from '../../assets/icons/ErrorNested';
 
 interface NestedCommunityCardProps {
     name: string;
@@ -27,6 +28,12 @@ const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
   membersCount,
   adminType
 }) => {
+
+    const containerClasses = [
+        styles.badge,
+        status === 'yellow' && styles.badgeError,
+      ].filter(Boolean).join(' ');
+
   return (
     <div className={styles.card}>
         <div className={styles.cardTop}>
@@ -40,15 +47,27 @@ const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
                     <span className={styles.text}>{FOLOWERS_Nested}</span>
                 </div>
                     {/* ADMIN / OWNER */}
-                <div className={styles.badge}>
-                    {adminType === 'admin' ? (
-                        <> <Crown /> {/* Иконка админа */} </>
+                <div className={containerClasses}>
+                    {status === "yellow" ? (
+                        <>
+                            <ErrorNested  />
+                            <span className={styles.errorText}>{ERROR_Nested}</span>
+                        </>
                     ) : (
-                        <> <Icon20DiamondOutline className={styles.icon} /> {/* Иконка владельца */} </>
+                        <>
+                        {adminType === 'admin' ? (
+                            <> 
+                                <Crown /> {/* Иконка админа */}
+                                <span className={styles.text}>{ADMIN_Nested}</span>
+                                </>
+                            ) : (
+                                <> 
+                                <Icon20DiamondOutline className={styles.icon} /> {/* Иконка владельца */}
+                                <span className={styles.text}>{OWNER}</span>
+                                </>
+                            )}
+                        </>
                     )}
-                    <span className={styles.text}>
-                        {adminType === 'admin' ? ADMIN_Nested : OWNER}
-                    </span>
                 </div>
             </div>
         </div>
