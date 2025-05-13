@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './NestedCommunityCard.module.css'; // Пусть стили будут в отдельном файле
 
-import { Icon20DiamondOutline, Icon20Users3Outline, Icon28CheckCircleOutline, Icon28ErrorOutline, Icon28LinkOutline } from '@vkontakte/icons';
+import { Icon20DiamondOutline} from '@vkontakte/icons';
 import Crown from '../../assets/icons/Crown';
 import { OWNER, ADMIN_Nested, FOLOWERS_Nested} from "../../constants/Text"
 import WidgetStatusBadge from '../WidgetStatusBadge/WidgetStatusBadge';
