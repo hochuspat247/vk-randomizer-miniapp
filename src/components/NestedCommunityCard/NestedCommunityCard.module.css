@@ -1,0 +1,97 @@
+.card {
+    display: flex;
+    padding: 14px;
+    flex-direction: column;
+    flex: 1 0 0;
+    align-self: stretch;
+    background: var(--Dark-Background-Background-Modal, #2D2D2E);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.05);
+    gap: 12px;
+}
+
+.cardTop {
+    display: flex;
+    justify-content: space-between;
+}
+
+.avatarInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+  }
+  
+  .name {
+    color: var(--Light-Text-Text-Contrast, #FFF);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 125% */
+    letter-spacing: 0.1px;
+  }
+  
+  .nickname {
+    color: var(--Dark-Counter-Secondary-Background, #76787A);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 14px;
+    font-family: "VK Sans Display";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.2px;
+  }
+
+  .badges {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  /* Отдельный бейдж */
+  .badge {
+    display: flex;
+    padding: 4px 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background-color: transparent;
+    width: 100%;  
+    height: 20px;
+  }
+  
+  /* Иконка внутри бейджа */
+  .icon {
+    color: #fff;
+    width: 10px !important;
+    height: 10px !important;
+  }
+  
+  /* Текст в бейджах */
+  .text {
+    color: var(--Dark-Text-Text-Contrast, #FFF);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: "VK Sans Display";
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 12px; /* 133.333% */
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .cardBottom {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .BadgeIcons {
+    display: flex;
+    gap: 6px;
+  } 
+  

@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    height: 28px;
+    padding: 5px 10px 5px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    width: fit-content;
+
+}
+
+.text {
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 12px;
+    font-style: normal;
+    font-family: "VK Sans Display";
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.048px;
+}
+
+.containerYellow {
+    border: 1px solid var(--Warning, #FFC256);
+    color: var(--Warning, #FFC256);
+}
+
+.containerRed {
+    border: 1px solid var(--Dark-Stroke-Stroke-Negative, #FF5C5C);
+    color: var(--Light-Text-Text-Negative, #E64646);
+}
+
+.containerGreen {
+    border: 1px solid var(--Green, #D4F94E);
+    color: var(--Green, #D4F94E);
+}
+
+.containerUndefined {
+    border: 1px solid var(--Light-Icon-Outline-Medium, #818C99);
+    color: var(--Light-Icon-Secondary, #99A2AD);
+}
