@@ -7,6 +7,7 @@
     gap: 2px;
     border-radius: 6px;
     box-sizing: border-box;
+    width: fit-content;
 
 }
 
@@ -33,4 +34,9 @@
 .containerGreen {
     border: 1px solid var(--Green, #D4F94E);
     color: var(--Green, #D4F94E);
+}
+
+.containerUndefined {
+    border: 1px solid var(--Light-Icon-Outline-Medium, #818C99);
+    color: var(--Light-Icon-Secondary, #99A2AD);
 }

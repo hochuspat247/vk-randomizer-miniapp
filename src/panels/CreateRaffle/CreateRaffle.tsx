@@ -4,6 +4,7 @@ import CommunityCard from "../../components/CommunityCard/CommunityCard"
 import avatar from '../../assets/images/Picture.png';
 
 import styles from "./CreateRaffle.web.module.css"
+import WidgetStatusBadge from '../../components/WidgetStatusBadge/WidgetStatusBadge';
 
 interface CreateRaffleProps {
   id: string;
@@ -16,7 +17,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
       <div style={{ padding: '16px' }}>
         <h2>Create a New Raffle</h2>
         <p>This is the panel for creating a new raffle.</p>
-        <div className={styles.container}>
+        <div className={styles.container} style={{display: "flex", flexDirection: "column"}}>
           <CommunityCard
             membersCount="592 582" 
             raffleCount="52" 
