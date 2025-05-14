@@ -1,0 +1,386 @@
+.raffleCard {
+    display: flex;
+    padding: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1 0 0;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--StickyCard-Backgroung, linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.12) 100%), rgba(0, 0, 0, 0.90));
+    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15), 0px 0px 10px 0px rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(10px);
+}
+
+.raffle {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.raffleL {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.raffleTextCont {
+    display: flex;
+}
+
+.raffleText {
+    display: flex;
+    overflow: hidden;
+    color: var(--Dark-Text-Primary, #E1E3E6);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 0.1px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.raffleId {
+    overflow: hidden;
+    color: var(--Green, #D4F94E);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 0.1px;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.name {
+    overflow: hidden;
+    color: var(--Dark-Counter-Secondary-Background, #76787A);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-family: "VK Sans Display";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; /* 128.571% */
+    letter-spacing: 0.2px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.badges {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+  }
+  
+  .badge {
+    display: flex;
+    padding: 4px 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  
+  .text {
+    color: var(--Dark-Text-Text-Contrast, #FFF);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 12px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  
+  .panelEnd {
+    display: flex;
+    padding: 12px;
+    flex-direction: column;
+    gap: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    background: #2C2D2E;
+    width: 100%;
+  }
+
+  .endCont {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #E1E3E6;
+  }
+  
+  .badgesPE {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .badgePE {
+    padding: 4px 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #E1E3E6;
+    width: fit-content;
+  }
+
+  .badgePEText {
+    color: var(--Dark-Text-Text-Primary, #E1E3E6);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 12px; /* 133.333% */
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  
+  .slash {
+    font-size: 12px;
+    color: #E1E3E6;
+  }
+  
+  .progressBar {
+    height: 4px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .progressFill {
+    height: 100%;
+    background: #D4F94E;
+  }
+
+  .progressBarCont {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .noteCont {
+    padding: 3px 0;
+  }
+  
+  .note {
+    overflow: hidden;
+    color: var(--Dark-Landing-Field-Placeholder, #AAAEB3);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.2px;
+  }
+
+  .noteBold {
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: var(--Dark-Landing-Field-Placeholder, #AAAEB3);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.2px;
+  }
+  
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* gap: 10%; */
+  }
+
+  .btnRes {
+    box-shadow: 0px 0px 30px 0px rgba(212, 249, 78, 0.20);
+    display: flex;
+    height: 28px;
+    padding: 4px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    border-radius: 6px;
+    border: 1px solid var(--Green, #D4F94E);
+    background: var(--Green, #D4F94E);
+
+    color: var(--Light-Text-Text-Primary, #000);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+    letter-spacing: -0.048px;
+    white-space: nowrap;
+
+
+  }
+  
+  .hint {
+    overflow: hidden;
+    color: var(--Dark-Landing-Login-Button-Background, #E1E3E6);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-family: "VK Sans Display";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 180% */
+    letter-spacing: 0.2px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    /* flex: 1 0 0; */
+  }
+  
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+  }
+  
+  .editButton {
+    display: flex;
+    height: 44px;
+    padding: 4px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    align-self: stretch;
+  
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.10);
+    color: #D4F94E;
+    font-family: "VK Sans Display Expanded";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .metaText {
+    color: #76787A;
+    font-family: "VK Sans Display";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    align-self: stretch;
+  }
+
+  .buttonOpenCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .label {
+    color: var(--Dark-Text-Text-Primary, #E1E3E6);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: 0.1px;
+  }
+  
+  .statusBadge {
+    display: flex;
+    padding: 2px 6px 4px 6px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    border: 1px solid;
+  }
+
+  .communityStatCont {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* Цвета для разных состояний */
+  .connected {
+    color: var(--Dark-Text-Text-Secondary, #76787A);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+  
+  .notConfig {
+    color: #FFC256;
+    border: 1px solid #FFC256;
+}
+  
+  .error {
+    color: #FF5C5C;
+    border: 1px solid var(--Dark-Stroke-Stroke-Negative, #FF5C5C);
+}
+  
+  .toggleBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-left: 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  
+    color: #99A2AD;
+    font-family: "VK Sans Display";
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+  }
+  
+  
