@@ -6,3 +6,4 @@ export const ADMIN_Nested = 'АДМИНИСТРАТОР';
 export const FOLOWERS_Nested = 'ПОДПИСЧИКОВ';
 export const ERROR_Nested = 'ERROR';
 export const Raffle_Id = ' Розыгрыш №';
+export const Change_CarouselCard = 'Изменено:'

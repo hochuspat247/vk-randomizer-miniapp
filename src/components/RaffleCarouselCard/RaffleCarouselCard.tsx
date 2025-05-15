@@ -3,17 +3,17 @@ import styles from './RaffleCarouselCard.module.css';
 import { Icon16Flag, Icon16PenOutline  } from '@vkontakte/icons';
 
 import RaffleState from '../RaffleState/RaffleState';
-import { Raffle_Id } from '../../constants/Text';
+import { Raffle_Id, Change_CarouselCard } from '../../constants/Text';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
 
 interface RaffleCarouselCardProps {
   raffleId: string;
   name: string;
-  status: 'active' | 'pending' | 'deleted' | 'draft';
+  status: 'active' | 'pending' | "results" | "resultsWhite" | 'deleted' | "draft" | "completed";
   stateText: string;
   members: string;
-  endDate: string;
-  updatedAt: string;
+  endDate: string; //format "14.10 21:31"
+  updatedAt: string; //format "14.10.2025 21:31"
 }
 
 const RaffleCarouselCard: React.FC<RaffleCarouselCardProps> = ({
@@ -48,7 +48,7 @@ const RaffleCarouselCard: React.FC<RaffleCarouselCardProps> = ({
       <div className={styles.footer}>
         <div className={styles.cont}>
             <RaffleState status={status} text={stateText} />
-            <div className={styles.updated}>Изменено:<br />{updatedAt}</div>
+            <div className={styles.updated}>{Change_CarouselCard}<br />{updatedAt}</div>
         </div>
 
         <div className={styles.actions}>
