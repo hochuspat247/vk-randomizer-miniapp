@@ -32,6 +32,7 @@ interface CommunityCardProps {
   name: string;
   nickname: string;
   buttonDesc: string;
+  stateText: string;
   
 }
 
@@ -43,7 +44,8 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
   status, 
   name, 
   nickname,
-  buttonDesc
+  buttonDesc,
+  stateText
 }) => {
 
   const containerClasses = [
@@ -120,7 +122,8 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
       
       <div className={styles.WidgetStatusCont}>
         <div className={styles.WidgetStatusLpart}>
-          <WidgetStatusBadge status={status} text="Виджет не добавлен"/>
+          {/* <WidgetStatusBadge status={status} text={stateText}/> */}
+          <WidgetStatusBadge status={status} text={stateText}/>
           <Update />
         </div>
         <div className={styles.IconCont}>
