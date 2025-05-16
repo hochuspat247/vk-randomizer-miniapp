@@ -7,6 +7,18 @@ import CircleIcon from '../../assets/icons/CircleIcon';
 import { Icon16DeleteOutline } from '@vkontakte/icons';
 import { Icon16LinkOutline } from '@vkontakte/icons';
 import ErrorBannerIcon from '../../assets/icons/ErrorBannerIcon';
+import {
+  NEW, 
+  Raffle_NotificationCard, 
+  Completed_NotificationCard,
+  ParticipantCountText,
+  PeopleText,
+  ResultsPublished,
+  Winners_NotificationCard,
+  At,
+  PleaseTryAgain,
+  ConnectionAfterTime
+} from "../../constants/Text"
 
 interface NotificationCardProps {
     type: 'warning' | 'completed' | 'error';
@@ -61,7 +73,7 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
           {/* Бейдж NEW */}
           {isNew && (
             <div className={styles.ContLNew}>
-              <span>NEW</span>
+              <span>{NEW}</span>
             </div>
           )}
 
@@ -71,9 +83,9 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
                 {type === 'error' && (<div ref={titleRef} className={styles.errorTitle}>{errorTitle}</div>)}
                 {type === 'completed' && (
                     <div className={raffleEndClass}>
-                        <span>Розыгрыш </span> 
+                        <span>{Raffle_NotificationCard}</span> 
                         <span className={raffleIdClass}>{raffleId}</span>
-                        <span> завершён</span>
+                        <span>{Completed_NotificationCard}</span>
                     </div>
                 )}
 
@@ -94,9 +106,9 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
                         <>
                         <div className={styles.reason}>{reasonEnd}</div>
                         <div className={styles.participants}>
-                            Приняли участие: {participantsCount} человек.
+                            {ParticipantCountText} {participantsCount} {PeopleText}
                         </div>
-                        <div className={styles.published}>Результаты опубликованы.</div>
+                        <div className={styles.published}>{ResultsPublished}</div>
                         </>
                     )}
                     </div>
@@ -131,11 +143,11 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
       {/* Плашка победителей — только если completed */}
       {type === 'completed' && winners && winners.length > 0 && (
         <div className={styles.winnersCont}>
-          <span className={styles.winnersText}>Победители:</span>
+          <span className={styles.winnersText}>{Winners_NotificationCard}</span>
           <div className={styles.winners}>
             {winners.map((winner, index) => (
               <div key={index} className={styles.winnerBadge}>
-                @{winner}
+                {At}{winner}
               </div>
             ))}
           </div>
@@ -146,7 +158,7 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
         <div className={styles.errorBanner}>
             <span className={styles.errorBannerIcon}><ErrorBannerIcon/></span>
             <span className={styles.errorBannerText}>
-            Пожалуйста, повторите попытку <br/> подключения через некоторое время
+            {PleaseTryAgain} <br/> {ConnectionAfterTime}
             </span>
         </div>
         )}
