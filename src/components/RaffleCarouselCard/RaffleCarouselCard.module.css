@@ -1,0 +1,133 @@
+.card {
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--Dark-Background-Background-Modal, #2D2D2E);    
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .cardTop {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .raffleL {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.raffleTextCont {
+    display: flex;
+}
+
+.raffleText {
+    display: flex;
+    overflow: hidden;
+    color: var(--Dark-Text-Primary, #E1E3E6);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 0.1px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.raffleId {
+    overflow: hidden;
+    color: var(--Green, #D4F94E);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 0.1px;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.name {
+    overflow: hidden;
+    color: var(--Dark-Counter-Secondary-Background, #76787A);
+    font-feature-settings: 'liga' off, 'clig' off;
+    text-overflow: ellipsis;
+    font-family: "VK Sans Display";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; /* 128.571% */
+    letter-spacing: 0.2px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+  
+  .rightBadges {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+  }
+  
+  .badge {
+    display: flex;
+    padding: 4px 6px;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    font-size: 9px;
+    font-weight: 700;
+    color: #FFF;
+    text-transform: uppercase;
+  }
+  
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .updated {
+    color: #76787A;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .iconBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cont {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
