@@ -7,7 +7,7 @@ import {
   Icon20GearOutline,
 } from '@vkontakte/icons';
 
-import { ADMIN, OWNER, RAFFLE, Change_Widget } from '../../constants/Text';
+import { ADMIN, OWNER, RAFFLE, Change_Widget } from '../../constants/Texts/CommunityCardText';
 
 import WidgetStatusBadge from '../WidgetStatusBadge/WidgetStatusBadge';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';

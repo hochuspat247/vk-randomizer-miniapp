@@ -1,4 +1,7 @@
-.container {
+ .Container {
+    padding: 16px; 
+    background-color: #0A0A0A;
     display: flex;
-    gap: 4px;
+    flex-direction: column;
+    gap: 16px;
 }

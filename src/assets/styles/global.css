@@ -1,7 +1,5 @@
-@import url('https://fonts.cdnfonts.com/css/vk-sans-display');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 * {
-    font-family: "VK Sans Display Expanded", sans-serif; /* Используем шрифт на всем сайте */
-    box-sizing: border-box;    
-  }
+    box-sizing: border-box;
+}
