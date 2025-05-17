@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import styles from './NestedCommunityCard.module.css';
 
 import { Icon20DiamondOutline, Icon48Linked, Icon16PenOutline, Icon16InfoOutline } from '@vkontakte/icons';
@@ -13,7 +13,7 @@ import {
   ADMIN_Nested,
   FOLOWERS_Nested,
   ERROR_Nested,
-} from '../../constants/Text';
+} from '../../constants/Texts/NestedCommunityCardText';
 
 interface NestedCommunityCardProps {
   name: string;

@@ -1,8 +1,7 @@
-import React from 'react';
+ import React from 'react';
 import {Panel, PanelHeader } from '@vkontakte/vkui';
-import NestedCommunityCard from '../../components/NestedCommunityCard/NestedCommunityCard';
-import NestedCommunityCardMocks from '../../mocks/NestedCommunityCardMocks';
-
+import {CreateRaffleText_Panel} from "../../constants/Texts/CreateRaffleText"
+import styles from "./CreateRaffle.web.module.css"
 
 interface CreateRaffleProps {
   id: string;
@@ -11,22 +10,10 @@ interface CreateRaffleProps {
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   return (
     <Panel id={id}>
-      <PanelHeader>Create Raffle</PanelHeader>
-      <div style={{ padding: '16px' , display: "flex", flexDirection: "column", gap: "16px"}}>
-        <h2>Create a New Raffle</h2>
+      <PanelHeader>{CreateRaffleText_Panel}</PanelHeader>
+      <div className={styles.Container}>
         <p>This is the panel for creating a new raffle.</p>
-
-        {NestedCommunityCardMocks.map((community, index) => (
-  <NestedCommunityCard
-    key={index}
-    name={community.name}
-    nickname={community.nickname}
-    status={community.status}
-    statusText={community.statusText}
-    membersCount={community.membersCount}
-    adminType={community.adminType}
-  />
-))}
+        
       </div>
     </Panel>
   );
