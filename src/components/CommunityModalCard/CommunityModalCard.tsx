@@ -16,7 +16,7 @@ import {
   SUCCESS_BUTTON_WIDGET,
   AND_MORE,
   NO_COMMUNITIES_PLACEHOLDER
-} from '../../constants/Text'; // или оставь свои строки напрямую
+} from '../../constants/Texts/CommunityModalCardText'; // или оставь свои строки напрямую
 
 interface Subscriber {
   name: string;
