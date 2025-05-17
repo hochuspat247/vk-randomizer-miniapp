@@ -1,6 +1,7 @@
-import React from 'react';
+ import React from 'react';
 import {Panel, PanelHeader } from '@vkontakte/vkui';
-import RaffleCarouselCard from '../../components/RaffleCarouselCard/RaffleCarouselCard';
+import {CreateRaffleText_Panel} from "../../constants/Texts/CreateRaffleText"
+import styles from "./CreateRaffle.web.module.css"
 
 interface CreateRaffleProps {
   id: string;
@@ -9,22 +10,11 @@ interface CreateRaffleProps {
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   return (
     <Panel id={id}>
-      <PanelHeader>Create Raffle</PanelHeader>
-      <div style={{ padding: '16px' }}>
-        <h2>Create a New Raffle</h2>
+      <PanelHeader>{CreateRaffleText_Panel}</PanelHeader>
+      <div className={styles.Container}>
         <p>This is the panel for creating a new raffle.</p>
-
-        <RaffleCarouselCard
-      raffleId="492850"
-      name="Москва 24 — Новости"
-      status="active"
-      stateText="Активно"
-      members="490 / 500"
-      endDate="15 МАЯ 23:59"
-      updatedAt="14.10 21:31"
-/>
+        
       </div>
-
     </Panel>
   );
 };
