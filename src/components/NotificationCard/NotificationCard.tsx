@@ -18,7 +18,7 @@ import {
   At,
   PleaseTryAgain,
   ConnectionAfterTime
-} from "../../constants/Text"
+} from "../../constants/Texts/NotificationCardText"
 
 interface NotificationCardProps {
     type: 'warning' | 'completed' | 'error';
