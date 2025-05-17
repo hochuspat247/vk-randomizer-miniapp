@@ -1,0 +1,10 @@
+export const NEW = "NEW";
+export const Raffle_NotificationCard = "Розыгрыш ";
+export const Completed_NotificationCard = " завершён";
+export const ParticipantCountText = "Приняли участие: ";
+export const PeopleText = " человек.";
+export const ResultsPublished = "Результаты опубликованы.";
+export const Winners_NotificationCard = "Победители: ";
+export const At = "@";
+export const PleaseTryAgain = "Пожалуйста, повторите попытку";
+export const ConnectionAfterTime = "подключения через некоторое время";
