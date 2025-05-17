@@ -1,6 +1,8 @@
 import React from 'react';
 import {Panel, PanelHeader } from '@vkontakte/vkui';
 import NestedCommunityCard from '../../components/NestedCommunityCard/NestedCommunityCard';
+import NestedCommunityCardMocks from '../../mocks/NestedCommunityCardMocks';
+
 
 interface CreateRaffleProps {
   id: string;
@@ -14,39 +16,17 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         <h2>Create a New Raffle</h2>
         <p>This is the panel for creating a new raffle.</p>
 
-        <NestedCommunityCard 
-          status='undefined'
-          statusText='Виджет настроен' 
-          name='Москва 24 – Новости' 
-          nickname='@mosnews24'
-          adminType='admin'
-          membersCount="592K"
-        />
-         <NestedCommunityCard 
-          status='green'
-          statusText='Виджет настроен' 
-          name='Москва 24 – Новости' 
-          nickname='@mosnews24'
-          adminType='admin'
-          membersCount="592K"
-        />
-         <NestedCommunityCard 
-          status='red'
-          statusText='Виджет настроен' 
-          name='Москва 24 – Новости' 
-          nickname='@mosnews24'
-          adminType='admin'
-          membersCount="592K"
-        />
-
-<NestedCommunityCard 
-          status='yellow'
-          statusText='Виджет настроен' 
-          name='Москва 24 – Новости' 
-          nickname='@mosnews24'
-          adminType='admin'
-          membersCount="592K"
-        />
+        {NestedCommunityCardMocks.map((community, index) => (
+  <NestedCommunityCard
+    key={index}
+    name={community.name}
+    nickname={community.nickname}
+    status={community.status}
+    statusText={community.statusText}
+    membersCount={community.membersCount}
+    adminType={community.adminType}
+  />
+))}
       </div>
     </Panel>
   );
