@@ -1,18 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Panel, PanelHeader} from '@vkontakte/vkui';
 
 // import styles from "./CreateRaffle.web.module.css"
 import CommunityModalCard from '../../components/CommunityModalCard/CommunityModalCard';
-
-import CommunityAvatar from "../../assets/images/Picture (1).png"
 
 interface CreateRaffleProps {
   id: string;
 }
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Panel id={id}>
