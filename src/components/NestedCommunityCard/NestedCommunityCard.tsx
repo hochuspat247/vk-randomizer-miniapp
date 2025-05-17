@@ -13,7 +13,7 @@ import {
   ADMIN_Nested,
   FOLOWERS_Nested,
   ERROR_Nested,
-} from '../../constants/Text';
+} from '../../constants/Texts/NestedCommunityCardText';
 
 interface NestedCommunityCardProps {
   name: string;

@@ -15,7 +15,7 @@ import {
   EDIT_CONDITIONS,
   COLLAPSE,
   EXPAND
-} from '../../constants/Texts/TextRaffleCard';
+} from '../../constants/Texts/RaffleCardText';
 
 import RaffleState from '../RaffleState/RaffleState';
 import NestedCommunityCard from '../NestedCommunityCard/NestedCommunityCard';
