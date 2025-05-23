@@ -1,5 +1,5 @@
-import VKSansExpanded from "../assets/fonts/VK Sans Display Expanded Regular.ttf"
-import VKSansDisplay from "../assets/fonts/VKSansDisplay-Regular.ttf"
+import VKSansExpanded from "../assets/fonts/VK Sans Display Expanded Regular.ttf";
+import VKSansDisplay from "../assets/fonts/VKSansDisplay-Regular.ttf";
 
 export const Fonts = () => (
   <style>
@@ -7,7 +7,7 @@ export const Fonts = () => (
       @font-face {
         font-family: 'VK Sans Display Expanded';
         src: url(${VKSansExpanded}) format('truetype');
-        font-weight: 400;
+        font-weight: 700;
         font-style: normal;
       }
 
@@ -19,8 +19,7 @@ export const Fonts = () => (
       }
 
       body {
-        font-family: 'VK Sans Display Expandedt';
-        font-family: 'VK Sans Display';
+        font-family: 'VK Sans Display', 'VK Sans Display Expanded';
       }
     `}
   </style>

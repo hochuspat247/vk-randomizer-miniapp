@@ -1,4 +1,4 @@
- .badge {
+.badge {
     display: flex;
     height: 28px;
     padding: 4px 12px;
@@ -74,7 +74,6 @@
 
 .draft {
     background: rgba(212, 249, 78, 0.15);
-
 }
 
 .textCompleted {
