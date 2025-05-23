@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './RaffleState.module.css';
 
-import ActiveIcon from "../../assets/icons/ActiveIcon"
-import PendingIcon from "../../assets/icons/PendingIcon"
-import { Icon16CancelCircleOutline, Icon16PenOutline, Icon16Flag  } from '@vkontakte/icons';
+import ActiveIcon from "../../assets/icons/ActiveIcon";
+import PendingIcon from "../../assets/icons/PendingIcon";
+import { Icon16CancelCircleOutline, Icon16PenOutline, Icon16Flag } from '@vkontakte/icons';
 
 interface RaffleStateProps {
   status: 'active' | 'pending' | "results" | "resultsWhite" | 'deleted' | "draft" | "completed";
@@ -11,7 +11,6 @@ interface RaffleStateProps {
 }
 
 const RaffleState: React.FC<RaffleStateProps> = ({ status, text }) => {
-
   const badgeClass = `${styles.badge} ${styles[status]}`;
   const textClassName = [
     styles.text,
