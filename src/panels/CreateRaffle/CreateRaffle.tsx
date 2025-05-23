@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import {Panel, PanelHeader } from '@vkontakte/vkui';
 import {CreateRaffleText_Panel} from "../../constants/Texts/CreateRaffleText"
 import styles from "./CreateRaffle.web.module.css"
