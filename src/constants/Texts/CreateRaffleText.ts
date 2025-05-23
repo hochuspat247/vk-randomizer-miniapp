@@ -1,1 +1,1 @@
- export const CreateRaffleText_Panel = "Create Raffle"
+export const CreateRaffleText_Panel = "Create Raffle";
