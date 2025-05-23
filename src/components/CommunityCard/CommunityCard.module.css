@@ -1,0 +1,217 @@
+/* Контейнер карточки */
+.container {
+  display: flex;
+  padding: 12px 12px 14px 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: var(--Dark-Background-Background-Modal, #2D2D2E);
+}
+
+.containerYellow {
+  border: 1px solid rgba(255, 194, 86, 0.30);
+}
+
+.containerRed {
+  border: 1px solid rgba(255, 92, 92, 0.40);
+  background: #2F2626;
+}
+
+/* Контейнер для бейджей */
+.badges {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+/* Отдельный бейдж */
+.badge {
+  display: flex;
+  padding: 4px 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background-color: transparent;
+  width: 100%;  
+  height: 20px;
+}
+
+/* Иконка внутри бейджа */
+.icon {
+  color: #fff;
+  width: 10px !important;
+  height: 10px !important;
+}
+
+/* Текст в бейджах */
+.text {
+  color: #FFF;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "VK Sans Display";
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 12px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* Обертка для аватара */
+.avatarCont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Сам аватар */
+.avatarImg {
+  width: 48px;
+  height: 48px;
+  aspect-ratio: 1/1;
+  border-radius: 24px;
+  background-position: center;
+  position: relative;
+  background: var(--avatar-url) lightgray 50% / cover no-repeat;
+}
+
+.avatar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+
+}
+
+/* Иконка замка в правом нижнем углу */
+.lockIcon {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+}
+
+.name {
+  color: var(--Light-Text-Text-Contrast, #FFF);
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.1px;
+}
+
+.nickname {
+  color: var(--Dark-Counter-Secondary-Background, #76787A);
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-size: 14px;
+  font-family: "VK Sans Display";
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.2px;
+}
+
+.changeWidgetCont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Стили для кнопки */
+.changeWidget {
+  display: flex;
+  height: 44px;
+  padding: 4px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--Dark-Background-Background-Secondary-Alpha, rgba(255, 255, 255, 0.10));
+  text-align: center;
+  cursor: pointer;
+}
+
+.CWtext {
+    text-align: center;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: "VK Sans Display Expanded";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px; /* 128.571% */
+    letter-spacing: 0.2px;
+
+}
+
+/* Активная кнопка (если status === 'green') */
+.activeButton {
+  color: var(--Green, #D4F94E); /* Зеленый текст для активного состояния */
+}
+
+/* Неактивная кнопка (если status === 'red' или 'yellow') */
+.inactiveButton {
+  color: var(--Dark-Icons-Icon-Secondary, #76787A); /* Тёмный текст для неактивного состояния */
+  cursor: not-allowed; /* Изменение курсора на "недоступно" */
+}
+
+.CWtext2 {
+  overflow: hidden;
+  color: var(--Dark-Landing-Text-Secondary, #76787A);
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  text-overflow: ellipsis;
+  font-family: "VK Sans Display";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 180% */
+  letter-spacing: 0.2px;
+}
+
+.WidgetStatusCont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  width: 100%;
+}
+
+.WidgetStatusLpart {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.IconCont {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

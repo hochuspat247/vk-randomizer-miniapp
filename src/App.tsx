@@ -6,9 +6,6 @@ import '@vkontakte/vkui/dist/vkui.css';
 import './assets/styles/global.css';
 import { Fonts } from './constants/Fonts';
 
-import { Fonts } from './constants/Fonts';
-import "./assets/styles/global.css"
-
 interface AppProps {
   platform: 'ios' | 'android' | 'web' | undefined;
 }
