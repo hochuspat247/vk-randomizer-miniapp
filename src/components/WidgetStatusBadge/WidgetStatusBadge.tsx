@@ -6,29 +6,37 @@ import ArrowY from '../../assets/icons/ArrowY';
 import ArrowR from '../../assets/icons/ArrowR';
 import { Icon16MinusCircleOutline } from '@vkontakte/icons';
 
-
 interface StatusButtonProps {
-  status: 'green' | 'yellow' | 'red' | "undefined";
+  status: 'green' | 'yellow' | 'red' | undefined;
   text: string;
 }
 
 const WidgetStatusBadge: React.FC<StatusButtonProps> = ({ status, text }) => {
-
   const containerClasses = [
     styles.container,
+    status === 'green' && styles.containerGreen,
     status === 'yellow' && styles.containerYellow,
     status === 'red' && styles.containerRed,
-    status === 'green' && styles.containerGreen,
-    status === "undefined" && styles.containerUndefined
+    status === undefined && styles.containerUndefined
   ].filter(Boolean).join(' ');
+
+  const renderIcon = () => {
+    switch (status) {
+      case 'green':
+        return <ArrowG width={16} height={16} />;
+      case 'yellow':
+        return <ArrowY width={16} height={16} />;
+      case 'red':
+        return <ArrowR width={16} height={16} />;
+      case undefined:
+        return <Icon16MinusCircleOutline width={16} height={16} />;
+    }
+  };
 
   return (
     <div className={containerClasses}>
-        {status === 'green' && <ArrowG />} 
-        {status === 'yellow' && <ArrowY />} 
-        {status === 'red' && <ArrowR />} 
-        {status === 'undefined' && <Icon16MinusCircleOutline />} 
-        <span className={styles.text}>{text}</span>
+      {renderIcon()}
+      <span className={styles.text}>{text}</span>
     </div>
   );
 };

@@ -1,0 +1,13 @@
+export const Raffle_Id = ' Розыгрыш №';
+export const LAST_EDIT = 'Последнее изменение';
+export const COMMUNITY_LABEL = 'Сообщество:';
+export const MODE_TIME = 'выбран режим завершения по времени';
+export const MODE_MEMBERS = 'выбран режим завершения по количеству участников';
+export const MODE_BOTH = 'выбран режим завершения по времени и количеству участников';
+export const WINNERS_LABEL = 'победителей';
+export const SUBSCRIPTION_LABEL = 'подписки';
+export const FINISH_TITLE = 'до завершения*';
+export const FINISH_NOW_HINT = '←  Можно завершить уже сейчас!';
+export const EDIT_CONDITIONS = 'Изменить условия';
+export const COLLAPSE = 'Свернуть';
+export const EXPAND = 'Развернуть';
