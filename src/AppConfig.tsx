@@ -4,6 +4,8 @@ import { AdaptivityProvider, ConfigProvider, AppRoot } from '@vkontakte/vkui';
 import { RouterProvider } from '@vkontakte/vk-mini-apps-router';
 import '@vkontakte/vkui/dist/vkui.css';
 
+import './assets/styles/global.css';  //Импорт глобальных стилей
+
 import { transformVKBridgeAdaptivity } from './utils';
 import { router } from './routes';
 import App from './App'; // Исправленный импорт

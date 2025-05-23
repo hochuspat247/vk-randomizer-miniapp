@@ -23,13 +23,13 @@ const WidgetStatusBadge: React.FC<StatusButtonProps> = ({ status, text }) => {
   const renderIcon = () => {
     switch (status) {
       case 'green':
-        return <ArrowG width={16} height={16}/>;
+        return <ArrowG width={16} height={16} />;
       case 'yellow':
-        return <ArrowY width={16} height={16}/>;
+        return <ArrowY width={16} height={16} />;
       case 'red':
-        return <ArrowR width={16} height={16}/>;
+        return <ArrowR width={16} height={16} />;
       case undefined:
-        return <Icon16MinusCircleOutline width={16} height={16}/>;
+        return <Icon16MinusCircleOutline width={16} height={16} />;
     }
   };
 
