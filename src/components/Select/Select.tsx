@@ -1,4 +1,4 @@
- import React, { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Select.module.css';
 import { Icon24ChevronDown } from '@vkontakte/icons';
 
