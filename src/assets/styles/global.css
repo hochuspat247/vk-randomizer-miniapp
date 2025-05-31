@@ -4,3 +4,21 @@
 * {
     box-sizing: border-box;
 }
+
+/* index.css или ваш глобальный CSS файл */
+body {
+  background-color: #000 !important;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  background-color: #000;
+}
+
+/* Для полного покрытия на мобильных устройствах */
+.AppRoot--android .vkui__root,
+.AppRoot--ios .vkui__root,
+.AppRoot--vkcom .vkui__root {
+  background-color: #000 !important;
+}

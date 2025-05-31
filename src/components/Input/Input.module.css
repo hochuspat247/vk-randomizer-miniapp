@@ -1,4 +1,12 @@
 .formItem {
     padding: 0;
+    color: var(--Dark-Text-Text-Secondary, #76787A);
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 125% */
+letter-spacing: 0.1px;
   }
   
