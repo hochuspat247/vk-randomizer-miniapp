@@ -16,6 +16,11 @@ export const router = createHashRouter([
     panel: 'notifications',
     view: 'default',
   },
+ {
+    path: '/community',
+    panel: 'community',
+    view: 'default',
+  },
 ]);
 
 export const DEFAULT_VIEW = 'default';
@@ -24,4 +29,6 @@ export const PANELS = {
   CREATE_RAFFLE: 'createRaffle',
   NOTIFICATIONS: 'notifications',
   RAFFLES: 'raffles',
+  COMMUNITY: 'community',
+
 };

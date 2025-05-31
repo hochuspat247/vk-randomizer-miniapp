@@ -115,6 +115,7 @@ const Select: React.FC<CommunitySelectProps> = ({
         {!isDisabled && <Icon24ChevronDown className={styles.icon} />}
       </div>
 
+
       {isOpen && !isDisabled && (
         <div className={styles.dropdownCont}>
         <div className={styles.dropdown}>
