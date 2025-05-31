@@ -1,0 +1,180 @@
+.container {
+    display: flex;
+    padding: 8px 12px;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 100vh; /* Или явная высота */
+
+}
+
+.headerText {
+    color: var(--Dark-Text-Text-Primary, #E1E3E6);
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display Expanded";
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 100% */
+letter-spacing: 0.1px;
+}
+
+.filterButton {
+    display: flex;
+height: 44px;
+width: 100%;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 6px;
+align-self: stretch;
+border-radius: 8px;
+border: 1px solid rgba(255, 255, 255, 0.05);
+background: var(--Dark-Background-Background-Secondary-Alpha, rgba(255, 255, 255, 0.10));
+}
+
+.filterText {
+    color: var(--Green, #D4F94E);
+text-align: center;
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display Expanded";
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 18px; /* 128.571% */
+letter-spacing: 0.2px;
+}
+
+.rafflesCont {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 150vh; /* Обеспечиваем пространство для скролла */
+}
+
+/* Общие стили для всех sticky-элементов */
+.rafflesCont > * {
+  position: sticky;
+  top: 0;
+  z-index: calc(var(--base-z-index, 0) + var(--index, 0));
+}
+
+/* Специфичные стили для мини-блоков */
+.rafflesMini {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+background: var(--StickyCard-Backgroung, linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.12) 100%), rgba(0, 0, 0, 0.90));
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+/* Первый блок "Завершенные" */
+.rafflesMini:nth-child(1) {
+  --base-z-index: 10;
+  top: 60px; /* Отступ от верха */
+}
+
+/* Второй блок "Неактивные" */
+.rafflesMini:nth-child(2) {
+  --base-z-index: 20;
+  top: 120px; /* Больший отступ */
+}
+
+.completedText {
+  color: var(--Dark-Text-Text-Primary, #E1E3E6);
+  font-family: "VK Sans Display Expanded";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.supportCard {
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+    height: 187px;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.12) 100%), #000;
+    position: relative; /* Добавляем для позиционирования спирали */
+    overflow: hidden; /* Скрываем выходящие за границы элементы */
+}
+
+.supportCardTop {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start; /* Выравниваем по верхнему краю */
+}
+
+.supportCardText {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1; /* Занимает все доступное пространство */
+    min-width: 0; /* Позволяет тексту переноситься */
+    padding-right: 16px; /* Отступ от картинки */
+}
+
+.supportCardTitle {
+    color: var(--Dark-Text-Primary, #E1E3E6);
+    font-family: "VK Sans Display Expanded";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    white-space: nowrap; /* Запрет переноса на новую строку */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Троеточие если текст не помещается */
+}
+
+.supportCardtext {
+    color: var(--Dark-Text-Subhead, #909499);
+    font-family: "VK Sans Display";
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Ограничиваем количество строк */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.spiral {
+    position: absolute; /* Абсолютное позиционирование */
+    top: 0;
+    right: 0;
+    width: 133px;
+    height: 133px;
+    z-index: 1;
+}
+
+.supportButton {
+    display: flex;
+height: 44px;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 6px;
+align-self: stretch; 
+border-radius: 8px;
+border: 1px solid rgba(255, 255, 255, 0.05);
+background: var(--Dark-Background-Background-Secondary-Alpha, rgba(255, 255, 255, 0.10));
+}
+
+.supportButtonText {
+    color: var(--Green, #D4F94E);
+text-align: center;
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display Expanded";
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 18px; /* 128.571% */
+letter-spacing: 0.2px;
+}
