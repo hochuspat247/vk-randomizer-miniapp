@@ -5,20 +5,23 @@
     box-sizing: border-box;
 }
 
-/* index.css или ваш глобальный CSS файл */
-body {
-  background-color: #000 !important;
-  margin: 0;
-  padding: 0;
+/* styles/global.css */
+:root {
+  --background_content: #000000; /* Чёрный фон */
+  --background_page: #000000; /* Чёрный фон для всей страницы */
+  --modal_card_background: #121212; /* Тёмный фон для модалок */
 }
 
-#root {
-  background-color: #000;
+/* Принудительное применение стилей */
+.vkui__root, 
+.vkuiAppRoot,
+.vkuiPanel,
+.vkuiPanel__in {
+  background: #000000 !important;
 }
 
-/* Для полного покрытия на мобильных устройствах */
-.AppRoot--android .vkui__root,
-.AppRoot--ios .vkui__root,
-.AppRoot--vkcom .vkui__root {
-  background-color: #000 !important;
+/* Дополнительные элементы */
+body,
+html {
+  background: #000000 !important;
 }

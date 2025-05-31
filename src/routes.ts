@@ -6,6 +6,11 @@ export const router = createHashRouter([
     panel: 'createRaffle',
     view: 'default',
   },
+   {
+    path: '/raffles',
+    panel: 'raffles',
+    view: 'default',
+  },
   {
     path: '/notifications',
     panel: 'notifications',
@@ -18,4 +23,5 @@ export const DEFAULT_ROOT = 'default_root';
 export const PANELS = {
   CREATE_RAFFLE: 'createRaffle',
   NOTIFICATIONS: 'notifications',
+  RAFFLES: 'raffles',
 };
