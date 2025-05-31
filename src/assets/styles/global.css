@@ -4,3 +4,24 @@
 * {
     box-sizing: border-box;
 }
+
+/* styles/global.css */
+:root {
+  --background_content: #000000; /* Чёрный фон */
+  --background_page: #000000; /* Чёрный фон для всей страницы */
+  --modal_card_background: #121212; /* Тёмный фон для модалок */
+}
+
+/* Принудительное применение стилей */
+.vkui__root, 
+.vkuiAppRoot,
+.vkuiPanel,
+.vkuiPanel__in {
+  background: #000000 !important;
+}
+
+/* Дополнительные элементы */
+body,
+html {
+  background: #000000 !important;
+}
