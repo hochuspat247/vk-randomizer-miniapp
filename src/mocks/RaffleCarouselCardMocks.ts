@@ -32,7 +32,7 @@ const RaffleCarouselCardMocks = [
     raffleId: '1004',
     name: 'Казань Сегодня',
     status: 'results',
-    stateText: 'Результаты опубликованы',
+    stateText: 'Открыть итоги',
     members: '3 700 участников',
     endDate: '12.05 18:00',
     updatedAt: '13.05.2025 09:00'
@@ -50,7 +50,7 @@ const RaffleCarouselCardMocks = [
     raffleId: '1006',
     name: 'Новосибирск PRO',
     status: 'resultsWhite',
-    stateText: 'Результаты (белый стиль)',
+    stateText: 'Открыть итоги',
     members: '5 480 участников',
     endDate: '09.05 22:15',
     updatedAt: '10.05.2025 08:20'

@@ -1,0 +1,42 @@
+
+.container {
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.headerText {
+    color: var(--Dark-Text-Text-Primary, #E1E3E6);
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display Expanded";
+font-size: 21px;
+font-style: normal;
+font-weight: 600;
+line-height: 26px; /* 123.81% */
+}
+
+.actCommunity {
+    display: flex;
+padding: 16px;
+flex-direction: column;
+align-items: center;
+gap: 14px;
+align-self: stretch;
+border-radius: 10px;
+border: 1px solid rgba(255, 255, 255, 0.05);
+background: var(--StickyCard-Backgroung, linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.12) 100%), rgba(0, 0, 0, 0.90));
+box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15), 0px 0px 10px 0px rgba(0, 0, 0, 0.20);
+backdrop-filter: blur(10px);
+}
+
+.title {
+    width: 100%;
+    color: var(--Dark-Text-Text-Primary, #E1E3E6);
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display Expanded";
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 22px; /* 137.5% */
+}
