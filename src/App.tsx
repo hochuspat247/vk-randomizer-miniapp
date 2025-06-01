@@ -8,8 +8,6 @@ import { Fonts } from './constants/Fonts';
 
 import "./assets/styles/global.css"
 
-import "./assets/styles/global.css"
-
 interface AppProps {
   platform: 'ios' | 'android' | 'web' | undefined;
 }

@@ -4,13 +4,12 @@ import { RouterProvider, useRouteNavigator, useActiveVkuiLocation } from '@vkont
 import { router, DEFAULT_VIEW, PANELS } from '../routes';
 import CreateRaffle from '../panels/CreateRaffle/CreateRaffle';
 import Notifications from '../panels/Notifications/Notifications';
-import Raffles from '../panels/CreateRaffle/CreateRaffle';
+import Raffles from '../panels/Raffles/Raffles';
 import Community from '../panels/Community/Community';
-
 
 const Navigation: React.FC = () => {
   const routeNavigator = useRouteNavigator();
-  const { panel: activePanel } = useActiveVkuiLocation(); // Получаем активную панель
+  const { panel: activePanel } = useActiveVkuiLocation();
 
   return (
     <RouterProvider router={router} navigator={routeNavigator}>
