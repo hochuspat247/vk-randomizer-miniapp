@@ -1,0 +1,71 @@
+.container {
+  margin-bottom: 16px;
+}
+
+.label {
+  color: var(--Dark-Text-Subhead, #909499);
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "VK Sans Display";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  margin-bottom: 8px;
+}
+
+.photosContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.photoWrapper {
+  position: relative;
+}
+
+.photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.uploadButton {
+  display: flex;
+  width: 96px;
+  height: 96px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+border: 0.5px solid var(--Light-Stroke-Image-Border-Alpha, rgba(0, 0, 0, 0.08));
+background: var(--Light-Other-Avatar-Overlay-Alpha, #353535);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* .uploadButton:hover {
+  background-color: var(--background_light_hover);
+} */
+
+.fileInput {
+  display: none;
+  
+}
+
+.removeButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}

@@ -1,0 +1,49 @@
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.checkboxContainer:hover:not(.disabled) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.label {
+  color: var(--Dark-Text-Text-Primary, #E1E3E6);
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "VK Sans Display";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  flex-grow: 1;
+}
+
+.additionalIcon {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabled .label {
+  color: var(--Dark-Text-Secondary, #76787A);
+}
