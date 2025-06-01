@@ -7,10 +7,9 @@ import Notifications from '../panels/Notifications/Notifications';
 import Raffles from '../panels/Raffles/Raffles';
 import Community from '../panels/Community/Community';
 
-
 const Navigation: React.FC = () => {
   const routeNavigator = useRouteNavigator();
-  const { panel: activePanel } = useActiveVkuiLocation(); // Получаем активную панель
+  const { panel: activePanel } = useActiveVkuiLocation();
 
   return (
     <RouterProvider router={router} navigator={routeNavigator}>
