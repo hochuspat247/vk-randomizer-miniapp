@@ -9,7 +9,7 @@ interface CommunitySelectProps {
   value: string | string[];
   onChange?: (value: string | string[]) => void;
   multiple?: boolean;
-  allowInput?: boolean; // Новый пропс для возможности ввода текста
+  allowInput?: boolean;
 }
 
 const Select: React.FC<CommunitySelectProps> = ({
@@ -19,7 +19,7 @@ const Select: React.FC<CommunitySelectProps> = ({
   value = [],
   onChange,
   multiple = false,
-  allowInput = false // Значение по умолчанию
+  allowInput = false,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState('');
@@ -55,13 +55,11 @@ const Select: React.FC<CommunitySelectProps> = ({
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {
-      const newValue = multiple 
+      const newValue = multiple
         ? [...(Array.isArray(value) ? value : []), inputValue.trim()]
         : inputValue.trim();
-      
       onChange?.(newValue);
       setInputValue('');
-      
       if (!multiple) {
         setIsOpen(false);
       }
@@ -74,21 +72,19 @@ const Select: React.FC<CommunitySelectProps> = ({
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const isDisabled = options.length === 0;
-  const displayValue = multiple 
+  const displayValue = multiple
     ? (Array.isArray(value) ? value : [])
     : (typeof value === 'string' ? [value] : []);
 
   return (
     <div className={styles.selectContainer} ref={selectRef}>
       {title && <div className={styles.selectTitle}>{title}</div>}
-      
-      <div 
+      <div
         className={`${styles.selectWrapper} ${isOpen ? styles.open : ''}`}
         onClick={!isDisabled ? handleToggle : undefined}
       >
@@ -101,8 +97,8 @@ const Select: React.FC<CommunitySelectProps> = ({
                 <span key={tag} className={`${styles.tag} ${!multiple ? styles.singleTag : ''}`}>
                   {tag}
                   {multiple && (
-                    <Icon16Cancel 
-                      className={styles.tagRemove} 
+                    <Icon16Cancel
+                      className={styles.tagRemove}
                       onClick={(e) => handleRemove(tag, e)}
                     />
                   )}
@@ -111,51 +107,47 @@ const Select: React.FC<CommunitySelectProps> = ({
             </div>
           )}
         </div>
-        
         {!isDisabled && <Icon24ChevronDown className={styles.icon} />}
       </div>
-
-
       {isOpen && !isDisabled && (
         <div className={styles.dropdownCont}>
-        <div className={styles.dropdown}>
-          {allowInput && (
-            <div className={styles.inputContainer}>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyDown={handleInputKeyDown}
-                placeholder="Введите значение и нажмите Enter"
-                className={styles.textInput}
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
-          )}
-          
-          {options.map(option => (
-            <div
-              key={option}
-              className={`${styles.option} ${
-                (multiple 
+          <div className={styles.dropdown}>
+            {allowInput && (
+              <div className={styles.inputContainer}>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onKeyDown={handleInputKeyDown}
+                  placeholder="Введите значение и нажмите Enter"
+                  className={styles.textInput}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+            )}
+            {options.map(option => (
+              <div
+                key={option}
+                className={`${styles.option} ${
+                  (multiple
+                    ? Array.isArray(value) && value.includes(option)
+                    : value === option
+                  ) ? (multiple ? styles.multipleSelected : styles.singleSelected) : ''
+                }`}
+                onClick={() => handleSelect(option)}
+              >
+                {option}
+                {(multiple
                   ? Array.isArray(value) && value.includes(option)
                   : value === option
-                ) ? (multiple ? styles.multipleSelected : styles.singleSelected) : ''
-              }`}
-              onClick={() => handleSelect(option)}
-            >
-              {option}
-              {(multiple 
-                ? Array.isArray(value) && value.includes(option)
-                : value === option
-              ) && (
-                <span className={styles.checkmark}>
-                  <Icon16Done className={styles.checkIcon} />
-                </span>
-              )}
-            </div>
-          ))}
-        </div>
+                ) && (
+                  <span className={styles.checkmark}>
+                    <Icon16Done className={styles.checkIcon} />
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

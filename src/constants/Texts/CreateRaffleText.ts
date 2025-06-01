@@ -1,1 +1,2 @@
+
 export const CreateRaffleText_Panel = "Новый Розыгрыш";
