@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styles from './NotificationCard.module.css';
 
-import gold from "../../assets/images/Gold.png";
-import CircleIcon from '../../assets/icons/CircleIcon';
+import gold from "@assets/images/Gold.png";
+import CircleIcon from '@assets/icons/CircleIcon';
 
 import { Icon16DeleteOutline } from '@vkontakte/icons';
 import { Icon16LinkOutline } from '@vkontakte/icons';
-import ErrorBannerIcon from '../../assets/icons/ErrorBannerIcon';
+import ErrorBannerIcon from '@assets/icons/ErrorBannerIcon';
 import {
   NEW, 
   Raffle_NotificationCard, 
@@ -18,7 +18,7 @@ import {
   At,
   PleaseTryAgain,
   ConnectionAfterTime
-} from "../../constants/Texts/NotificationCardText"
+} from "@constants/Texts/NotificationCardText"
 
 interface NotificationCardProps {
     type: 'warning' | 'completed' | 'error';

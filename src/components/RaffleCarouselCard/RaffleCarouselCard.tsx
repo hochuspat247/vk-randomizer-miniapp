@@ -3,7 +3,7 @@ import styles from './RaffleCarouselCard.module.css';
 import { Icon16Flag, Icon16PenOutline  } from '@vkontakte/icons';
 
 import RaffleState from '../RaffleState/RaffleState';
-import { Raffle_Id, Change_CarouselCard } from '../../constants/Texts/RaffleCarouselCardText';
+import { Raffle_Id, Change_CarouselCard } from '@constants/Texts/RaffleCarouselCardText';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
 
 interface RaffleCarouselCardProps {

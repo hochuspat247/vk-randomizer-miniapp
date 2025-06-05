@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './WidgetStatusBadge.module.css';
 
-import ArrowG from '../../assets/icons/ArrowG';
-import ArrowY from '../../assets/icons/ArrowY';
-import ArrowR from '../../assets/icons/ArrowR';
+import ArrowG from '@assets/icons/ArrowG';
+import ArrowY from '@assets/icons/ArrowY';
+import ArrowR from '@assets/icons/ArrowR';
 import { Icon16MinusCircleOutline } from '@vkontakte/icons';
 
 interface StatusButtonProps {

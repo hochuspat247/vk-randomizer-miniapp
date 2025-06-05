@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Community.module.css';
-import CommunityCard from '../../components/CommunityCard/CommunityCard';
-import CommunityCardMocks from '../../mocks/CommunityCardMocks';
+import CommunityCard from '@components/CommunityCard/CommunityCard';
+import CommunityCardMocks from '@mocks/CommunityCardMocks';
 import { Panel, PanelHeader } from '@vkontakte/vkui';
 import { Icon24ChevronLeft } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';

@@ -15,13 +15,13 @@ import {
   EDIT_CONDITIONS,
   COLLAPSE,
   EXPAND
-} from '../../constants/Texts/RaffleCardText';
+} from '@constants/Texts/RaffleCardText';
 
 import RaffleState from '../RaffleState/RaffleState';
 import NestedCommunityCard from '../NestedCommunityCard/NestedCommunityCard';
 
 import { Icon20Users3Outline, Icon16Dropdown, Icon16DropdownFlipped } from '@vkontakte/icons';
-import UserCheckIcon from '../../assets/icons/UserCheckIcon';
+import UserCheckIcon from '@assets/icons/UserCheckIcon';
 
 interface RaffleCardProps {
   raffleId: string;

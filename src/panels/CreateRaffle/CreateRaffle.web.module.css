@@ -1,42 +1,37 @@
-/* CreateRaffle.web.module.css */
-
 /* Основные переопределения */
 .panelOverride {
-  background-color: #000 !important;
+  height: 100vh;
+  background-color: #fff;
 }
 
 .panelHeaderOverride {
-  background-color: #000 !important;
+  background-color: #fff;
+  border-bottom: 1px solid #e1e3e6;
 }
 
 .panelHeaderContentOverride {
-  background-color: #000 !important;
-}
-
-.container {
-  padding: 8px 12px;
-  background-color: #000;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex: 1;
-}
-
-.panelHeaderText {
-  color: var(--Dark-Text-Text-Primary, #E1E3E6);
-  font-feature-settings: 'liga' off, 'clig' off;
-  font-family: "VK Sans Display Expanded";
-  font-size: 21px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 26px;
-}
-
-.backIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+}
+
+.container {
+  padding: 16px;
+  height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+}
+
+.panelHeaderText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+.backIcon {
+  cursor: pointer;
+  padding: 8px;
+  margin-left: -8px;
 }
 
 .formContainer {
@@ -46,39 +41,102 @@
 }
 
 .formLayout {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.formField {
+  margin-bottom: 16px;
+}
+
+.formField1 {
+  margin-bottom: 16px;
+}
+
+.formField2 {
+  margin-bottom: 16px;
+}
+
+.conditionContainer {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  flex: 1;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.selectCont {
+  margin-top: 16px;
+}
+
+.addonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.addonsTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.checkboxList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.navigationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-top: 1px solid #e1e3e6;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #3f8ae0;
+  cursor: pointer;
+  padding: 8px;
 }
 
 .nextButton {
- display: flex;
-height: 44px;
-padding: 4px 14px;
-justify-content: center;
-align-items: center;
-gap: 6px;
-border-radius: 12px;
-border: 1px solid rgba(255, 255, 255, 0.10);
-background: var(--Dark-Background-Background-Contrast-Secondary-Alpha, rgba(255, 255, 255, 0.20));
-box-shadow: 0px 0px 10px 0px rgba(119, 119, 119, 0.25);
-width: 100%;
-margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #3f8ae0;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.nextButton:disabled {
+  background: #e1e3e6;
+  cursor: not-allowed;
+}
+
+.buttonText {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .nextText {
-    overflow: hidden;
-color: var(--Green, #D4F94E);
-text-align: center;
-font-feature-settings: 'liga' off, 'clig' off;
-text-overflow: ellipsis;
-font-family: "VK Sans Display Expanded";
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: 18px; /* 128.571% */
-letter-spacing: 0.2px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 /* Глобальные переопределения для VKUI */
@@ -89,85 +147,3 @@ letter-spacing: 0.2px;
 :global(.vkuiPanel__in) {
   background-color: #000 !important;
 }
-
-.navigationContainer {
-  display: flex;
-  gap: 10px;
-}
-
-.checkboxGroup {
-    margin-bottom: 12px;
-}
-
-.backButton {
-  display: flex;
-  height: 44px;
-  padding: 4px 14px;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  border-radius: 8px;
-border: 1px solid rgba(255, 255, 255, 0.10);
-box-shadow: 0px 0px 10px 0px rgba(119, 119, 119, 0.25);
-  color: #D4F94E;
-  text-align: center;
-  font-family: "VK Sans Display Expanded";
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 18px;
-  letter-spacing: 0.2px;
-  cursor: pointer;
-  background: transparent;
-}
-
-.buttonText {
-  overflow: hidden;
-color: var(--Green, #D4F94E);
-text-align: center;
-font-feature-settings: 'liga' off, 'clig' off;
-text-overflow: ellipsis;
-font-family: "VK Sans Display Expanded";
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: 18px; /* 128.571% */
-letter-spacing: 0.2px;
-}
-
-.formField1 {
-    padding: 4px 0 12px 0;
-}
-
-.formField2 {
-    padding: 12px 0 12px 0;
-}
-
-.selectCont {
-    padding-top: 12px;
-}
-
-.addonsContainer {
-  padding-top: 12px;
-  background: var(--background_content);
-  border-radius: 12px;
-}
-
-.addonsTitle {
-  color: var(--Dark-Text-Subhead, #909499);
-font-feature-settings: 'liga' off, 'clig' off;
-font-family: "VK Sans Display";
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 18px; /* 128.571% */
-letter-spacing: 0.2px;
-margin-bottom: 8px;
-}
-
-.checkboxList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-

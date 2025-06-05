@@ -1,0 +1,7 @@
+/* Стили для веб-версии */
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* расстояние между карточками */
+  padding: 16px;
+}
