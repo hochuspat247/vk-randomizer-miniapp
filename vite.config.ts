@@ -1,6 +1,11 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 function handleModuleDirectivesPlugin() {
   return {
@@ -32,9 +37,18 @@ export default defineConfig({
     }),
   ],
 
-  server: {
-    port: 5173, // Явно указываем порт
-    open: true, // Автоматически открывать браузер по умолчанию при запуске
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+      '@assets': resolve(__dirname, './src/assets'),
+      '@components': resolve(__dirname, './src/components'),
+      '@panels': resolve(__dirname, './src/panels'),
+      '@utils': resolve(__dirname, './src/utils'),
+      '@hooks': resolve(__dirname, './src/hooks'),
+      '@types': resolve(__dirname, './src/types'),
+      '@constants': resolve(__dirname, './src/constants'),
+      '@mocks': resolve(__dirname, './src/mocks')
+    }
   },
 
   build: {

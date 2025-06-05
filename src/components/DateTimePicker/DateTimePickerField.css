@@ -1,0 +1,42 @@
+.fullWidthWrapper {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.dateInputWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1c1c1e;
+  border-radius: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dateText {
+  font-size: 16px;
+  color: white;
+}
+
+.calendarIcon {
+  color: #909499;
+}
+
+.popout {
+  padding: 16px;
+  background: #1c1c1e;
+  border-radius: 12px;
+  margin-top: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.timeControls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}

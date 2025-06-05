@@ -1,9 +1,9 @@
- import React from 'react';
+import React from 'react';
 import styles from './NestedCommunityCard.module.css';
 
 import { Icon20DiamondOutline, Icon48Linked, Icon16PenOutline, Icon16InfoOutline } from '@vkontakte/icons';
-import Crown from '../../assets/icons/Crown';
-import ErrorNested from '../../assets/icons/ErrorNested';
+import Crown from '@assets/icons/Crown';
+import ErrorNested from '@assets/icons/ErrorNested';
 
 import WidgetStatusBadge from '../WidgetStatusBadge/WidgetStatusBadge';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
@@ -13,7 +13,7 @@ import {
   ADMIN_Nested,
   FOLOWERS_Nested,
   ERROR_Nested,
-} from '../../constants/Texts/NestedCommunityCardText';
+} from '@constants/Texts/NestedCommunityCardText';
 
 interface NestedCommunityCardProps {
   name: string;

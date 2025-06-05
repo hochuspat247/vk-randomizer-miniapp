@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './CustomCheckbox.module.css';
 import { Icon24CheckBoxOff, Icon16HelpOutline , Icon24Info } from '@vkontakte/icons';
-import CheckboxIcon from '../../assets/icons/CheckboxIcon';
+import CheckboxIcon from '@assets/icons/CheckboxIcon';
 
 interface CustomCheckboxProps {
   label: string;

@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './RaffleState.module.css';
 
-import ActiveIcon from "../../assets/icons/ActiveIcon";
-import PendingIcon from "../../assets/icons/PendingIcon";
+import ActiveIcon from "@assets/icons/ActiveIcon";
+import PendingIcon from "@assets/icons/PendingIcon";
 import { Icon16CancelCircleOutline, Icon16PenOutline, Icon16Flag } from '@vkontakte/icons';
 
 interface RaffleStateProps {
