@@ -25,4 +25,8 @@ export interface FormData {
   excludeAdmins: boolean;
   partnersTags: string[];
   memberMax: string,
+  isSelectedStartTime: string;
+  isSelectedEndTime: string;
+  startDateLabel: string;
+  endDateLabel: string;
 } 

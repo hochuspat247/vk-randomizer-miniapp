@@ -23,7 +23,7 @@ import { validateDateTime } from './utils/dateTimeUtils';
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
-  const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('General');
+  const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('DateTime');
 
   // Состояния формы
   const [formData, setFormData] = useState<FormData>({
@@ -47,17 +47,23 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     excludeAdmins: false,
     partnersTags: [],
     memberMax: "",
+
+    startDateLabel: '',
+    endDateLabel: '',
+
+    isSelectedStartTime: "",
+    isSelectedEndTime: "",
   });
 
   const progress = useProgress(formData);
 
   const handleNextStep = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!isStepComplete(currentStep, formData)) {
-      const missing = getMissingFields(currentStep, formData);
-      alert(`Заполните обязательные поля: ${missing.join(', ')}`);
-      return;
-    }
+    // e.preventDefault();
+    // if (!isStepComplete(currentStep, formData)) {
+    //   const missing = getMissingFields(currentStep, formData);
+    //   alert(`Заполните обязательные поля: ${missing.join(', ')}`);
+    //   return;
+    // }
     const steps: CreateRaffleStep[] = ['General', 'Condition', 'DateTime', 'Addons'];
     const currentIndex = steps.indexOf(currentStep);
     if (currentIndex < steps.length - 1) {
@@ -117,7 +123,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             numberWinners={formData.numberWinners}
             setNumberWinners={(value) => setFormData({ ...formData, numberWinners: value })}
             blackListSel={formData.blackListSel}
-            setBlackListSel={(value) => setFormData({ ...formData, blackListSel: value })}
+            setBlackListSel={(value) => setFormData({ ...formData, blackListSel: value })}            
           />
 
         );
@@ -126,18 +132,24 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         return (
           <DateTimeStep
             endByParticipants={formData.endByParticipants}
-            setEndByParticipants={(value) => setFormData({ ...formData, endByParticipants: value })}
+            setEndByParticipants={value => setFormData(prev => ({ ...prev, endByParticipants: value }))}
             startDateTime={formData.startDateTime}
-            setStartDateTime={(value) => setFormData({ ...formData, startDateTime: value })}
+            setStartDateTime={value => setFormData(prev => ({ ...prev, startDateTime: value }))}
             endDateTime={formData.endDateTime}
-            setEndDateTime={(value) => setFormData({ ...formData, endDateTime: value })}
-            isStartCustom={formData.startDateTime === ''}
-            setIsStartCustom={() => {}}
-            isEndCustom={formData.endDateTime === ''}
-            setIsEndCustom={() => {}}
+            setEndDateTime={value => setFormData(prev => ({ ...prev, endDateTime: value }))}
             memberMax={formData.memberMax}
-            setMemberMax={v => setFormData({ ...formData, memberMax: v })}
-          />
+            setMemberMax={value => setFormData(prev => ({ ...prev, memberMax: value }))}
+            isSelectedStartTime={formData.isSelectedStartTime}
+            setIsSelectedStartTime={value => setFormData(prev => ({ ...prev, isSelectedStartTime: value }))}
+            isSelectedEndTime={formData.isSelectedEndTime}
+            setIsSelectedEndTime={value => setFormData(prev => ({ ...prev, isSelectedEndTime: value }))}
+
+            startDateLabel={formData.startDateLabel}
+            setStartDateLabel={value => setFormData(prev => ({ ...prev, startDateLabel: value }))}
+
+            endDateLabel={formData.endDateLabel}
+            setEndDateLabel={value => setFormData(prev => ({ ...prev, endDateLabel: value }))}
+          />        
         );
 
       case 'Addons':

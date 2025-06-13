@@ -16,6 +16,8 @@ interface FormData {
   memberMax: string;
 }
 
+const isDigits = (s: string) => /^\d+$/.test(s);
+
 export const isStepComplete = (
   step: CreateRaffleStep,
   formData: FormData
@@ -33,20 +35,18 @@ export const isStepComplete = (
       return (
         formData.participationConditions.length > 0 &&
         formData.requiredCommunities.length > 0 &&
-        !!formData.numberWinners.trim()
+        !!formData.numberWinners.trim() &&
+        isDigits(formData.numberWinners)
       );
 
     case 'DateTime':
-      // если endByParticipants === false  — значит “По участникам”
-      if (!formData.endByParticipants) {
-        return !!formData.memberMax.trim();
+      if (formData.endByParticipants) {
+        // режим «По дате» — надо заполнить обе даты
+        return !!formData.startDateTime && !!formData.endDateTime;
+      } else {
+        // режим «По участникам» — достаточно ввести memberMax
+        return !!formData.memberMax.trim() && isDigits(formData.memberMax);
       }
-      // иначе — режим “По дате”
-      return (
-        !!formData.startDateTime &&
-        !!formData.endDateTime
-      );
-
     case 'Addons':
       return true;
 
@@ -71,13 +71,16 @@ export const getMissingFields = (
     if (formData.requiredCommunities.length === 0) missing.push('Обязательные сообщества');
     if (!formData.numberWinners.trim()) missing.push('Количество победителей');
     if (formData.blackListSel.length === 0) missing.push('Черный список');
-  } else if (step === 'DateTime') {
-  if (formData.endByParticipants) {
-    if (!formData.memberMax.trim()) missing.push('Максимальное количество участников');
-  } else {
-    if (!formData.startDateTime) missing.push('Дата и время начала');
-    if (!formData.endDateTime) missing.push('Дата и время окончания');
+  }  if (step === 'DateTime') {
+    if (formData.endByParticipants) {
+      // «По дате»
+      if (!formData.startDateTime) missing.push('Дата и время начала');
+      if (!formData.endDateTime)   missing.push('Дата и время окончания');
+    } else {
+      // «По участникам»
+      if (!formData.memberMax.trim()) missing.push('Максимальное количество участников');
+    }
   }
-}
+
   return missing;
 };
