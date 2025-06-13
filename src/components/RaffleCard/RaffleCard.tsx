@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styles from './RaffleCard.module.css';
+import RaffleState from '../RaffleState/RaffleState';
+import NestedCommunityCard from '../NestedCommunityCard/NestedCommunityCard';
+import { Icon20Users3Outline, Icon16Dropdown, Icon16DropdownFlipped } from '@vkontakte/icons';
 
 import {
   Raffle_Id,
@@ -8,7 +11,6 @@ import {
   MODE_TIME,
   MODE_MEMBERS,
   MODE_BOTH,
-  WINNERS_LABEL,
   SUBSCRIPTION_LABEL,
   FINISH_TITLE,
   FINISH_NOW_HINT,
@@ -16,12 +18,8 @@ import {
   COLLAPSE,
   EXPAND
 } from '@constants/Texts/RaffleCardText';
-
-import RaffleState from '../RaffleState/RaffleState';
-import NestedCommunityCard from '../NestedCommunityCard/NestedCommunityCard';
-
-import { Icon20Users3Outline, Icon16Dropdown, Icon16DropdownFlipped } from '@vkontakte/icons';
-import UserCheckIcon from '@assets/icons/UserCheckIcon';
+import { declOfNum } from '@/panels/CreateRaffle/utils/declension';
+import UserCheckIcon from '@/assets/icons/UserCheckIcon';
 
 interface RaffleCardProps {
   raffleId: string;
@@ -58,7 +56,7 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
   textRaffleState,
   winnersCount,
   mode,
-  memberCount = '',
+  memberCount = '0',
   timeLeft = '',
   progress,
   lastModified,
@@ -80,47 +78,41 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
             <div className={styles.badgePE}>{timeLeft}</div>
           </div>
         );
-      case 'members':
+      case 'members': {
+        const n = Number(memberCount) || 0;
+        const label = declOfNum(n, ['участник', 'участника', 'участников']);
         return (
           <div className={styles.badgesPE}>
             <div className={styles.badgePE}>
-              <span className={styles.badgePEText}>{memberCount} ЧЕЛОВЕК</span>
+              <span className={styles.badgePEText}>{n} {label}</span>
             </div>
           </div>
         );
-      case 'both':
+      }
+      case 'both': {
+        const n = Number(memberCount) || 0;
+        const label = declOfNum(n, ['участник', 'участника', 'участников']);
         return (
           <div className={styles.badgesPE}>
             <div className={styles.badgePE}>
-              <span className={styles.badgePEText}>{memberCount} ЧЕЛОВЕК</span>
+              <span className={styles.badgePEText}>{n} {label}</span>
             </div>
             <span className={styles.slash}>/</span>
             <div className={styles.badgePE}>{timeLeft}</div>
           </div>
         );
+      }
     }
   };
 
   const renderNote = () => {
     switch (mode) {
       case 'time':
-        return (
-          <div className={styles.note}>
-            *{MODE_TIME}
-          </div>
-        );
+        return <div className={styles.note}>*{MODE_TIME}</div>;
       case 'members':
-        return (
-          <div className={styles.note}>
-            *{MODE_MEMBERS}
-          </div>
-        );
+        return <div className={styles.note}>*{MODE_MEMBERS}</div>;
       case 'both':
-        return (
-          <div className={styles.note}>
-            *{MODE_BOTH}
-          </div>
-        );
+        return <div className={styles.note}>*{MODE_BOTH}</div>;
     }
   };
 
@@ -140,7 +132,9 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
       <div className={styles.badges}>
         <div className={styles.badge}>
           <Icon20Users3Outline width={10} height={10} />
-          <span className={styles.text}>{winnersCount} {WINNERS_LABEL}</span>
+          <span className={styles.text}>
+            {winnersCount} {declOfNum(winnersCount, ['победитель', 'победителя', 'победителей'])}
+          </span>
         </div>
         <div className={styles.badge}>
           <UserCheckIcon />
@@ -156,7 +150,10 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
 
         <div className={styles.progressBarCont}>
           <div className={styles.progressBar}>
-            <div className={styles.progressFill} style={{ width: `${clamp(progress)}%` }} />
+            <div
+              className={styles.progressFill}
+              style={{ width: `${clamp(progress)}%` }}
+            />
           </div>
           <div className={styles.noteCont}>{renderNote()}</div>
         </div>
@@ -181,7 +178,11 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
             {statusCommunityTextMap[statusСommunity]}
           </span>
         </div>
-        <button type="button" onClick={() => setExpanded(!expanded)} className={styles.toggleBtn}>
+        <button
+          type="button"
+          onClick={() => setExpanded(!expanded)}
+          className={styles.toggleBtn}
+        >
           {expanded ? COLLAPSE : EXPAND}
           {expanded ? <Icon16DropdownFlipped /> : <Icon16Dropdown />}
         </button>

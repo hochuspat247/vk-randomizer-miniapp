@@ -11,6 +11,7 @@ interface ProgressBadgeProps {
 
 const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
   const clampedProgress = Math.min(100, Math.max(0, progress));
+  const displayText = clampedProgress === 100 ? 'Готово!' : `${clampedProgress}%`;
   const progressRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -31,7 +32,7 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
 
       // Проверка пересечения с текстом (25% ширины)
       const textOverlap = Math.min(progressRect.right, textRect.right) - Math.max(progressRect.left, textRect.left);
-      setIsTextReached(textOverlap >= textRect.width * 0.25);
+      setIsTextReached(textOverlap >= textRect.width * 0.1);
     }
 
     animationRef.current = requestAnimationFrame(checkIntersections);
@@ -81,7 +82,7 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
           ref={textRef}
           className={`${styles.progressText} ${isTextReached ? styles.textReached : ''}`}
         >
-          {clampedProgress}%
+          {displayText}
         </div>
       </div>
 
@@ -124,7 +125,7 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
           ref={textRef}
           className={`${styles.progressText} ${isTextReached ? styles.textReached : ''}`}
         >
-          {clampedProgress}%
+          {displayText}
         </div>
       </div>
 
@@ -167,7 +168,7 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
           ref={textRef}
           className={`${styles.progressText} ${isTextReached ? styles.textReached : ''}`}
         >
-          {clampedProgress}%
+          {displayText}
         </div>
       </div>
 
@@ -210,11 +211,7 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
           ref={textRef}
           className={`${styles.progressText} ${isTextReached ? styles.textReached : ''}`}
         >
-            {clampedProgress === 100 ? (
-                <span>Готово!</span>
-            ) : (
-                <span>{clampedProgress}%</span>
-            )}
+            {displayText}
         </div>
       </div>
 

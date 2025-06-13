@@ -19,10 +19,11 @@ import { GeneralStep } from './components/GeneralStep';
 import { ConditionStep } from './components/ConditionStep';
 import { DateTimeStep } from './components/DateTimeStep';
 import { AddonsStep } from './components/AddonsStep';
+import { validateDateTime } from './utils/dateTimeUtils';
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
-  const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('General');
+  const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('DateTime');
 
   // Состояния формы
   const [formData, setFormData] = useState<FormData>({
@@ -34,8 +35,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     requiredCommunities: [],
     numberWinners: '',
     blackListSel: [],
-    startDateTime: '',
-    endDateTime: '',
+    startDateTime: new Date().toISOString(),
+    endDateTime: new Date().toISOString(),
     autoSelectWinners: false,
     publishResults: false,
     onlySubscribers: false,
@@ -44,17 +45,25 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     hideParticipantsCount: false,
     excludeMe: false,
     excludeAdmins: false,
+    partnersTags: [],
+    memberMax: "",
+
+    startDateLabel: '',
+    endDateLabel: '',
+
+    isSelectedStartTime: "",
+    isSelectedEndTime: "",
   });
 
   const progress = useProgress(formData);
 
   const handleNextStep = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!isStepComplete(currentStep, formData)) {
-      const missing = getMissingFields(currentStep, formData);
-      alert(`Заполните обязательные поля: ${missing.join(', ')}`);
-      return;
-    }
+    // e.preventDefault();
+    // if (!isStepComplete(currentStep, formData)) {
+    //   const missing = getMissingFields(currentStep, formData);
+    //   alert(`Заполните обязательные поля: ${missing.join(', ')}`);
+    //   return;
+    // }
     const steps: CreateRaffleStep[] = ['General', 'Condition', 'DateTime', 'Addons'];
     const currentIndex = steps.indexOf(currentStep);
     if (currentIndex < steps.length - 1) {
@@ -105,6 +114,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setParticipationConditions={(value) => setFormData({ ...formData, participationConditions: value })}
             requiredCommunities={formData.requiredCommunities}
             setRequiredCommunities={(value) => setFormData({ ...formData, requiredCommunities: value })}
+            partnersTags={formData.partnersTags}  
+            setPartnersTags={(value) => setFormData({ ...formData, partnersTags: value })} 
             showInPartners={formData.showInPartners}
             setShowInPartners={(value) => setFormData({ ...formData, showInPartners: value })}
             isPartners={formData.isPartners}
@@ -112,24 +123,33 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             numberWinners={formData.numberWinners}
             setNumberWinners={(value) => setFormData({ ...formData, numberWinners: value })}
             blackListSel={formData.blackListSel}
-            setBlackListSel={(value) => setFormData({ ...formData, blackListSel: value })}
+            setBlackListSel={(value) => setFormData({ ...formData, blackListSel: value })}            
           />
+
         );
 
       case 'DateTime':
         return (
           <DateTimeStep
-            autoSelectWinners={formData.autoSelectWinners}
-            setAutoSelectWinners={(value) => setFormData({ ...formData, autoSelectWinners: value })}
+            endByParticipants={formData.endByParticipants}
+            setEndByParticipants={value => setFormData(prev => ({ ...prev, endByParticipants: value }))}
             startDateTime={formData.startDateTime}
-            setStartDateTime={(value) => setFormData({ ...formData, startDateTime: value })}
+            setStartDateTime={value => setFormData(prev => ({ ...prev, startDateTime: value }))}
             endDateTime={formData.endDateTime}
-            setEndDateTime={(value) => setFormData({ ...formData, endDateTime: value })}
-            isStartCustom={formData.startDateTime === ''}
-            setIsStartCustom={() => {}}
-            isEndCustom={formData.endDateTime === ''}
-            setIsEndCustom={() => {}}
-          />
+            setEndDateTime={value => setFormData(prev => ({ ...prev, endDateTime: value }))}
+            memberMax={formData.memberMax}
+            setMemberMax={value => setFormData(prev => ({ ...prev, memberMax: value }))}
+            isSelectedStartTime={formData.isSelectedStartTime}
+            setIsSelectedStartTime={value => setFormData(prev => ({ ...prev, isSelectedStartTime: value }))}
+            isSelectedEndTime={formData.isSelectedEndTime}
+            setIsSelectedEndTime={value => setFormData(prev => ({ ...prev, isSelectedEndTime: value }))}
+
+            startDateLabel={formData.startDateLabel}
+            setStartDateLabel={value => setFormData(prev => ({ ...prev, startDateLabel: value }))}
+
+            endDateLabel={formData.endDateLabel}
+            setEndDateLabel={value => setFormData(prev => ({ ...prev, endDateLabel: value }))}
+          />        
         );
 
       case 'Addons':
@@ -152,6 +172,19 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         return null;
     }
   };
+
+  // валидация даты начала и конца розыгрыша
+  const canProceed = (() => {
+  if (currentStep === 'DateTime') {
+    return (
+      !!formData.startDateTime &&
+      !!formData.endDateTime &&
+      validateDateTime(formData.startDateTime, formData.endDateTime)
+    );
+  } else {
+    return isStepComplete(currentStep, formData);
+  }
+})();
 
   return (
     <Panel id={id} className={styles.panelOverride}>
@@ -199,11 +232,12 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
               {currentStep !== 'Addons' ? (
                 <button
                   type="button"
-                  className={styles.nextButton}
-                  disabled={!isStepComplete(currentStep, formData)}
+                  className={styles.nextButton2}
+                  disabled={!canProceed}
                   onClick={handleNextStep}
                 >
                   <span className={styles.buttonText}>Далее</span>
+                  <ChevronRightIcon />
                 </button>
               ) : (
                 <button

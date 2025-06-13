@@ -67,6 +67,6 @@ background: var(--Dark-Background-Background-Secondary, #232324);
 }
 
 .iconCont {
-    z-index: 10;
+    z-index: 2;
     position: relative;
 }

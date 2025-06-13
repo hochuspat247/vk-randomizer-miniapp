@@ -1,25 +1,45 @@
 .fullWidthWrapper {
   padding-left: 0;
   padding-right: 0;
-  margin-left: -16px;
-  margin-right: -16px;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
 }
 
 .dateInputWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1c1c1e;
+background-color: #232324;
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 12px;
   cursor: pointer;
-  width: 100%;
   box-sizing: border-box;
 }
 
+.customSelect {
+  width: 100%;
+  border-radius: 8px;
+border: 0.5px solid var(--Dark-Stroke-Separator-Primary, #363738);
+}
+
+.act {
+    transform: rotate(180deg);
+}
+
 .dateText {
-  font-size: 16px;
-  color: white;
+color: var(--Dark-Text-Muted, #C4C8CC);
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 125% */
+letter-spacing: 0.1px;
 }
 
 .calendarIcon {
@@ -27,16 +47,64 @@
 }
 
 .popout {
-  padding: 16px;
-  background: #1c1c1e;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border-radius: 12px;
   margin-top: 12px;
-  width: 100%;
   box-sizing: border-box;
+
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: 
+    opacity 0.25s ease-in-out,
+    transform 0.25s ease-in-out;
+  /* Запрет кликов, пока не показано */
+  pointer-events: none;
+}
+
+.popout.show {
+  /* Состояние «видимо» */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .timeControls {
   display: flex;
+   width: clamp(300px, 80vw, 500px);
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 8px;
+}
+
+.btn {
+  width: clamp(300px, 80vw, 500px);
+  padding: 12px 0;
+  margin-top: 8px;
+  background-color: #FFFFFF;       /* белый фон */
+  color: #232324;                  /* тёмный текст */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  font-family: "VK Sans Display", sans-serif;
+  border: none;
+  border-radius: 12px;             /* скругление под стиль попапа */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: 
+    background-color 0.2s ease-in-out,
+    transform 0.1s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #F0F0F0;     
+}
+
+.btn:active {
+  transform: scale(0.98);          
+}
+
+.calendar {
+   width: clamp(300px, 80vw, 500px);
 }

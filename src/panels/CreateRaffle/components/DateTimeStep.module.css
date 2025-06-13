@@ -6,6 +6,10 @@
   border: 1px solid var(--field_border);
 }
 
+.FormLayoutGroup {
+  overflow-x: hidden;
+}
+
 .dateTimePickerContainer:hover {
   border-color: var(--field_border_hover);
 }
@@ -13,3 +17,11 @@
 .dateTimePickerContainer:focus-within {
   border-color: var(--field_border_active);
 } 
+
+.formItem {
+  padding: 8px 0 0 0;
+}
+
+.formItemT {
+  padding: 0;
+}

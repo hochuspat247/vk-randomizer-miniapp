@@ -1,4 +1,4 @@
-export const getDateTimeFromOption = (option: string, baseDate: Date = new Date('2025-06-01T16:40')): string => {
+export const getDateTimeFromOption = (option: string, baseDate: Date = new Date()): string => {
   const date = new Date(baseDate);
 
   switch (option) {
@@ -29,5 +29,5 @@ export const getDateTimeFromOption = (option: string, baseDate: Date = new Date(
 
 export const validateDateTime = (startDateTime: string, endDateTime: string): boolean => {
   if (!startDateTime || !endDateTime) return true;
-  return new Date(startDateTime) <= new Date(endDateTime);
+  return new Date(startDateTime) < new Date(endDateTime);
 }; 

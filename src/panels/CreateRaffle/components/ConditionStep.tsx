@@ -2,14 +2,16 @@ import React from 'react';
 import Select from '@components/Select/Select';
 import Input from '@components/Input/Input';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
-import { CONDITION_OPTIONS, COMMUNITY_TAG_OPTIONS, BLACK_LIST } from '../constants';
-import styles from '../CreateRaffle.web.module.css';
+import { CONDITION_OPTIONS, COMMUNITY_TAG_OPTIONS, BLACK_LIST, COMMUNITY_PARTNERS_OPTIONS } from '../constants';
+import styles from './ConditionStep.module.css';
 
 interface ConditionStepProps {
   participationConditions: string[];
   setParticipationConditions: (value: string[]) => void;
   requiredCommunities: string[];
   setRequiredCommunities: (value: string[]) => void;
+  partnersTags: string[];
+  setPartnersTags: (value: string[]) => void;
   showInPartners: boolean;
   setShowInPartners: (value: boolean) => void;
   isPartners: boolean;
@@ -25,6 +27,8 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
   setParticipationConditions,
   requiredCommunities,
   setRequiredCommunities,
+  partnersTags,
+  setPartnersTags,
   showInPartners,
   setShowInPartners,
   isPartners,
@@ -38,7 +42,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
     <div className={styles.conditionContainer}>
       <div className={styles.formField1}>
         <Select
-          title="Обязательные условия участия"
+          title="Обязательные условия участия *"
           placeholder="Выберите условия"
           options={CONDITION_OPTIONS}
           onChange={setParticipationConditions}
@@ -49,7 +53,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
 
       <div className={styles.formField2}>
         <Select
-          title="Введите теги обязательных сообществ"
+          title="Введите теги обязательных сообществ *"
           placeholder="Выберите сообщества"
           options={COMMUNITY_TAG_OPTIONS}
           onChange={setRequiredCommunities}
@@ -61,7 +65,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
 
       <div className={styles.checkboxGroup}>
         <CustomCheckbox
-          label="Отображать их в Партнерах"
+          label="Отображать в Партнерах"
           checked={showInPartners}
           onChange={setShowInPartners}
           showAdditionalIcon={true}
@@ -79,16 +83,16 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
         <Select
           title="Введите теги партнеров"
           placeholder="Выберите партнеров"
-          options={COMMUNITY_TAG_OPTIONS}
-          onChange={setRequiredCommunities}
-          value={requiredCommunities}
+          options={COMMUNITY_PARTNERS_OPTIONS}
+          onChange={setPartnersTags}
+          value={partnersTags}
           multiple={true}
           allowInput={true}
         />
       )}
 
       <Input
-        title="Количество победителей"
+        title="Количество победителей *"
         placeholder="Введите количество"
         type="input"
         value={numberWinners}

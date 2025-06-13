@@ -10,15 +10,16 @@ interface ToggleSwitchProps {
 
 export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange, label }) => {
   return (
-    <Group>
+    <Group mode="plain">
       <div className="groupContent">
         <div className="selectTitle">{label}</div>
         <SegmentedControl
           value={checked ? 'on' : 'off'}
+          className='segmentedControl'
           onChange={(value) => onChange(value === 'on')}
           options={[
-            { label: 'Включено', value: 'on' },
-            { label: 'Выключено', value: 'off' },
+            { label: 'По дате', value: 'on' },
+            { label: 'По участникам', value: 'off' },
           ]}
         />
       </div>

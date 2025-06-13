@@ -15,7 +15,7 @@ export interface FormData {
   blackListSel: string[];
   startDateTime: string;
   endDateTime: string;
-  autoSelectWinners: boolean;
+  endByParticipants: boolean;
   publishResults: boolean;
   onlySubscribers: boolean;
   showInPartners: boolean;
@@ -23,4 +23,10 @@ export interface FormData {
   hideParticipantsCount: boolean;
   excludeMe: boolean;
   excludeAdmins: boolean;
+  partnersTags: string[];
+  memberMax: string,
+  isSelectedStartTime: string;
+  isSelectedEndTime: string;
+  startDateLabel: string;
+  endDateLabel: string;
 } 
