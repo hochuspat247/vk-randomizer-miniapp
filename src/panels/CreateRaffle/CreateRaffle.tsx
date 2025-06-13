@@ -19,6 +19,7 @@ import { GeneralStep } from './components/GeneralStep';
 import { ConditionStep } from './components/ConditionStep';
 import { DateTimeStep } from './components/DateTimeStep';
 import { AddonsStep } from './components/AddonsStep';
+import { validateDateTime } from './utils/dateTimeUtils';
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
@@ -34,8 +35,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     requiredCommunities: [],
     numberWinners: '',
     blackListSel: [],
-    startDateTime: '',
-    endDateTime: '',
+    startDateTime: new Date().toISOString(),
+    endDateTime: new Date().toISOString(),
     autoSelectWinners: false,
     publishResults: false,
     onlySubscribers: false,
@@ -44,6 +45,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     hideParticipantsCount: false,
     excludeMe: false,
     excludeAdmins: false,
+    partnersTags: [],
+    memberMax: "",
   });
 
   const progress = useProgress(formData);
@@ -105,6 +108,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setParticipationConditions={(value) => setFormData({ ...formData, participationConditions: value })}
             requiredCommunities={formData.requiredCommunities}
             setRequiredCommunities={(value) => setFormData({ ...formData, requiredCommunities: value })}
+            partnersTags={formData.partnersTags}  
+            setPartnersTags={(value) => setFormData({ ...formData, partnersTags: value })} 
             showInPartners={formData.showInPartners}
             setShowInPartners={(value) => setFormData({ ...formData, showInPartners: value })}
             isPartners={formData.isPartners}
@@ -114,13 +119,14 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             blackListSel={formData.blackListSel}
             setBlackListSel={(value) => setFormData({ ...formData, blackListSel: value })}
           />
+
         );
 
       case 'DateTime':
         return (
           <DateTimeStep
-            autoSelectWinners={formData.autoSelectWinners}
-            setAutoSelectWinners={(value) => setFormData({ ...formData, autoSelectWinners: value })}
+            endByParticipants={formData.endByParticipants}
+            setEndByParticipants={(value) => setFormData({ ...formData, endByParticipants: value })}
             startDateTime={formData.startDateTime}
             setStartDateTime={(value) => setFormData({ ...formData, startDateTime: value })}
             endDateTime={formData.endDateTime}
@@ -129,6 +135,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setIsStartCustom={() => {}}
             isEndCustom={formData.endDateTime === ''}
             setIsEndCustom={() => {}}
+            memberMax={formData.memberMax}
+            setMemberMax={v => setFormData({ ...formData, memberMax: v })}
           />
         );
 
@@ -152,6 +160,19 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         return null;
     }
   };
+
+  // валидация даты начала и конца розыгрыша
+  const canProceed = (() => {
+  if (currentStep === 'DateTime') {
+    return (
+      !!formData.startDateTime &&
+      !!formData.endDateTime &&
+      validateDateTime(formData.startDateTime, formData.endDateTime)
+    );
+  } else {
+    return isStepComplete(currentStep, formData);
+  }
+})();
 
   return (
     <Panel id={id} className={styles.panelOverride}>
@@ -199,11 +220,12 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
               {currentStep !== 'Addons' ? (
                 <button
                   type="button"
-                  className={styles.nextButton}
-                  disabled={!isStepComplete(currentStep, formData)}
+                  className={styles.nextButton2}
+                  disabled={!canProceed}
                   onClick={handleNextStep}
                 >
                   <span className={styles.buttonText}>Далее</span>
+                  <ChevronRightIcon />
                 </button>
               ) : (
                 <button

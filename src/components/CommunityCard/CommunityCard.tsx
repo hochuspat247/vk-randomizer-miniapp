@@ -20,6 +20,7 @@ import LockR from '../../assets/icons/LockR';
 import ArrowRNoact from '../../assets/icons/ArrowRNoact';
 import ArrowRAct from '../../assets/icons/ArrowRAct';
 import Update from '../../assets/icons/Update';
+import { declOfNum } from '@/panels/CreateRaffle/utils/declension';
 
 
 
@@ -53,6 +54,9 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
     status === 'yellow' && styles.containerYellow,
     status === 'red' && styles.containerRed,
   ].filter(Boolean).join(' ');
+
+  const rafflesNum = Number(raffleCount) || 0;
+  const rafflesLabel = declOfNum(rafflesNum, ['розыгрыш', 'розыгрыша', 'розыгрышей']);
   
   return (
     <div className={containerClasses}>
@@ -81,8 +85,8 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
 
         {/* RAFFLES */}
         <div className={styles.badge}>
-          <span className={styles.text}>{raffleCount}</span>
-          <span className={styles.text}>{RAFFLE}</span>
+          <span className={styles.text}>{rafflesNum}</span>
+          <span className={styles.text}>{rafflesLabel}</span>
         </div>
       </div>
 

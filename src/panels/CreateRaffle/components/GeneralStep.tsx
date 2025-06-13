@@ -32,8 +32,8 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
   }));
 
   return (
-    <FormLayoutGroup mode="vertical">
-      <FormItem top="Название розыгрыша">
+    <FormLayoutGroup className={styles.formLayoutGroup} mode="vertical">
+      <FormItem className={styles.formItem} top="Название розыгрыша *">
         <Input
           type="text"
           value={giveawayName}
@@ -42,7 +42,7 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
         />
       </FormItem>
 
-      <FormItem top="Сообщество">
+      <FormItem className={styles.formItem} top="Сообщество *">
         <CustomSelect
           value={community}
           onChange={(e) => setCommunity(e.target.value)}
@@ -51,7 +51,7 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
         />
       </FormItem>
 
-      <FormItem top="Описание приза">
+      <FormItem className={styles.formItem} top="Описание приза *">
         <Input
           type="text"
           value={prizeDescription}
@@ -60,7 +60,7 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
         />
       </FormItem>
 
-      <FormItem top="Фото">
+      <FormItem className={styles.formItem}>
         <div className={styles.photoUploadContainer}>
           <PhotoUpload
             onPhotosChange={onPhotosChange}

@@ -7,6 +7,7 @@ export const CONDITION_OPTIONS = [
   'Отметить друзей',
 ];
 export const COMMUNITY_TAG_OPTIONS = ['@mscw_runclub', '@m_culture', '@mscw_runclub', '@m_culture'];
+export const COMMUNITY_PARTNERS_OPTIONS = ['@mscw_rb', '@m_cure', '@ms_runclub', '@m_cure']
 
 export const START_OPTIONS = [
   { value: 'now', label: 'Сразу' },

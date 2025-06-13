@@ -61,7 +61,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.label}>Фото (до {maxPhotos} шт)</div>
+      <div className={styles.label}>Фото (до {maxPhotos} шт) *</div>
       
       <div className={styles.photosContainer}>
         {photoPreviews.map((preview, index) => (
@@ -72,6 +72,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
               className={styles.photo}
             />
             <button 
+              type='button'
               className={styles.removeButton}
               onClick={() => removePhoto(index)}
             >

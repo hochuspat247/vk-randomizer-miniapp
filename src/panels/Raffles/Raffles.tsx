@@ -61,6 +61,7 @@ const Raffles: React.FC<RafflesProps> = ({ id }) => {
                     />
                 ))}
 
+                {/* <div className={styles.rafflesMiniCont}> */}
                 <div className={styles.rafflesMini}>
                     <span className={styles.completedText}>Завершенные</span>
                     {RaffleCarouselCardMocks
@@ -81,7 +82,12 @@ const Raffles: React.FC<RafflesProps> = ({ id }) => {
                             />
                         ))
                     }
+                                    <div className={styles.backgroud}></div>
+
                 </div>
+                {/* </div> */}
+
+                
                 <div className={styles.rafflesMini}>
                     <span className={styles.completedText}>Неактивные</span>
                     {RaffleCarouselCardMocks

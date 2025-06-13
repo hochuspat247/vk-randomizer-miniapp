@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FormData } from '../types';
 
 export const useProgress = (formData: FormData) => {
   const [progress, setProgress] = useState(0);
+
+  const initialStart = useRef(formData.startDateTime);
+  const initialEnd   = useRef(formData.endDateTime);
 
   useEffect(() => {
     const totalFields = 10; // 10 обязательных полей
@@ -23,8 +26,8 @@ export const useProgress = (formData: FormData) => {
     if (formData.blackListSel.length > 0) filledFields += 1;
 
     // DateTime
-    if (formData.startDateTime) filledFields += 1;
-    if (formData.endDateTime) filledFields += 1;
+    if (formData.startDateTime !== initialStart.current) filledFields += 1;
+    if (formData.endDateTime   !== initialEnd.current)   filledFields += 1;
 
     const newProgress = Math.round(filledFields * progressPerField);
     setProgress(newProgress);
