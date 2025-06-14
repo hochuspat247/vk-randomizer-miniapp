@@ -1,0 +1,40 @@
+/* FaqFilter.module.css */
+.container {
+  display: flex;
+  overflow-x: auto;
+  padding: 8px 12px;
+  gap: 8px;
+  /* Скрываем скроллбар */
+  scrollbar-width: none;
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.button {
+  display: flex;
+  padding: 8px 12px;
+  align-items: center;
+  border-radius: 8px;
+  gap: 6px;
+border: 0.5px solid var(--Light-Stroke-Image-Border-Alpha, rgba(0, 0, 0, 0.08));
+background: var(--Dark-Background-Background-Secondary, #232324);
+box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04), 0px 0px 4px 0px rgba(0, 0, 0, 0.06);
+
+  color: var(--Dark-Text-Text-Primary, #E1E3E6);
+text-align: center;
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display Expanded";
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 133.333% */
+letter-spacing: 0.2px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+
+.active {
+  background: var(--Green, #D4F94E);
+  color: var(--Dark-Text-Primary, #000);
+}
