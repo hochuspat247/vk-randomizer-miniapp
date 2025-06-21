@@ -3,10 +3,10 @@ import { View, Epic, Tabbar, TabbarItem } from '@vkontakte/vkui';
 import { RouterProvider, useRouteNavigator, useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
 import { Icon28AddCircleOutline, Icon28NewsfeedOutline, Icon28Notifications, Icon28UsersOutline } from '@vkontakte/icons';
 import { router, DEFAULT_VIEW, PANELS } from '../routes';
-import CreateRaffle from '../panels/CreateRaffle/CreateRaffle';
-import Notifications from '../panels/Notifications/Notifications';
-import Raffles from '../panels/Raffles/Raffles';
-import Community from '../panels/Community/Community';
+import CreateRaffle from '@panels/CreateRaffle/CreateRaffle';
+import Notifications from '@panels/Notifications/Notifications';
+import Raffles from '@panels/Raffles/Raffles';
+import Community from '@panels/Community/Community';
 import TestPanel from '@/panels/TestPanel/TestPanel';
 
 const Navigation: React.FC = () => {
