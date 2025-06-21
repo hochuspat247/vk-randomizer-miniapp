@@ -11,6 +11,7 @@ import RaffleCarouselCardMocks from '../../mocks/RaffleCarouselCardMocks';
 import RaffleCarouselCard from '../../components/RaffleCarouselCard/RaffleCarouselCard';
 
 import spiral from "../../assets/images/261.png" 
+import SupportCard from '@/components/SupportCard/SupportCard';
 
 interface RafflesProps {
   id: string;
@@ -111,23 +112,7 @@ const Raffles: React.FC<RafflesProps> = ({ id }) => {
                     }
                 </div>
 
-                <div className={styles.supportCard}>
-                    <div className={styles.supportCardTop}>
-                        <div className={styles.supportCardText}>
-                            <span className={styles.supportCardTitle}>Возникли трудности?</span>
-                            <span className={styles.supportCardtext}>Напишите в службу поддержки — <br/>
-                                поможем разобраться, подскажем <br/>
-                                и быстро решим ваш вопрос.
-                            </span>
-                        </div>
-                        <img className={styles.spiral} src={spiral} alt='gold spiral'/>
-                    </div>
-                    <button className={styles.supportButton}>
-                        <Icon20LifebuoyOutline fill='#D4F94E'/>
-                        <span className={styles.supportButtonText}>Служба поддержки</span>
-                    </button>
-                </div>
-                
+                <SupportCard variant='support'/>
             </div>
         </div>
     </Panel>
