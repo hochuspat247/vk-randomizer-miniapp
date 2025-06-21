@@ -8,12 +8,14 @@ interface ToggleSwitchProps {
   onChange: (checked: boolean) => void;
   /** "create" или "main" */
   variant?: 'create' | 'main';
+  label: string;
 }
 
 export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   checked,
   onChange,
   variant = 'create',
+  label,
 }) => {
   const options =
     variant === 'main'
@@ -29,6 +31,8 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   return (
     <Group mode="plain">
       <div className="groupContent">
+        <span className='label'>{label}</span>
+
         <SegmentedControl
           className={`segmentedControl ${variant}`}
           value={checked ? 'on' : 'off'}
