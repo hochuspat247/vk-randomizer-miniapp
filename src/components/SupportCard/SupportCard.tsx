@@ -3,13 +3,12 @@ import React from 'react';
 import styles from './SupportCard.module.css';
 import { Icon20LifebuoyOutline } from '@vkontakte/icons';
 
+import { SupportTitle, SupportButton, SupportDesc, SupportAlt, GuideTitle, GuideDesc, GuideButton, GuideAlt, AdminOwnerTitle, AdminOwnerDesc, AdminOwnerButton, AdminOwnerAlt } from '@/constants/Texts/SupportCardText';
+
 import spiralSupport from '@assets/images/261.png';
 import spiralGuide from '@assets/images/Image Container.png';
 import spiralAdmin from '@assets/images/260.png';
-
-interface SupportCardProps {
-  variant: 'support' | 'guide' | 'adminOwner';
-}
+import { SupportCardProps } from './SupportCardTypes';
 
 const SupportCard: React.FC<SupportCardProps> = ({ variant }) => {
   let title: React.ReactNode;
@@ -21,56 +20,29 @@ const SupportCard: React.FC<SupportCardProps> = ({ variant }) => {
 
   switch (variant) {
     case 'support':
-      title = 'Возникли трудности?';
-      description = (
-        <>
-          Напишите в службу поддержки —<br/>
-          поможем разобраться, подскажем<br/>
-          и быстро решим ваш вопрос.
-        </>
-      );
-      buttonText    = 'Служба поддержки';
+      title = SupportTitle;
+      description = SupportDesc
+      buttonText    = SupportButton;
       spiralSrc     = spiralSupport;
-      spiralAlt     = 'спираль поддержки';
+      spiralAlt     = SupportAlt;
       onButtonClick = () => console.log('Открываем поддержку');
       break;
 
     case 'guide':
-      title = 'Что умеет приложение?';
-      description = (
-        <>
-          В пару кликов создавайте<br/>
-          розыгрыши в VK, настраивайте<br/>
-          условия, добавляйте виджеты<br/>
-          и автоматически выбирайте<br/>
-          победителей.
-        </>
-      );
-      buttonText    = 'Гайд по использованию';
+      title = GuideTitle;
+      description = GuideDesc;
+      buttonText    = GuideButton;
       spiralSrc     = spiralGuide;
-      spiralAlt     = 'спираль гида';
+      spiralAlt     = GuideAlt;
       onButtonClick = () => console.log('Старт гида');
       break;
 
     case 'adminOwner':
-      title = (
-        <>
-          Вы администратор или<br/>
-          владелец сообщества?
-        </>
-      );
-      description = (
-        <>
-            В пару кликов создавайте <br/>
-            собственные розыгрыши в VK, <br/>
-            настраивайте условия участия, <br/>
-            добавляйте умные виджеты приложенияи <br/>
-            автоматически выбирайте победителей.
-        </>
-      );
-      buttonText    = 'Написать администратору';
+      title = AdminOwnerTitle;
+      description = AdminOwnerDesc;
+      buttonText    = AdminOwnerButton;
       spiralSrc     = spiralAdmin;
-      spiralAlt     = 'спираль админа';
+      spiralAlt     = AdminOwnerAlt;
       onButtonClick = () => console.log('Переход к админу');
       break;
 
