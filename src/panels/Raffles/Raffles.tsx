@@ -61,7 +61,7 @@ const Raffles: React.FC<RafflesProps> = ({ id }) => {
                     />
                 ))}
 
-                {/* <div className={styles.rafflesMiniCont}> */}
+                <div className={styles.rafflesMiniCont}>
                 <div className={styles.rafflesMini}>
                     <span className={styles.completedText}>Завершенные</span>
                     {RaffleCarouselCardMocks
@@ -82,34 +82,32 @@ const Raffles: React.FC<RafflesProps> = ({ id }) => {
                             />
                         ))
                     }
-                                    <div className={styles.backgroud}></div>
-
                 </div>
-                {/* </div> */}
-
-                
-                <div className={styles.rafflesMini}>
-                    <span className={styles.completedText}>Неактивные</span>
-                    {RaffleCarouselCardMocks
-                        .filter(raffle => 
-                            raffle.status === 'draft' || 
-                            raffle.status === 'pending' ||
-                            raffle.status === 'deleted'
-                        )
-                        .map((raffle, index) => (
-                            <RaffleCarouselCard
-                                key={raffle.raffleId}
-                                raffleId={raffle.raffleId}
-                                name={raffle.name}
-                                status={raffle.status}
-                                stateText={raffle.stateText}
-                                members={raffle.members}
-                                endDate={raffle.endDate}
-                                updatedAt={raffle.updatedAt}
-                            />
-                        ))
-                    }
+                    <div className={styles.backgroud}></div>
                 </div>
+
+                    <div className={styles.rafflesMini}>
+                        <span className={styles.completedText}>Неактивные</span>
+                        {RaffleCarouselCardMocks
+                            .filter(raffle => 
+                                raffle.status === 'draft' || 
+                                raffle.status === 'pending' ||
+                                raffle.status === 'deleted'
+                            )
+                            .map((raffle, index) => (
+                                <RaffleCarouselCard
+                                    key={raffle.raffleId}
+                                    raffleId={raffle.raffleId}
+                                    name={raffle.name}
+                                    status={raffle.status}
+                                    stateText={raffle.stateText}
+                                    members={raffle.members}
+                                    endDate={raffle.endDate}
+                                    updatedAt={raffle.updatedAt}
+                                />
+                            ))
+                        }
+                    </div>
 
                 <div className={styles.supportCard}>
                     <div className={styles.supportCardTop}>
