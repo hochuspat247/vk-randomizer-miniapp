@@ -163,10 +163,12 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
             <div className={styles.titleSucces}>{communityName}</div>
             <div className={styles.subtitle}>{SUCCESS_SUBTITLE}</div>
             <div className={styles.buttonContainer}>
-              <button type="button" onClick={() => {
-          console.log('SUCCESS → onClose');         // ← лог
-          onClose?.();                              // ← вызываем
-        }} className={styles.buttonPrimary}>{SUCCESS_BUTTON_OK}</button>
+              <button type="button" 
+                onClick={() => {onClose?.()}} 
+                className={styles.buttonPrimary}
+              >
+                {SUCCESS_BUTTON_OK}
+              </button>
               <button type="button" className={styles.buttonSecondary}>{SUCCESS_BUTTON_WIDGET}</button>
             </div>
           </>

@@ -1,0 +1,200 @@
+/* Основные переопределения */
+.panelOverride {
+  height: 100vh;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+
+.panelHeaderOverride {
+  background-color: #fff;
+  border-bottom: 1px solid #e1e3e6;
+}
+
+.panelHeaderContentOverride {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  flex: 1;
+  padding: 16px;
+  height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+}
+
+.panelHeaderText {
+  color: var(--Dark-Text-Text-Primary, #E1E3E6);
+font-feature-settings: 'liga' off, 'clig' off;
+font-family: "VK Sans Display Expanded";
+font-size: 21px;
+font-style: normal;
+font-weight: 600;
+line-height: 26px; /* 123.81% */
+}
+
+.backIcon {
+  cursor: pointer;
+  padding: 8px;
+  margin-left: -8px;
+}
+
+.formContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 185px;
+}
+
+.formLayout {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.formField {
+  margin-bottom: 16px;
+}
+
+.formField1 {
+  margin-bottom: 16px;
+}
+
+.formField2 {
+  margin-bottom: 16px;
+}
+
+.conditionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.selectCont {
+  margin-top: 16px;
+}
+
+.addonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.addonsTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.checkboxList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.navigationContainer {
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  /* margin-bottom: 56px; */
+  bottom: 47px;
+  gap: 10px;
+  padding-bottom: 10px;
+  width: calc(100vw - 32px);
+}
+
+.backButton {
+  display: flex;
+height: 44px;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+gap: 6px;
+flex: 1 0 0;
+ background: #090909;
+ border-radius: 8px;
+border: 1px solid rgba(255, 255, 255, 0.10);
+box-shadow: 0px 0px 10px 0px rgba(119, 119, 119, 0.25);
+
+}
+
+.nextButton {
+  border-radius: 12px;
+border: 1px solid rgba(255, 255, 255, 0.10);
+background: var(--Dark-Background-Background-Contrast-Secondary-Alpha, rgba(255, 255, 255, 0.20));
+box-shadow: 0px 0px 10px 0px rgba(119, 119, 119, 0.25);
+display: flex;
+height: 44px;
+padding: 4px 14px;
+justify-content: center;
+align-items: center;
+gap: 6px;
+flex: 1 0 0;
+}
+
+.nextButton2 {
+ border-radius: 12px;
+border: 1px solid rgba(255, 255, 255, 0.10);
+background: #353535;
+box-shadow: 0px 0px 10px 0px rgba(119, 119, 119, 0.25);
+display: flex;
+height: 44px;
+padding: 4px 14px;
+justify-content: center;
+align-items: center;
+gap: 6px;
+flex: 1 0 0;
+/* width: calc(50vw); */
+}
+
+.nextButton:disabled {
+  cursor: not-allowed;
+}
+
+.buttonText {
+  overflow: hidden;
+color: var(--Green, #D4F94E);
+text-align: center;
+font-feature-settings: 'liga' off, 'clig' off;
+text-overflow: ellipsis;
+font-family: "VK Sans Display Expanded";
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 18px; /* 128.571% */
+letter-spacing: 0.2px;
+}
+
+.nextText {
+  overflow: hidden;
+color: var(--Green, #D4F94E);
+text-align: center;
+font-feature-settings: 'liga' off, 'clig' off;
+text-overflow: ellipsis;
+font-family: "VK Sans Display Expanded";
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 18px; /* 128.571% */
+letter-spacing: 0.2px;
+}
+
+/* Глобальные переопределения для VKUI */
+:global(.vkuiPanel) {
+  background-color: #000 !important;
+}
+
+:global(.vkuiPanel__in) {
+  background-color: #000 !important;
+}

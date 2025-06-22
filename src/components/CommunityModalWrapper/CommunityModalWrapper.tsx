@@ -1,18 +1,16 @@
 // src/components/CommunityModalCard/CommunityModalWrapper.tsx
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { communityModalMocks } from '@/mocks/CommunityModalCardMocks';
 import styles from './CommunityModalWrapper.module.css';
 import CommunityModalCard from '../CommunityModalCard/CommunityModalCard';
 
 interface Props {
-  /** Закрыть модалку (клик по фону или по вашей кнопке) */
   onClose: () => void;
 }
 
 const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
-  /** Шаг мастера */
   const [step, setStep] = useState<'select' | 'permission' | 'success'>('select');
-  /** Выбранное сообщество */
   const [selected, setSelected] = useState('');
 
   const selectMock     = communityModalMocks.find(m => m.type === 'select')!;
@@ -23,11 +21,13 @@ const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
   const handlePermissionAllow = () => setStep('success');
   const handleBackToSelect    = () => setStep('select');
 
-  return (
-    <div className={styles.overlay} onClick={onClose}>
-      {/* Клики по карточке не закрывают модалку */}
+  // Собираем всё в один узел
+  const modal = (
+    <div className={styles.overlay} onClick={() => {
+    console.log('klkk');
+    onClose();
+  }}>
       <div className={styles.cardWrapper} onClick={e => e.stopPropagation()}>
-        {/* STEP 1 — выбор сообщества */}
         {step === 'select' && (
           <CommunityModalCard
             type="select"
@@ -35,36 +35,33 @@ const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
             options={selectMock.options}
             value={selected}
             onChange={setSelected}
-            /** Кнопка «Подключить» */
             onSubmit={handleSelectSubmit}
           />
         )}
-
-        {/* STEP 2 — разрешения */}
         {step === 'permission' && (
           <CommunityModalCard
             type="permission"
             communityName={selected}
             communityAvatar={permissionMock.communityAvatar}
             subscribers={permissionMock.subscribers}
-            /** Кнопка «Разрешить» */
             onSubmit={handlePermissionAllow}
-            /** «Другое сообщество» */
             onBack={handleBackToSelect}
           />
         )}
-
-        {/* STEP 3 — успех */}
         {step === 'success' && (
           <CommunityModalCard
             type="success"
             communityName={selected}
             communityAvatar={successMock.communityAvatar}
+            onClose={onClose}
           />
         )}
       </div>
     </div>
   );
+
+  // Портал “выносит” его прямо в <body>
+  return ReactDOM.createPortal(modal, document.body);
 };
 
 export default CommunityModalWrapper;

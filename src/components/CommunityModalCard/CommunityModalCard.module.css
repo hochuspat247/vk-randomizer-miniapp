@@ -1,12 +1,18 @@
 .container {
   position: fixed;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 8px;        /* отступ от низа экрана */
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  z-index: 9999;
   padding: 8px;
-  margin-bottom: 40px;
+  z-index: 9997;
+  /* Убираем высоту и inset:
+     inset: 0;
+     height: fit-content;
+     margin-bottom: 40px;
+  */
+  /* Пропускаем клики через контейнер */
 }
 
 .card {

@@ -1,0 +1,12 @@
+
+.photoUploadContainer:focus-within {
+  border-color: var(--vkui--color_accent);
+} 
+
+.formItem {
+  padding: 12px 0 0 0;
+}
+
+.formLayoutGroup {
+  margin-top: 6px;
+}

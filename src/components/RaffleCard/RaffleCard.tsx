@@ -20,6 +20,8 @@ import {
 } from '@constants/Texts/RaffleCardText';
 import { declOfNum } from '@/panels/CreateRaffle/utils/declension';
 import UserCheckIcon from '@/assets/icons/UserCheckIcon';
+import { router } from '@/routes';
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 
 interface RaffleCardProps {
   raffleId: string;
@@ -69,6 +71,7 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
   adminType,
 }) => {
   const [expanded, setExpanded] = useState(true);
+  const router = useRouteNavigator(); 
 
   const renderBadgesPE = () => {
     switch (mode) {
@@ -165,7 +168,7 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
       </div>
 
       <div className={styles.wrapper}>
-        <button type="button" className={styles.editButton}>{EDIT_CONDITIONS}</button>
+        <button type="button" onClick={() => {router.push("/editrafflepanel")}} className={styles.editButton}>{EDIT_CONDITIONS}</button>
         <div className={styles.metaText}>
           {LAST_EDIT}: {lastModified} – {modifiedBy}
         </div>

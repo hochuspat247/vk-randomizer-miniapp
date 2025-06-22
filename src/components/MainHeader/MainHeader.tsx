@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './MainHeader.module.css';
 import { Icon16InfoOutline, Icon20GearOutline } from '@vkontakte/icons';
 import AppLogoIcon from '@/assets/icons/AppLogoIcon';
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 
 interface MainHeaderProps {
   /** Название приложения */
@@ -16,6 +17,9 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   onInfoClick,
   onSettingsClick,
 }) => {
+
+    const router = useRouteNavigator(); 
+
   return (
     <header className={styles.header}>
       <div className={styles.left}>
@@ -27,7 +31,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       <div className={styles.actions}>
         <button
           className={styles.iconButton}
-          onClick={onInfoClick}
+          onClick={() => {router.push("/faqpanel")}}
           aria-label="Информация"
         >
           <Icon16InfoOutline fill='#D4F94E' width={24} height={24}/>

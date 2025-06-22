@@ -13,6 +13,8 @@ import Raffles from '@panels/Raffles/Raffles';
 import Community from '@panels/Community/Community';
 import TestPanel from '@panels/TestPanel/TestPanel';
 import MainPanel from '@/panels/MainPanel/MainPanel';
+import FAQPanel from '@/panels/FAQPanel/FAQPanel';
+import EditRaffle from '@/panels/EditRaffle/EditRaffle';
 
 const Navigation: React.FC = () => {
   const routeNavigator = useRouteNavigator();
@@ -62,6 +64,8 @@ const Navigation: React.FC = () => {
           <Community id={PANELS.COMMUNITY} />
           <TestPanel id={PANELS.TEST_PANEL} />
           <MainPanel id={PANELS.MAIN_PANEL} />
+          <FAQPanel id={PANELS.FAQ_PANEL} />
+          <EditRaffle id={PANELS.EDIT_RAFFLE_PANEL} />
         </View>
       </Epic>
     </RouterProvider>
