@@ -32,6 +32,9 @@ interface CommunityModalCardProps {
   subscribers?: Subscriber[];
   onSubmit?: (selected: string) => void;
   onBack?: () => void;
+  value?: string;
+  onChange?: (value: string) => void;
+  onClose?: () => void;
 }
 
 const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
@@ -43,6 +46,9 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
   subscribers = [],
   onSubmit,
   onBack,
+  value,
+  onChange,
+  onClose,
 }) => {
   const [selected, setSelected] = useState('');
   const [avatarError, setAvatarError] = useState(false);
@@ -66,7 +72,8 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
                 <Select
                   placeholder={placeholder || ''}
                   options={options}
-                  onChange={setSelected}
+                  onChange={onChange}
+                  value={value}
                 />
               ) : (
                 <div className={styles.selectPlaceholder}>{NO_COMMUNITIES_PLACEHOLDER}</div>
@@ -75,7 +82,8 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
             <button
               type="button"
               className={styles.button}
-              onClick={() => selected && onSubmit?.(selected)}
+              onClick={() => value && onSubmit?.(value)}
+              disabled={!value}
             >
               {CONNECT_BUTTON}
             </button>
@@ -128,7 +136,14 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
               </div>
             </div>
 
-            <button type="button" className={styles.buttonPrimary}>{PERMISSION_BUTTON}</button>
+            <button 
+              type="button" 
+              className={styles.buttonPrimary} 
+              onClick={() => onSubmit?.()}
+            >
+              {PERMISSION_BUTTON}
+            </button>
+
             <button type="button" className={styles.buttonSecondary} onClick={onBack}>
               {OTHER_COMMUNITY}
             </button>
@@ -148,7 +163,12 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
             <div className={styles.titleSucces}>{communityName}</div>
             <div className={styles.subtitle}>{SUCCESS_SUBTITLE}</div>
             <div className={styles.buttonContainer}>
-              <button type="button" className={styles.buttonPrimary}>{SUCCESS_BUTTON_OK}</button>
+              <button type="button" 
+                onClick={() => {onClose?.()}} 
+                className={styles.buttonPrimary}
+              >
+                {SUCCESS_BUTTON_OK}
+              </button>
               <button type="button" className={styles.buttonSecondary}>{SUCCESS_BUTTON_WIDGET}</button>
             </div>
           </>

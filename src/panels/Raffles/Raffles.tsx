@@ -17,16 +17,15 @@ interface RafflesProps {
   id: string;
 }
 
-const router = useRouteNavigator
-
 const Raffles: React.FC<RafflesProps> = ({ id }) => {
 
+const router = useRouteNavigator();
 
   return (
      <Panel id={id}>
         <PanelHeader
             before={
-                <div onClick={() => router.popPage()} >
+                <div onClick={() => router.back()} >
                     <Icon24ChevronLeft fill=' #D4F94E'/>
                 </div> }
              

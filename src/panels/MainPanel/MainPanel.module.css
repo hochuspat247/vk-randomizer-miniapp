@@ -1,0 +1,34 @@
+
+
+.toggleSwitch {
+    padding: 0 12px;
+    margin-top: -12px;
+}
+
+.scrollWrapper {
+  height: calc(100vh - 195px); /* зависит от MainHeader + ToggleSwitch высоты */
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  display: block;
+
+  -ms-overflow-style: none;  /* IE и старый Edge */
+  scrollbar-width: none;  
+}
+
+.scrollWrapper::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, новый Edge */
+}
+
+.stickySection {
+  scroll-snap-align: start;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-bottom: 16px;
+}
+
+.groupNotif {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

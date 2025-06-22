@@ -10,9 +10,9 @@ interface CommuniytProps {
   id: string;
 }
 
-const router = useRouteNavigator
-
 const Community: React.FC<CommuniytProps> = ({ id }) => {
+
+    const router = useRouteNavigator();
 
   const activeCommunities = CommunityCardMocks.filter(community => community.status === 'green');
   const inactiveCommunities = CommunityCardMocks.filter(community => community.status !== 'green');
@@ -21,7 +21,7 @@ const Community: React.FC<CommuniytProps> = ({ id }) => {
      <Panel id={id}>
         <PanelHeader
             before={
-                <div onClick={() => router.popPage()} >
+                <div onClick={() => router.back()} >
                     <Icon24ChevronLeft fill=' #D4F94E'/>
                 </div> }
              
