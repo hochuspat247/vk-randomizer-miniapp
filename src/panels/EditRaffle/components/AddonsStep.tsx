@@ -1,19 +1,8 @@
 import React from 'react';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
 import styles from '../EditRaffle.module.css';
+import { AddonsStepProps } from '../types';
 
-interface AddonsStepProps {
-  publishResults: boolean;
-  setPublishResults: (value: boolean) => void;
-  hideParticipantsCount: boolean;
-  setHideParticipantsCount: (value: boolean) => void;
-  onlySubscribers: boolean;
-  setOnlySubscribers: (value: boolean) => void;
-  excludeMe: boolean;
-  setExcludeMe: (value: boolean) => void;
-  excludeAdmins: boolean;
-  setExcludeAdmins: (value: boolean) => void;
-}
 
 export const AddonsStep: React.FC<AddonsStepProps> = ({
   publishResults,

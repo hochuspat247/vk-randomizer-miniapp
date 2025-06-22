@@ -7,54 +7,22 @@ import { ToggleSwitch } from '@/components/ToggleSwitch/ToggleSwitch';
 import { getDateTimeFromOption } from '../utils/dateTimeUtils';
 import dayjs from 'dayjs';
 import styles from './DateTimeStep.module.css';
-
-const START_OPTIONS = [
-  { label: 'Сейчас',           value: 'now'    },
-  { label: 'Через 1 час',      value: '1hour'  },
-  { label: 'Через 6 часов',    value: '6hours' },
-  { label: 'Моя дата и время', value: 'custom' }
-];
-
-const END_OPTIONS = [
-  { label: 'Через 24 часа',    value: '24hours' },
-  { label: 'Через 7 дней',     value: '7days'   },
-  { label: 'Через 14 дней',    value: '14days'  },
-  { label: 'Через месяц',      value: '1month'  },
-  { label: 'Моя дата и время', value: 'custom'  }
-];
-
-interface DateTimeStepProps {
-  endByParticipants: boolean ;
-  setEndByParticipants: (v: boolean) => void;
-  startDateTime: string;
-  setStartDateTime: (v: string) => void;
-  endDateTime: string;
-  setEndDateTime: (v: string) => void;
-  memberMax: string;
-  setMemberMax: (v: string) => void;
-
-  isSelectedStartTime: string;
-  setIsSelectedStartTime: (v: string) => void;
-  isSelectedEndTime: string;
-  setIsSelectedEndTime: (v: string) => void;
-
-  startDateLabel: string;
-  setStartDateLabel: (v: string) => void;
-
-  endDateLabel: string;
-  setEndDateLabel: (v: string) => void;
-}
+import { END_OPTIONS, START_OPTIONS } from '../constants';
+import { DateTimeStepProps } from '../types';
 
 export const DateTimeStep: React.FC<DateTimeStepProps> = ({
-  endByParticipants = false, setEndByParticipants,
-  startDateTime,    setStartDateTime,
-  endDateTime,      setEndDateTime,
-  memberMax,        setMemberMax,
+  endByParticipants = false, 
+  setEndByParticipants,
+  startDateTime,    
+  setStartDateTime,
+  endDateTime,      
+  setEndDateTime,
+  memberMax,        
+  setMemberMax,
   isSelectedStartTime,
   setIsSelectedStartTime,
   isSelectedEndTime,
   setIsSelectedEndTime,
-
   startDateLabel, 
   endDateLabel, 
   setEndDateLabel, 

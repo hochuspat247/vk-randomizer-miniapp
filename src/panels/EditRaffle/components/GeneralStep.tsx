@@ -1,20 +1,9 @@
 import React from 'react';
 import { FormItem, Input, CustomSelect, FormLayoutGroup } from '@vkontakte/vkui';
-import { Icon28AddOutline } from '@vkontakte/icons';
 import PhotoUpload from '@components/PhotoUpload/PhotoUpload';
 import styles from './GeneralStep.module.css';
+import { GeneralStepProps } from '../types';
 
-interface GeneralStepProps {
-  community: string;
-  setCommunity: (value: string) => void;
-  giveawayName: string;
-  setGiveawayName: (value: string) => void;
-  prizeDescription: string;
-  setPrizeDescription: (value: string) => void;
-  photos: File[];
-  onPhotosChange: (photos: File[]) => void;
-  communityOptions: string[];
-}
 
 export const GeneralStep: React.FC<GeneralStepProps> = ({
   community,

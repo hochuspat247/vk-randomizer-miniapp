@@ -2,29 +2,8 @@ import React from 'react';
 import Select from '@components/Select/Select';
 import Input from '@components/Input/Input';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
-import { CONDITION_OPTIONS, COMMUNITY_TAG_OPTIONS, BLACK_LIST, COMMUNITY_PARTNERS_OPTIONS } from '../constants';
 import styles from './ConditionStep.module.css';
-
-interface ConditionStepProps {
-  participationConditions: string[];
-  setParticipationConditions: (value: string[]) => void;
-  requiredCommunities: string[];
-  setRequiredCommunities: (value: string[]) => void;
-  partnersTags: string[];
-  setPartnersTags: (value: string[]) => void;
-  showInPartners: boolean;
-  setShowInPartners: (value: boolean) => void;
-  isPartners: boolean;
-  setIsPartners: (value: boolean) => void;
-  numberWinners: string;
-  setNumberWinners: (value: string) => void;
-  blackListSel: string[];
-  setBlackListSel: (value: string[]) => void;
-  conditionOptions: string[];
-  communityTagOptions: string[];
-  communityPartnersTags: string[];
-  blackListOptions: string[];
-}
+import { ConditionStepProps } from '../types';
 
 export const ConditionStep: React.FC<ConditionStepProps> = ({
   participationConditions,

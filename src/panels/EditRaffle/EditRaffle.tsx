@@ -1,87 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Panel,
-  PanelHeader,
-  PanelHeaderContent,
-} from '@vkontakte/vkui';
+// src/components/EditRaffle/EditRaffle.tsx
+import React from 'react';
+import { Panel, PanelHeader, PanelHeaderContent } from '@vkontakte/vkui';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+
 import BackIcon from '../../assets/icons/BackIcon';
 import ChevronRightIcon from '../../assets/icons/ChevronRightIcon';
 import ChevronLeftIcon from '../../assets/icons/ChevronLeftIconProps';
 import ProgressBadge from '../../components/ProgressBadge/ProgressBadge';
 import { CreateRaffleText_Panel } from '../../constants/Texts/CreateRaffleText';
 import styles from './EditRaffle.module.css';
+import { CreateRaffleProps } from './types';
 
-import { CreateRaffleProps, CreateRaffleStep, FormData } from './types';
-import { useProgress } from './hooks/useProgress';
-import { isStepComplete, getMissingFields } from './utils/validationUtils';
-import { GeneralStep } from './components/GeneralStep';
+import { GeneralStep }   from './components/GeneralStep';
 import { ConditionStep } from './components/ConditionStep';
-import { DateTimeStep } from './components/DateTimeStep';
-import { AddonsStep } from './components/AddonsStep';
-import { validateDateTime } from './utils/dateTimeUtils';
+import { DateTimeStep }  from './components/DateTimeStep';
+import { AddonsStep }    from './components/AddonsStep';
 
-import { useRef } from 'react';
-import { editRaffleMock } from '@/mocks/EditRaffleMock';
+import { useFormData }    from './hooks/useFormData';
+import { useSteps }       from './hooks/useSteps';
+import { useCanProceed }  from './hooks/useCanProceed';
+import { useProgress }    from './hooks/useProgress';
 
 const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
-  const routeNavigator = useRouteNavigator();
-  const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('General');
+  const nav = useRouteNavigator();
 
-    /* локальное состояние формы — редактируется, вызывает ререндеры */
-    const [formData, setFormData] = useState<FormData>(() => ({ ...editRaffleMock }));
+  // Все хуки
+  const { formData, updateField, updateFields } = useFormData();
+  const { currentStep, nextStep, prevStep }     = useSteps();
+  const canProceed                              = useCanProceed(currentStep, formData);
+  const progress                                = useProgress(formData);
 
-    /* 2. ref-буфер — держит актуальные данные, но не вызывает ререндеры */
-    const draftRef = useRef<FormData>(formData);
+  // Навигация «назад»
+  function handlePrev() {
+    prevStep(() => nav.back());
+  }
 
-    /* 3. синхронизируем ref при каждом изменении formData */
-    useEffect(() => {
-        draftRef.current = formData;
-    }, [formData]);
+  // Навигация «вперёд»
+  function handleNext() {
+    nextStep();
+  }
 
-    const progress = useProgress(formData);
-
-  const handleNextStep = (e: React.MouseEvent) => {
-    const steps: CreateRaffleStep[] = ['General', 'Condition', 'DateTime', 'Addons'];
-    const currentIndex = steps.indexOf(currentStep);
-    if (currentIndex < steps.length - 1) {
-      setCurrentStep(steps[currentIndex + 1]);
-    }
-  };
-
-  const handlePrevStep = (e: React.MouseEvent) => {
+  // Submit на финальном шаге
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const steps: CreateRaffleStep[] = ['General', 'Condition', 'DateTime', 'Addons'];
-    const currentIndex = steps.indexOf(currentStep);
-    if (currentIndex > 0) {
-      setCurrentStep(steps[currentIndex - 1]);
-    } else {
-      routeNavigator.back();
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // if (progress < 100) {
-    //   alert('Заполните все обязательные поля!');
-    //   return;
-    // }
     console.log('Form data:', formData);
-  };
+    nav.push('/');
+  }
 
+  // Рендерим нужный шаг, передавая updateField / updateFields
   const renderStepContent = () => {
     switch (currentStep) {
       case 'General':
         return (
           <GeneralStep
             community={formData.community}
-            setCommunity={(value) => setFormData({ ...formData, community: value })}
+            setCommunity={v => updateField('community', v)}
             giveawayName={formData.giveawayName}
-            setGiveawayName={(value) => setFormData({ ...formData, giveawayName: value })}
+            setGiveawayName={v => updateField('giveawayName', v)}
             prizeDescription={formData.prizeDescription}
-            setPrizeDescription={(value) => setFormData({ ...formData, prizeDescription: value })}
+            setPrizeDescription={v => updateField('prizeDescription', v)}
             photos={formData.photos}
-            onPhotosChange={(photos) => setFormData({ ...formData, photos })}
+            onPhotosChange={photos => updateField('photos', photos)}
             communityOptions={formData.communityOptions}
           />
         );
@@ -90,64 +69,61 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         return (
           <ConditionStep
             participationConditions={formData.participationConditions}
-            setParticipationConditions={(value) => setFormData({ ...formData, participationConditions: value })}
+            setParticipationConditions={v => updateField('participationConditions', v)}
             requiredCommunities={formData.requiredCommunities}
-            setRequiredCommunities={(value) => setFormData({ ...formData, requiredCommunities: value })}
-            partnersTags={formData.partnersTags}  
-            setPartnersTags={(value) => setFormData({ ...formData, partnersTags: value })} 
+            setRequiredCommunities={v => updateField('requiredCommunities', v)}
+            partnersTags={formData.partnersTags}
+            setPartnersTags={v => updateField('partnersTags', v)}
             showInPartners={formData.showInPartners}
-            setShowInPartners={(value) => setFormData({ ...formData, showInPartners: value })}
+            setShowInPartners={v => updateField('showInPartners', v)}
             isPartners={formData.isPartners}
-            setIsPartners={(value) => setFormData({ ...formData, isPartners: value })}
+            setIsPartners={v => updateField('isPartners', v)}
             numberWinners={formData.numberWinners}
-            setNumberWinners={(value) => setFormData({ ...formData, numberWinners: value })}
+            setNumberWinners={v => updateField('numberWinners', v)}
             blackListSel={formData.blackListSel}
-            setBlackListSel={(value) => setFormData({ ...formData, blackListSel: value })} 
-            conditionOptions={formData.conditionOptions}   
-            communityTagOptions={formData.communityTagOptions}    
-            communityPartnersTags={formData.communityPartnersTags}    
+            setBlackListSel={v => updateField('blackListSel', v)}
+            conditionOptions={formData.conditionOptions}
+            communityTagOptions={formData.communityTagOptions}
+            communityPartnersTags={formData.communityPartnersTags}
             blackListOptions={formData.blackListOptions}
           />
-
         );
 
       case 'DateTime':
         return (
           <DateTimeStep
             endByParticipants={formData.endByParticipants}
-            setEndByParticipants={value => setFormData(prev => ({ ...prev, endByParticipants: value }))}
+            setEndByParticipants={v => updateField('endByParticipants', v)}
             startDateTime={formData.startDateTime}
-            setStartDateTime={value => setFormData(prev => ({ ...prev, startDateTime: value }))}
+            setStartDateTime={v => updateField('startDateTime', v)}
             endDateTime={formData.endDateTime}
-            setEndDateTime={value => setFormData(prev => ({ ...prev, endDateTime: value }))}
+            setEndDateTime={v => updateField('endDateTime', v)}
             memberMax={formData.memberMax}
-            setMemberMax={value => setFormData(prev => ({ ...prev, memberMax: value }))}
+            setMemberMax={v => updateField('memberMax', v)}
             isSelectedStartTime={formData.isSelectedStartTime}
-            setIsSelectedStartTime={value => setFormData(prev => ({ ...prev, isSelectedStartTime: value }))}
+            setIsSelectedStartTime={v => updateField('isSelectedStartTime', v)}
             isSelectedEndTime={formData.isSelectedEndTime}
-            setIsSelectedEndTime={value => setFormData(prev => ({ ...prev, isSelectedEndTime: value }))}
-
+            setIsSelectedEndTime={v => updateField('isSelectedEndTime', v)}
             startDateLabel={formData.startDateLabel}
-            setStartDateLabel={value => setFormData(prev => ({ ...prev, startDateLabel: value }))}
-
+            setStartDateLabel={v => updateField('startDateLabel', v)}
             endDateLabel={formData.endDateLabel}
-            setEndDateLabel={value => setFormData(prev => ({ ...prev, endDateLabel: value }))}
-          />        
+            setEndDateLabel={v => updateField('endDateLabel', v)}
+          />
         );
 
       case 'Addons':
         return (
           <AddonsStep
             publishResults={formData.publishResults}
-            setPublishResults={(value) => setFormData({ ...formData, publishResults: value })}
+            setPublishResults={v => updateField('publishResults', v)}
             hideParticipantsCount={formData.hideParticipantsCount}
-            setHideParticipantsCount={(value) => setFormData({ ...formData, hideParticipantsCount: value })}
+            setHideParticipantsCount={v => updateField('hideParticipantsCount', v)}
             onlySubscribers={formData.onlySubscribers}
-            setOnlySubscribers={(value) => setFormData({ ...formData, onlySubscribers: value })}
+            setOnlySubscribers={v => updateField('onlySubscribers', v)}
             excludeMe={formData.excludeMe}
-            setExcludeMe={(value) => setFormData({ ...formData, excludeMe: value })}
+            setExcludeMe={v => updateField('excludeMe', v)}
             excludeAdmins={formData.excludeAdmins}
-            setExcludeAdmins={(value) => setFormData({ ...formData, excludeAdmins: value })}
+            setExcludeAdmins={v => updateField('excludeAdmins', v)}
           />
         );
 
@@ -156,24 +132,11 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     }
   };
 
-  // валидация даты начала и конца розыгрыша
-  const canProceed = (() => {
-  if (currentStep === 'DateTime') {
-    return (
-      !!formData.startDateTime &&
-      !!formData.endDateTime &&
-      validateDateTime(formData.startDateTime, formData.endDateTime)
-    );
-  } else {
-    return isStepComplete(currentStep, formData);
-  }
-})();
-
   return (
     <Panel id={id} className={styles.panelOverride}>
       <PanelHeader
         before={
-          <div onClick={(e) => handlePrevStep(e as any)} className={styles.backIcon}>
+          <div onClick={handlePrev} className={styles.backIcon}>
             <BackIcon />
           </div>
         }
@@ -181,7 +144,9 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         getContentClassName={() => styles.panelHeaderContentOverride}
       >
         <PanelHeaderContent>
-          <span className={styles.panelHeaderText}>{CreateRaffleText_Panel}</span>
+          <span className={styles.panelHeaderText}>
+            {CreateRaffleText_Panel}
+          </span>
         </PanelHeaderContent>
       </PanelHeader>
 
@@ -189,51 +154,38 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         <ProgressBadge type={currentStep} progress={progress} />
 
         <form className={styles.formContainer} onSubmit={handleSubmit}>
-          <div className={styles.formLayout}>{renderStepContent()}</div>
+          <div className={styles.formLayout}>
+            {renderStepContent()}
+          </div>
 
-          {currentStep === 'General' && (
-            <div className={styles.navigationContainer}>
+          <div className={styles.navigationContainer}>
+            {currentStep !== 'General' && (
               <button
                 type="button"
-                className={styles.nextButton}
-                disabled={!isStepComplete(currentStep, formData)}
-                onClick={handleNextStep}
+                className={styles.backButton}
+                onClick={handlePrev}
               >
-                <span className={styles.nextText}>Далее</span>
-                <ChevronRightIcon />
-              </button>
-            </div>
-          )}
-
-          {currentStep !== 'General' && (
-            <div className={styles.navigationContainer}>
-              <button type="button" className={styles.backButton} onClick={handlePrevStep}>
                 <ChevronLeftIcon />
                 <span className={styles.buttonText}>Назад</span>
               </button>
+            )}
 
-              {currentStep !== 'Addons' ? (
-                <button
-                  type="button"
-                  className={styles.nextButton2}
-                  disabled={!canProceed}
-                  onClick={handleNextStep}
-                >
-                  <span className={styles.buttonText}>Далее</span>
-                  <ChevronRightIcon />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className={styles.nextButton}
-                //   disabled={progress < 100}
-                onClick={() => routeNavigator.push('/')}
-                >
-                  <span className={styles.buttonText}>Завершить</span>
-                </button>
-              )}
-            </div>
-          )}
+            {currentStep !== 'Addons' ? (
+              <button
+                type="button"
+                className={styles.nextButton2}
+                disabled={!canProceed}
+                onClick={handleNext}
+              >
+                <span className={styles.buttonText}>Далее</span>
+                <ChevronRightIcon />
+              </button>
+            ) : (
+              <button type="submit" className={styles.nextButton}>
+                <span className={styles.buttonText}>Завершить</span>
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </Panel>
