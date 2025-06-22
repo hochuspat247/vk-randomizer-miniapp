@@ -1,11 +1,12 @@
 .container {
   position: fixed;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 8px;     
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  z-index: 9999;
   padding: 8px;
+  z-index: 9997;
 }
 
 .card {

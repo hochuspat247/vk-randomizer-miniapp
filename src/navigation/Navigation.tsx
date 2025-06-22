@@ -3,10 +3,18 @@ import { View, Epic, Tabbar, TabbarItem, ConfigProvider } from '@vkontakte/vkui'
 import { RouterProvider, useRouteNavigator, useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
 import { Icon28AddCircleOutline, Icon28NewsfeedOutline, Icon28Notifications, Icon28UsersOutline } from '@vkontakte/icons';
 import { router, DEFAULT_VIEW, PANELS } from '../routes';
-import CreateRaffle from '../panels/CreateRaffle/CreateRaffle';
-import Notifications from '../panels/Notifications/Notifications';
-import Raffles from '../panels/Raffles/Raffles';
-import Community from '../panels/Community/Community';
+// import Notifications from '@panels/Notifications/Notifications';
+// import Raffles from '@panels/Raffles/Raffles';
+// import Community from '@panels/Community/Community';
+// import TestPanel from '@/panels/TestPanel/TestPanel';
+import { CreateRaffle, Notifications } from '@panels';
+
+import Raffles from '@panels/Raffles/Raffles';
+import Community from '@panels/Community/Community';
+import TestPanel from '@panels/TestPanel/TestPanel';
+import MainPanel from '@/panels/MainPanel/MainPanel';
+import FAQPanel from '@/panels/FAQPanel/FAQPanel';
+import EditRaffle from '@/panels/EditRaffle/EditRaffle';
 
 const Navigation: React.FC = () => {
   const routeNavigator = useRouteNavigator();
@@ -55,6 +63,10 @@ const Navigation: React.FC = () => {
             <Notifications id={PANELS.NOTIFICATIONS} />
             <Raffles id={PANELS.RAFFLES} />
             <Community id={PANELS.COMMUNITY} />
+            <TestPanel id={PANELS.TEST_PANEL} />
+            <MainPanel id={PANELS.MAIN_PANEL}/>
+            <FAQPanel id={PANELS.FAQ_PANEL} />
+            <EditRaffle id={PANELS.EDIT_RAFFLE_PANEL} />
           </View>
         </Epic>
       </ConfigProvider>

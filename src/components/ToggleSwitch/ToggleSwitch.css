@@ -8,21 +8,44 @@
 
 .segmentedControl {
   color: var(--Dark-Text-Text-Primary, #E1E3E6);
-text-align: center;
-font-feature-settings: 'liga' off, 'clig' off;
-font-family: "VK Sans Display";
-font-size: 15px;
-font-style: normal;
-font-weight: 600;
-line-height: 20px; /* 133.333% */
-letter-spacing: 0.2px;
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "VK Sans Display";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 133.333% */
+  letter-spacing: 0.2px;
+}
+
+.segmentedControl .main .vkuiHeadline__level2 {
+  color: var(--Dark-Text-Text-Primary, #E1E3E6);
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "VK Sans Display Expanded";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.2px;
+}
+
+.segmentedControl.main
+  .vkuiSegmentedControlOption__host
+  input[type="radio"]:checked
+  + .vkuiHeadline__level2 {
+    color: var(--Dark-Text-Text-Primary-Invariably, #000);
+    text-align: center;
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: "VK Sans Display Expanded";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; 
+    letter-spacing: 0.2px;
 }
 
 .label {
-  font-size: 16px;
-  color: #000;
-}
-.selectTitle {
   color: var(--Dark-Text-Text-Subhead, #969A9F);
 font-feature-settings: 'liga' off, 'clig' off;
 font-family: "VK Sans Display";
@@ -31,7 +54,17 @@ font-style: normal;
 font-weight: 400;
 line-height: 18px; /* 128.571% */
 letter-spacing: 0.2px;
-margin-top: 8px;
+}
+.selectTitle {
+  color: var(--Dark-Text-Text-Subhead, #969A9F);
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "VK Sans Display";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; 
+  letter-spacing: 0.2px;
+  margin-top: 8px;
 } 
 .input {
   display: none; /* Скрываем стандартный чекбокс */
@@ -40,6 +73,7 @@ margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px; /* ← здесь регулируется расстояние между заголовком и контролом */
+  margin-top: 12px;
 }
 .slider {
   position: relative;
@@ -63,11 +97,9 @@ margin-top: 8px;
 }
 
 .input:checked + .slider {
-border: 0.5px solid var(--Dark-Stroke-Image-Border-Alpha, rgba(255, 255, 255, 0.08));
-background: var(--Dark-Background-Background-Secondary-Alpha, rgba(255, 255, 255, 0.10));
-
-/* Dark/Elevation 2 */
-box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 4px 0px rgba(0, 0, 0, 0.20);
+  border: 0.5px solid var(--Dark-Stroke-Image-Border-Alpha, rgba(255, 255, 255, 0.08));
+  background: var(--Dark-Background-Background-Secondary-Alpha, rgba(255, 255, 255, 0.10));
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 4px 0px rgba(0, 0, 0, 0.20);
 }
 
 .input:checked + .slider:before {
@@ -75,9 +107,15 @@ box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 4px 0px rgba(0, 0, 0, 0
 }
 
 .vkuiSegmentedControl__slider {
-border: 0.5px solid var(--Dark-Stroke-Image-Border-Alpha, rgba(255, 255, 255, 0.08));
-background: var(--Dark-Background-Background-Secondary-Alpha, rgba(255, 255, 255, 0.10));
+  border: 0.5px solid var(--Dark-Stroke-Image-Border-Alpha, rgba(255, 255, 255, 0.08));
+  background: var(--Dark-Background-Background-Secondary-Alpha, rgba(255, 255, 255, 0.10));
+
 
 /* Dark/Elevation 2 */
-box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 4px 0px rgba(0, 0, 0, 0.20);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 4px 0px rgba(0, 0, 0, 0.20);
 } 
+
+.segmentedControl.main .vkuiSegmentedControl__slider {
+  background: var(--Green, #D4F94E);
+  border-color: var(--Green, #D4F94E);
+}

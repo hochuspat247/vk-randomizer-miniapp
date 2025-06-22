@@ -3,29 +3,28 @@ import styles from './Raffles.module.css';
 
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { Panel, PanelHeader } from '@vkontakte/vkui';
-import { Icon20LifebuoyOutline, Icon24ChevronLeft } from '@vkontakte/icons';
+import {Icon24ChevronLeft } from '@vkontakte/icons';
 import FilterIcon from '../../assets/icons/FilterIcon';
 import RaffleCardMocks from '../../mocks/RaffleCardMocks';
 import RaffleCard from '../../components/RaffleCard/RaffleCard';
 import RaffleCarouselCardMocks from '../../mocks/RaffleCarouselCardMocks';
 import RaffleCarouselCard from '../../components/RaffleCarouselCard/RaffleCarouselCard';
 
-import spiral from "../../assets/images/261.png" 
+import SupportCard from '@/components/SupportCard/SupportCard';
 
 interface RafflesProps {
   id: string;
 }
 
-const router = useRouteNavigator
-
 const Raffles: React.FC<RafflesProps> = ({ id }) => {
 
+const router = useRouteNavigator();
 
   return (
      <Panel id={id}>
         <PanelHeader
             before={
-                <div onClick={() => router.popPage()} >
+                <div onClick={() => router.back()} >
                     <Icon24ChevronLeft fill=' #D4F94E'/>
                 </div> }
              
@@ -109,23 +108,7 @@ const Raffles: React.FC<RafflesProps> = ({ id }) => {
                         }
                     </div>
 
-                <div className={styles.supportCard}>
-                    <div className={styles.supportCardTop}>
-                        <div className={styles.supportCardText}>
-                            <span className={styles.supportCardTitle}>Возникли трудности?</span>
-                            <span className={styles.supportCardtext}>Напишите в службу поддержки — <br/>
-                                поможем разобраться, подскажем <br/>
-                                и быстро решим ваш вопрос.
-                            </span>
-                        </div>
-                        <img className={styles.spiral} src={spiral} alt='gold spiral'/>
-                    </div>
-                    <button className={styles.supportButton}>
-                        <Icon20LifebuoyOutline fill='#D4F94E'/>
-                        <span className={styles.supportButtonText}>Служба поддержки</span>
-                    </button>
-                </div>
-                
+                <SupportCard variant='support'/>
             </div>
         </div>
     </Panel>

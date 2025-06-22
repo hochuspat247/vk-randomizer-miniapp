@@ -2,8 +2,23 @@ import { createHashRouter } from '@vkontakte/vk-mini-apps-router';
 
 export const router = createHashRouter([
   {
-    path: '/',
+    path: '/createRaffle',
     panel: 'createRaffle',
+    view: 'default',
+  },
+  {
+    path: '/',
+    panel: 'mainpanel',
+    view: 'default',
+  },
+   {
+    path: '/faqpanel',
+    panel: 'faqpanel',
+    view: 'default',
+  },
+  {
+    path: '/editrafflepanel',
+    panel: 'editrafflepanel',
     view: 'default',
   },
    {
@@ -21,6 +36,11 @@ export const router = createHashRouter([
     panel: 'community',
     view: 'default',
   },
+  {
+    path: '/testPanel',
+    panel: 'testPanel',
+    view: 'default',
+  },
 ]);
 
 export const DEFAULT_VIEW = 'default';
@@ -30,5 +50,9 @@ export const PANELS = {
   NOTIFICATIONS: 'notifications',
   RAFFLES: 'raffles',
   COMMUNITY: 'community',
+  TEST_PANEL: "testPanel",
+  MAIN_PANEL: 'mainpanel',
+  FAQ_PANEL: 'faqpanel',
+  EDIT_RAFFLE_PANEL: 'editrafflepanel'
 
 };
