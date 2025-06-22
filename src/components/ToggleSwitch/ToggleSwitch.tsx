@@ -1,6 +1,6 @@
 // src/components/ToggleSwitch/ToggleSwitch.tsx
 import React from 'react';
-import { Group, SegmentedControl } from '@vkontakte/vkui';
+import { ConfigProvider, Group, SegmentedControl } from '@vkontakte/vkui';
 import './ToggleSwitch.css';
 
 interface ToggleSwitchProps {
@@ -31,14 +31,15 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   return (
     <Group mode="plain">
       <div className="groupContent">
-        <span className='label'>{label}</span>
-
-        <SegmentedControl
-          className={`segmentedControl ${variant}`}
-          value={checked ? 'on' : 'off'}
-          onChange={(v) => onChange(v === 'on')}
-          options={options}
-        />
+        <div className="selectTitle">{label}</div>
+        <ConfigProvider colorScheme="dark">
+          <SegmentedControl
+            value={checked ? 'on' : 'off'}
+            className={`segmentedControl ${variant}`}
+            onChange={(v) => onChange(v === 'on')}
+            options={options}
+          />
+        </ConfigProvider>
       </div>
     </Group>
   );

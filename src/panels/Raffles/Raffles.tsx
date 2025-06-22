@@ -3,14 +3,13 @@ import styles from './Raffles.module.css';
 
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { Panel, PanelHeader } from '@vkontakte/vkui';
-import { Icon20LifebuoyOutline, Icon24ChevronLeft } from '@vkontakte/icons';
+import {Icon24ChevronLeft } from '@vkontakte/icons';
 import FilterIcon from '../../assets/icons/FilterIcon';
 import RaffleCardMocks from '../../mocks/RaffleCardMocks';
 import RaffleCard from '../../components/RaffleCard/RaffleCard';
 import RaffleCarouselCardMocks from '../../mocks/RaffleCarouselCardMocks';
 import RaffleCarouselCard from '../../components/RaffleCarouselCard/RaffleCarouselCard';
 
-import spiral from "../../assets/images/261.png" 
 import SupportCard from '@/components/SupportCard/SupportCard';
 
 interface RafflesProps {
@@ -61,7 +60,7 @@ const router = useRouteNavigator();
                     />
                 ))}
 
-                {/* <div className={styles.rafflesMiniCont}> */}
+                <div className={styles.rafflesMiniCont}>
                 <div className={styles.rafflesMini}>
                     <span className={styles.completedText}>Завершенные</span>
                     {RaffleCarouselCardMocks
@@ -82,34 +81,32 @@ const router = useRouteNavigator();
                             />
                         ))
                     }
-                                    <div className={styles.backgroud}></div>
-
                 </div>
-                {/* </div> */}
-
-                
-                <div className={styles.rafflesMini}>
-                    <span className={styles.completedText}>Неактивные</span>
-                    {RaffleCarouselCardMocks
-                        .filter(raffle => 
-                            raffle.status === 'draft' || 
-                            raffle.status === 'pending' ||
-                            raffle.status === 'deleted'
-                        )
-                        .map((raffle, index) => (
-                            <RaffleCarouselCard
-                                key={raffle.raffleId}
-                                raffleId={raffle.raffleId}
-                                name={raffle.name}
-                                status={raffle.status}
-                                stateText={raffle.stateText}
-                                members={raffle.members}
-                                endDate={raffle.endDate}
-                                updatedAt={raffle.updatedAt}
-                            />
-                        ))
-                    }
+                    <div className={styles.backgroud}></div>
                 </div>
+
+                    <div className={styles.rafflesMini}>
+                        <span className={styles.completedText}>Неактивные</span>
+                        {RaffleCarouselCardMocks
+                            .filter(raffle => 
+                                raffle.status === 'draft' || 
+                                raffle.status === 'pending' ||
+                                raffle.status === 'deleted'
+                            )
+                            .map((raffle, index) => (
+                                <RaffleCarouselCard
+                                    key={raffle.raffleId}
+                                    raffleId={raffle.raffleId}
+                                    name={raffle.name}
+                                    status={raffle.status}
+                                    stateText={raffle.stateText}
+                                    members={raffle.members}
+                                    endDate={raffle.endDate}
+                                    updatedAt={raffle.updatedAt}
+                                />
+                            ))
+                        }
+                    </div>
 
                 <SupportCard variant='support'/>
             </div>

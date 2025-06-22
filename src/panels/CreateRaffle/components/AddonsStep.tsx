@@ -1,6 +1,7 @@
 import React from 'react';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
 import styles from '../CreateRaffle.web.module.css';
+import { ConfigProvider } from '@vkontakte/vkui';
 
 interface AddonsStepProps {
   publishResults: boolean;
@@ -30,43 +31,44 @@ export const AddonsStep: React.FC<AddonsStepProps> = ({
   return (
     <div className={styles.addonsContainer}>
       <span className={styles.addonsTitle}>Дополнительно</span>
+      <ConfigProvider colorScheme="dark">
+        <div className={styles.checkboxList}>
+          <CustomCheckbox
+            label="Опубликовать пост с итогами"
+            checked={publishResults}
+            onChange={setPublishResults}
+            showAdditionalIcon={true}
+          />
 
-      <div className={styles.checkboxList}>
-        <CustomCheckbox
-          label="Опубликовать пост с итогами"
-          checked={publishResults}
-          onChange={setPublishResults}
-          showAdditionalIcon={true}
-        />
+          <CustomCheckbox
+            label="Скрыть количество участников"
+            checked={hideParticipantsCount}
+            onChange={setHideParticipantsCount}
+            showAdditionalIcon={true}
+          />
 
-        <CustomCheckbox
-          label="Скрыть количество участников"
-          checked={hideParticipantsCount}
-          onChange={setHideParticipantsCount}
-          showAdditionalIcon={true}
-        />
+          <CustomCheckbox
+            label="Учитывать только подписчиков"
+            checked={onlySubscribers}
+            onChange={setOnlySubscribers}
+            showAdditionalIcon={true}
+          />
 
-        <CustomCheckbox
-          label="Учитывать только подписчиков"
-          checked={onlySubscribers}
-          onChange={setOnlySubscribers}
-          showAdditionalIcon={true}
-        />
+          <CustomCheckbox
+            label="Не учитывать в розыгрыше меня"
+            checked={excludeMe}
+            onChange={setExcludeMe}
+            showAdditionalIcon={false}
+          />
 
-        <CustomCheckbox
-          label="Не учитывать в розыгрыше меня"
-          checked={excludeMe}
-          onChange={setExcludeMe}
-          showAdditionalIcon={false}
-        />
-
-        <CustomCheckbox
-          label="Не учитывать в розыгрыше администрацию сообщества"
-          checked={excludeAdmins}
-          onChange={setExcludeAdmins}
-          showAdditionalIcon={false}
-        />
-      </div>
+          <CustomCheckbox
+            label="Не учитывать в розыгрыше администрацию сообщества"
+            checked={excludeAdmins}
+            onChange={setExcludeAdmins}
+            showAdditionalIcon={false}
+          />
+        </div>
+      </ConfigProvider>
     </div>
   );
 }; 

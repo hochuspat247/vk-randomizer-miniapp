@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormItem, Input, CustomSelect, FormLayoutGroup } from '@vkontakte/vkui';
+import { FormItem, Input, CustomSelect, FormLayoutGroup, ConfigProvider } from '@vkontakte/vkui';
 import { Icon28AddOutline } from '@vkontakte/icons';
 import PhotoUpload from '@components/PhotoUpload/PhotoUpload';
 import { COMMUNITY_OPTIONS } from '../constants';
@@ -33,32 +33,35 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
 
   return (
     <FormLayoutGroup className={styles.formLayoutGroup} mode="vertical">
-      <FormItem className={styles.formItem} top="Название розыгрыша *">
-        <Input
-          type="text"
-          value={giveawayName}
-          onChange={(e) => setGiveawayName(e.target.value)}
-          placeholder="Введите название"
-        />
-      </FormItem>
+      <ConfigProvider colorScheme="dark">
+        <FormItem className={styles.formItem} top="Название розыгрыша *">
+          <Input
+            type="text"
+            value={giveawayName}
+            onChange={(e) => setGiveawayName(e.target.value)}
+            placeholder="Введите название"
+          />
+        </FormItem>
 
-      <FormItem className={styles.formItem} top="Сообщество *">
-        <CustomSelect
-          value={community}
-          onChange={(e) => setCommunity(e.target.value)}
-          options={communityOptions}
-          placeholder="Выберите сообщество"
-        />
-      </FormItem>
+        <FormItem className={styles.formItem} top="Сообщество *">
+          <CustomSelect
+            value={community}
+            onChange={(e) => setCommunity(e.target.value)}
+            options={communityOptions}
+            placeholder="Выберите сообщество"
+          />
+        </FormItem>
 
-      <FormItem className={styles.formItem} top="Описание приза *">
-        <Input
-          type="text"
-          value={prizeDescription}
-          onChange={(e) => setPrizeDescription(e.target.value)}
-          placeholder="Введите описание приза"
-        />
-      </FormItem>
+        <FormItem className={styles.formItem} top="Описание приза *">
+          <Input
+            type="text"
+            value={prizeDescription}
+            onChange={(e) => setPrizeDescription(e.target.value)}
+            placeholder="Введите описание приза"
+          />
+        </FormItem>
+      </ConfigProvider>
+
 
       <FormItem className={styles.formItem}>
         <div className={styles.photoUploadContainer}>

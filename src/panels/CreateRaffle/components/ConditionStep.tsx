@@ -4,6 +4,7 @@ import Input from '@components/Input/Input';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
 import { CONDITION_OPTIONS, COMMUNITY_TAG_OPTIONS, BLACK_LIST, COMMUNITY_PARTNERS_OPTIONS } from '../constants';
 import styles from './ConditionStep.module.css';
+import { ConfigProvider } from '@vkontakte/vkui';
 
 interface ConditionStepProps {
   participationConditions: string[];
@@ -63,21 +64,23 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
         />
       </div>
 
-      <div className={styles.checkboxGroup}>
-        <CustomCheckbox
-          label="Отображать в Партнерах"
-          checked={showInPartners}
-          onChange={setShowInPartners}
-          showAdditionalIcon={true}
-        />
+      <ConfigProvider colorScheme="dark"> 
+        <div className={styles.checkboxGroup}>
+          <CustomCheckbox
+            label="Отображать в Партнерах"
+            checked={showInPartners}
+            onChange={setShowInPartners}
+            showAdditionalIcon={true}
+          />
 
-        <CustomCheckbox
-          label="У розыгрыша есть партнеры"
-          checked={isPartners}
-          onChange={setIsPartners}
-          showAdditionalIcon={false}
-        />
-      </div>
+          <CustomCheckbox
+            label="У розыгрыша есть партнеры"
+            checked={isPartners}
+            onChange={setIsPartners}
+            showAdditionalIcon={false}
+          />
+        </div>
+      </ConfigProvider>
 
       {isPartners && (
         <Select

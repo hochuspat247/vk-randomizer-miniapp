@@ -105,7 +105,7 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
 
     {type === 'Condition' && (<div className={styles.wrapper}>
         <div className={styles.iconWrapper}>
-            <Icon24GearOutline width={24} height={24} />
+            <Icon24GearOutline fill='#E1E3E6' width={24} height={24} />
           </div>
       <div className={styles.progressContainer}>
         {/* Прогресс-бар */}
@@ -145,10 +145,10 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
 
     {type === 'DateTime' && (<div className={styles.wrapper}>
         <div className={styles.iconWrapper}>
-            <Icon24GearOutline width={24} height={24} />
+            <Icon24GearOutline fill='#E1E3E6' width={24} height={24} />
           </div>
           <div className={styles.iconWrapper}>
-            <Icon20ListAddOutline width={24} height={24} />
+            <Icon20ListAddOutline fill='#E1E3E6' width={24} height={24} />
           </div>
       <div className={styles.progressContainer}>
         {/* Прогресс-бар */}
@@ -185,13 +185,13 @@ const ProgressBadge: React.FC<ProgressBadgeProps> = ({ progress, type }) => {
 
     {type === 'Addons' && (<div className={styles.wrapper}>
         <div className={styles.iconWrapper}>
-            <Icon24GearOutline width={24} height={24} />
+            <Icon24GearOutline fill='#E1E3E6' width={24} height={24} />
           </div>
           <div className={styles.iconWrapper}>
-            <Icon20ListAddOutline width={24} height={24} />
+            <Icon20ListAddOutline fill='#E1E3E6' width={24} height={24} />
           </div>
           <div className={styles.iconWrapper}>
-            <Icon20CalendarOutline width={24} height={24} />
+            <Icon20CalendarOutline fill='#E1E3E6' width={24} height={24} />
           </div>
       <div className={styles.progressContainer}>
         {/* Прогресс-бар */}
