@@ -1,0 +1,49 @@
+
+.Panel {
+    overflow-y: hidden;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+.headerText {
+    color: var(--Dark-Text-Text-Primary, #E1E3E6);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: "VK Sans Display Expanded";
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px; /* 123.81% */
+}
+
+:global(.vkuiPanelHeader__in) {
+  background: #000;
+}
+
+:global(.vkuiSeparator__appearancePrimary) {
+  color: #000;
+}
+
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+
+  height: calc(100vh - 175px ); /* Пример — подстрой под свой layout */
+  overflow-y: auto;
+}
+
+.list > * {
+  position: sticky;
+  top: 0;
+  --current-z: calc(var(--base-z-index, 0) + var(--index, 0));
+  z-index: var(--current-z);
+}
+
+
