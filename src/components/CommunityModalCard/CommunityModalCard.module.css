@@ -2,17 +2,11 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 8px;        /* отступ от низа экрана */
+  bottom: 8px;     
   display: flex;
   justify-content: center;
   padding: 8px;
   z-index: 9997;
-  /* Убираем высоту и inset:
-     inset: 0;
-     height: fit-content;
-     margin-bottom: 40px;
-  */
-  /* Пропускаем клики через контейнер */
 }
 
 .card {
