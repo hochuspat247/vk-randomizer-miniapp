@@ -16,6 +16,13 @@
   justify-content: center;
 }
 
+:global(.vkuiPanelHeader__in) {
+  background-color: #000;
+}
+
+:global(.vkuiSeparator__appearancePrimary) {
+    color: #000;
+}
 .container {
   flex: 1;
   padding: 16px;

@@ -1,4 +1,4 @@
-import { FormItem, Input as VKInput, Textarea } from '@vkontakte/vkui';
+import { FormItem, Input as VKInput, Textarea, ConfigProvider } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import styles from './Input.module.css';
 
@@ -20,25 +20,27 @@ const Input: React.FC<VKInputProps> = ({
     onChange
 }) => {
     return (
-        <FormItem
-            top={withTitle ? title : undefined}
-            className={styles.formItem}
-        >
-            {type === "input" ? (
-                <VKInput 
-                    placeholder={placeholder} 
-                    value={value}
-                    onChange={onChange}
-                />
-            ) : (
-                <Textarea 
-                    rows={2} 
-                    placeholder={placeholder} 
-                    value={value}
-                    onChange={onChange}
-                />
-            )}
-        </FormItem>
+        <ConfigProvider colorScheme="dark">
+            <FormItem
+                top={withTitle ? title : undefined}
+                className={styles.formItem}
+            >
+                {type === "input" ? (
+                    <VKInput 
+                        placeholder={placeholder} 
+                        value={value}
+                        onChange={onChange}
+                    />
+                ) : (
+                    <Textarea 
+                        rows={2} 
+                        placeholder={placeholder} 
+                        value={value}
+                        onChange={onChange}
+                    />
+                )}
+            </FormItem>
+        </ConfigProvider>
     );
 };
 
