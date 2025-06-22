@@ -18,7 +18,6 @@ export interface FormData {
   endByParticipants: boolean;
   publishResults: boolean;
   onlySubscribers: boolean;
-  showInPartners: boolean;
   isPartners: boolean;
   hideParticipantsCount: boolean;
   excludeMe: boolean;

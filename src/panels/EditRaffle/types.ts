@@ -23,7 +23,6 @@ export interface FormData {
   endByParticipants: boolean;
   publishResults: boolean;
   onlySubscribers: boolean;
-  showInPartners: boolean;
   isPartners: boolean;
   hideParticipantsCount: boolean;
   excludeMe: boolean;
@@ -56,8 +55,6 @@ export interface ConditionStepProps {
   setRequiredCommunities: (value: string[]) => void;
   partnersTags: string[];
   setPartnersTags: (value: string[]) => void;
-  showInPartners: boolean;
-  setShowInPartners: (value: boolean) => void;
   isPartners: boolean;
   setIsPartners: (value: boolean) => void;
   numberWinners: string;

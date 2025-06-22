@@ -34,13 +34,11 @@ html, body, #root {
   padding: 0 12px;
   margin-top: 8px;
   margin-bottom: 16px;
-
   height: calc(100vh - 175px ); /* Пример — подстрой под свой layout */
   overflow-y: auto;
 }
 
 .list > * {
-  position: sticky;
   top: 0;
   --current-z: calc(var(--base-z-index, 0) + var(--index, 0));
   z-index: var(--current-z);
