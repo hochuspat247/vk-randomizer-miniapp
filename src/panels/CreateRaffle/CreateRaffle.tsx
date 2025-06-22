@@ -23,7 +23,7 @@ import { validateDateTime } from './utils/dateTimeUtils';
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
-  const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('DateTime');
+  const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('General');
 
   // Состояния формы
   const [formData, setFormData] = useState<FormData>({

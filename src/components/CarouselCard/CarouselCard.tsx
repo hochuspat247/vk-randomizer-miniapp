@@ -19,6 +19,8 @@ interface BaseCarouselCardProps {
   raffleItems?: RaffleCarouselCardProps[];
   /** если variant="community" — передаём CommunityBannerProps[] */
   communityItems?: CommunityBannerProps[];
+  buttonOnClick?: () => void;
+  buttonPlusOnClick?: () => void;
 }
 
 const CarouselCard: React.FC<BaseCarouselCardProps> = ({
@@ -28,6 +30,8 @@ const CarouselCard: React.FC<BaseCarouselCardProps> = ({
   variant,
   raffleItems = [],
   communityItems = [],
+  buttonOnClick, 
+  buttonPlusOnClick,
 }) => {
   // выбираем тот массив, который сейчас нужен
   const items = variant === 'raffle' ? raffleItems : communityItems;
@@ -121,11 +125,11 @@ const CarouselCard: React.FC<BaseCarouselCardProps> = ({
 
       {/* Кнопки под каруселью */}
       <div className={styles.buttons}>
-        <button type="button" className={styles.buttonPlus}>
+        <button type="button" className={styles.buttonPlus} onClick={buttonPlusOnClick}>
           <Icon20Add fill="#D4F94E" />
           <span className={styles.buttonPlusText}>{buttonPlus}</span>
         </button>
-        <button type="button" className={styles.button}>
+        <button type="button" className={styles.button} onClick={buttonOnClick}>
           <span className={styles.buttonText}>{button}</span>
         </button>
       </div>

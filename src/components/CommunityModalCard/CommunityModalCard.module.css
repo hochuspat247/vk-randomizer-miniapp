@@ -6,6 +6,7 @@
   align-items: flex-end;
   z-index: 9999;
   padding: 8px;
+  margin-bottom: 40px;
 }
 
 .card {
