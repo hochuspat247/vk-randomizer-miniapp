@@ -1,10 +1,10 @@
 import React from 'react';
 import Select from '@components/Select/Select';
-import Input from '@components/Input/Input';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
 import { CONDITION_OPTIONS, COMMUNITY_TAG_OPTIONS, BLACK_LIST, COMMUNITY_PARTNERS_OPTIONS } from '../constants';
 import styles from './ConditionStep.module.css';
 import { ConfigProvider } from '@vkontakte/vkui';
+import InputNumber from '@/components/InputNumbers/InputNumbers';
 
 interface ConditionStepProps {
   participationConditions: string[];
@@ -94,7 +94,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
         />
       )}
 
-      <Input
+      <InputNumber
         title="Количество победителей *"
         placeholder="Введите количество"
         type="input"

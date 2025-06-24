@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FormItem, FormLayoutGroup } from '@vkontakte/vkui';
 import Select from '@/components/Select/Select';
 import { DateTimePicker } from '@/components/DateTimePicker/DateTimePicker';
-import Input from '@/components/Input/Input';
 import { ToggleSwitch } from '@/components/ToggleSwitch/ToggleSwitch';
 import { getDateTimeFromOption } from '../utils/dateTimeUtils';
 import dayjs from 'dayjs';
 import styles from './DateTimeStep.module.css';
 import { END_OPTIONS, START_OPTIONS } from '../constants';
 import { DateTimeStepProps } from '../types';
+import InputNumber from '@/components/InputNumbers/InputNumbers';
 
 export const DateTimeStep: React.FC<DateTimeStepProps> = ({
   endByParticipants = false, 
@@ -160,7 +160,7 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
 
       {/* Всегда показываем лимит участников */}
       <FormItem className={styles.formItem} top={`Max колличество участников ${endByParticipants ? "" : "*"}`}>
-        <Input
+        <InputNumber
           type="input"
           value={memberMax}
           onChange={e => setMemberMax(e.target.value)}

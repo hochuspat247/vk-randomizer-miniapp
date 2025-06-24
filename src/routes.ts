@@ -11,6 +11,11 @@ export const router = createHashRouter([
     panel: 'mainpanel',
     view: 'default',
   },
+  {
+    path: '/previewpanel',
+    panel: 'previewpanel',
+    view: 'default',
+  },
    {
     path: '/faqpanel',
     panel: 'faqpanel',
@@ -53,6 +58,7 @@ export const PANELS = {
   TEST_PANEL: "testPanel",
   MAIN_PANEL: 'mainpanel',
   FAQ_PANEL: 'faqpanel',
-  EDIT_RAFFLE_PANEL: 'editrafflepanel'
+  EDIT_RAFFLE_PANEL: 'editrafflepanel',
+  PREVIEW_PANEL: 'previewpanel',
 
 };

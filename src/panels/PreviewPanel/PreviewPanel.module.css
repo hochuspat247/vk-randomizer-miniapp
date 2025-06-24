@@ -1,0 +1,13 @@
+.panelWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex: 1;
+    background: linear-gradient(
+    180deg,
+    #1f1f1f 0%,
+    #141414 50%,
+    #0d0d0d 100%
+  );
+}
