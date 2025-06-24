@@ -74,8 +74,6 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setRequiredCommunities={v => updateField('requiredCommunities', v)}
             partnersTags={formData.partnersTags}
             setPartnersTags={v => updateField('partnersTags', v)}
-            showInPartners={formData.showInPartners}
-            setShowInPartners={v => updateField('showInPartners', v)}
             isPartners={formData.isPartners}
             setIsPartners={v => updateField('isPartners', v)}
             numberWinners={formData.numberWinners}

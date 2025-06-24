@@ -13,8 +13,6 @@ interface ConditionStepProps {
   setRequiredCommunities: (value: string[]) => void;
   partnersTags: string[];
   setPartnersTags: (value: string[]) => void;
-  showInPartners: boolean;
-  setShowInPartners: (value: boolean) => void;
   isPartners: boolean;
   setIsPartners: (value: boolean) => void;
   numberWinners: string;
@@ -30,8 +28,6 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
   setRequiredCommunities,
   partnersTags,
   setPartnersTags,
-  showInPartners,
-  setShowInPartners,
   isPartners,
   setIsPartners,
   numberWinners,
@@ -66,13 +62,6 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
 
       <ConfigProvider colorScheme="dark"> 
         <div className={styles.checkboxGroup}>
-          <CustomCheckbox
-            label="Отображать в Партнерах"
-            checked={showInPartners}
-            onChange={setShowInPartners}
-            showAdditionalIcon={true}
-          />
-
           <CustomCheckbox
             label="У розыгрыша есть партнеры"
             checked={isPartners}

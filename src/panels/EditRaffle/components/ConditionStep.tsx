@@ -12,8 +12,6 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
   setRequiredCommunities,
   partnersTags,
   setPartnersTags,
-  showInPartners,
-  setShowInPartners,
   isPartners,
   setIsPartners,
   numberWinners,
@@ -51,12 +49,6 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
       </div>
 
       <div className={styles.checkboxGroup}>
-        <CustomCheckbox
-          label="Отображать в Партнерах"
-          checked={showInPartners}
-          onChange={setShowInPartners}
-          showAdditionalIcon={true}
-        />
 
         <CustomCheckbox
           label="У розыгрыша есть партнеры"

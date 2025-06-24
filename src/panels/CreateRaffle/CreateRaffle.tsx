@@ -116,8 +116,6 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setRequiredCommunities={(value) => setFormData({ ...formData, requiredCommunities: value })}
             partnersTags={formData.partnersTags}  
             setPartnersTags={(value) => setFormData({ ...formData, partnersTags: value })} 
-            showInPartners={formData.showInPartners}
-            setShowInPartners={(value) => setFormData({ ...formData, showInPartners: value })}
             isPartners={formData.isPartners}
             setIsPartners={(value) => setFormData({ ...formData, isPartners: value })}
             numberWinners={formData.numberWinners}

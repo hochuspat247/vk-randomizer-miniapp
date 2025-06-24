@@ -46,7 +46,12 @@ const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
       <div className={styles.cardTop}>
         <div className={styles.avatarInfo}>
           <span className={styles.name}>{name}</span>
-          <span className={styles.nickname}>{nickname}</span>
+          <span 
+            className={styles.nickname} 
+            onClick={() => window.open(`https://vk.com/${nickname}`, '_blank')}
+          >
+            {nickname}
+          </span>
         </div>
 
         <div className={styles.badges}>

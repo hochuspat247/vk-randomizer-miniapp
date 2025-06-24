@@ -54,7 +54,6 @@ letter-spacing: 0.2px;
 
 /* Общие стили для всех sticky-элементов */
 .rafflesCont > * {
-  position: sticky;
   top: 0;
   --current-z: calc(var(--base-z-index, 0) + var(--index, 0));
   z-index: var(--current-z);

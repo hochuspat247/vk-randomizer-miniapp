@@ -106,7 +106,12 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
           </div>
           <div className={styles.avatarInfo}>
             <span className={styles.name}>{name}</span>
-            <span className={styles.nickname}>{nickname}</span>
+            <span 
+              className={styles.nickname}   
+              onClick={() => window.open(`https://vk.com/${nickname}`, '_blank')}
+            >
+              {nickname}
+            </span>
           </div>
         {/* </div> */}
         {status !== "green" ? <ArrowRNoact /> : <ArrowRAct />} {/* Иконки неактивной и активной чтрелок */}
