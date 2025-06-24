@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { FormItem, FormLayoutGroup } from '@vkontakte/vkui';
 import Select from '@/components/Select/Select';
 import { DateTimePicker } from '@/components/DateTimePicker/DateTimePicker';
-import Input from '@/components/Input/Input';
 import { ToggleSwitch } from '@/components/ToggleSwitch/ToggleSwitch';
 import { getDateTimeFromOption } from '../utils/dateTimeUtils';
 import dayjs from 'dayjs';
 import styles from './DateTimeStep.module.css';
+import InputNumber from '@/components/InputNumbers/InputNumbers';
 
 const START_OPTIONS = [
   { label: 'Сейчас',           value: 'now'    },
@@ -160,7 +160,7 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
   return (
     <FormLayoutGroup mode="vertical" className={styles.FormLayoutGroup}>
       {/* Переключатель режима валидации (но поля отображаются всегда) */}
-      <FormItem className={styles.formItemT} onClick={console.log(endByParticipants)}>
+      <FormItem className={styles.formItemT}>
         <ToggleSwitch
           checked={endByParticipants}
           onChange={setEndByParticipants}
@@ -192,7 +192,7 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
 
       {/* Всегда показываем лимит участников */}
       <FormItem className={styles.formItem} top={`Max колличество участников ${endByParticipants ? "" : "*"}`}>
-        <Input
+        <InputNumber
           type="input"
           value={memberMax}
           onChange={e => setMemberMax(e.target.value)}

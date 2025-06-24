@@ -1,6 +1,6 @@
 import { FormItem, Input as VKInput, Textarea, ConfigProvider } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import styles from './Input.module.css';
+import styles from './InputNumbers.module.css';
 
 interface VKInputProps {
     title?: string;
@@ -11,7 +11,7 @@ interface VKInputProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-const Input: React.FC<VKInputProps> = ({
+const InputNumber: React.FC<VKInputProps> = ({
     title,
     placeholder = "Введите текст",
     withTitle = true,
@@ -32,6 +32,8 @@ const Input: React.FC<VKInputProps> = ({
                         placeholder={placeholder} 
                         value={value}
                         onChange={onChange}
+                        type='number'
+                        inputMode='numeric'
                     />
                 ) : (
                     <Textarea 
@@ -46,4 +48,4 @@ const Input: React.FC<VKInputProps> = ({
     );
 };
 
-export default Input;
+export default InputNumber;

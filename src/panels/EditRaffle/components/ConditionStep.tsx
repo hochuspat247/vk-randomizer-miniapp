@@ -1,9 +1,9 @@
 import React from 'react';
 import Select from '@components/Select/Select';
-import Input from '@components/Input/Input';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
 import styles from './ConditionStep.module.css';
 import { ConditionStepProps } from '../types';
+import InputNumbers from '@/components/InputNumbers/InputNumbers';
 
 export const ConditionStep: React.FC<ConditionStepProps> = ({
   participationConditions,
@@ -70,7 +70,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
         />
       )}
 
-      <Input
+      <InputNumbers
         title="Количество победителей *"
         placeholder="Введите количество"
         type="input"

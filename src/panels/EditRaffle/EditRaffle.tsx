@@ -179,7 +179,11 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
                 <ChevronRightIcon />
               </button>
             ) : (
-              <button type="submit" className={styles.nextButton}>
+              <button 
+                type="button" 
+                className={styles.nextButton}
+                onClick={() => nav.push("/previewpanel")}
+            >
                 <span className={styles.buttonText}>Завершить</span>
               </button>
             )}

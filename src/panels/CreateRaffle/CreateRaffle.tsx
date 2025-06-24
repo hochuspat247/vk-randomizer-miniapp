@@ -242,6 +242,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
                   type="submit"
                   className={styles.nextButton}
                   disabled={progress < 100}
+                  onClick={() => routeNavigator.push("/previewpanel")}
                 >
                   <span className={styles.buttonText}>Завершить</span>
                 </button>

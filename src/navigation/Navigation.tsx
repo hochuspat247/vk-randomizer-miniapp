@@ -15,6 +15,7 @@ import TestPanel from '@panels/TestPanel/TestPanel';
 import MainPanel from '@/panels/MainPanel/MainPanel';
 import FAQPanel from '@/panels/FAQPanel/FAQPanel';
 import EditRaffle from '@/panels/EditRaffle/EditRaffle';
+import PreviewPanel from '@/panels/PreviewPanel/PreviewPanel';
 
 const Navigation: React.FC = () => {
   const routeNavigator = useRouteNavigator();
@@ -67,6 +68,7 @@ const Navigation: React.FC = () => {
             <MainPanel id={PANELS.MAIN_PANEL}/>
             <FAQPanel id={PANELS.FAQ_PANEL} />
             <EditRaffle id={PANELS.EDIT_RAFFLE_PANEL} />
+            <PreviewPanel id={PANELS.PREVIEW_PANEL} />
           </View>
         </Epic>
       </ConfigProvider>
