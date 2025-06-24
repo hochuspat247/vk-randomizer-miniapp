@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styles from './CommunityBanner.module.css';
 import { Icon20ChevronRight } from '@vkontakte/icons';
 import LockIcon from '@/assets/icons/LockG'; // ваша иконка замка (зелёная)
-import DefaultAvatar from '@/assets/images/Picture (1).png'; 
+import DefaultAvatar from '@/assets/images/Picture(1).png'; 
 
 export interface CommunityBannerProps {
   /** URL аватара сообщества */

@@ -1,4 +1,4 @@
-import avatar from '../assets/images/Picture (1).png';
+import avatar from '../assets/images/Picture(1).png';
 
 export const communityModalMocks = [
   {

@@ -25,6 +25,7 @@ import { declOfNum } from '@/panels/CreateRaffle/utils/declension';
 
 
 interface CommunityCardProps {
+  id: string;
   membersCount: string;
   raffleCount: string;
   adminType: 'admin' | 'owner';
@@ -38,6 +39,7 @@ interface CommunityCardProps {
 }
 
 const CommunityCard: React.FC<CommunityCardProps> = ({
+  id,
   membersCount,
   raffleCount,
   adminType,

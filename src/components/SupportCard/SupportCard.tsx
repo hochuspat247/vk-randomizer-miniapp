@@ -6,7 +6,7 @@ import { Icon20LifebuoyOutline } from '@vkontakte/icons';
 import { SupportTitle, SupportButton, SupportDesc, SupportAlt, GuideTitle, GuideDesc, GuideButton, GuideAlt, AdminOwnerTitle, AdminOwnerDesc, AdminOwnerButton, AdminOwnerAlt } from '@/constants/Texts/SupportCardText';
 
 import spiralSupport from '@assets/images/261.png';
-import spiralGuide from '@assets/images/Image Container.png';
+import spiralGuide from '@assets/images/ImageContainer.png';
 import spiralAdmin from '@assets/images/260.png';
 import { SupportCardProps } from './SupportCardTypes';
 
