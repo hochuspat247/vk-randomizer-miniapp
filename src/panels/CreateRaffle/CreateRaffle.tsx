@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Panel,
   PanelHeader,
@@ -37,22 +37,20 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     blackListSel: [],
     startDateTime: new Date().toISOString(),
     endDateTime: new Date().toISOString(),
-    autoSelectWinners: false,
     publishResults: false,
     onlySubscribers: false,
-    showInPartners: false,
     isPartners: false,
     hideParticipantsCount: false,
     excludeMe: false,
     excludeAdmins: false,
     partnersTags: [],
     memberMax: "",
-
     startDateLabel: '',
     endDateLabel: '',
-
     isSelectedStartTime: "",
     isSelectedEndTime: "",
+    telegramChannel: [],
+    endByParticipants: false,
   });
 
   const progress = useProgress(formData);
@@ -91,6 +89,10 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     console.log('Form data:', formData);
   };
 
+  const handlePhotosChange = useCallback((photos: File[]) => {
+    setFormData(prev => ({ ...prev, photos }));
+  }, []);
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 'General':
@@ -103,7 +105,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             prizeDescription={formData.prizeDescription}
             setPrizeDescription={(value) => setFormData({ ...formData, prizeDescription: value })}
             photos={formData.photos}
-            onPhotosChange={(photos) => setFormData({ ...formData, photos })}
+            onPhotosChange={handlePhotosChange}
           />
         );
 
@@ -111,19 +113,20 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         return (
           <ConditionStep
             participationConditions={formData.participationConditions}
-            setParticipationConditions={(value) => setFormData({ ...formData, participationConditions: value })}
+            setParticipationConditions={(value) => setFormData({ ...formData, participationConditions: Array.isArray(value) ? value : [value] })}
             requiredCommunities={formData.requiredCommunities}
-            setRequiredCommunities={(value) => setFormData({ ...formData, requiredCommunities: value })}
+            setRequiredCommunities={(value) => setFormData({ ...formData, requiredCommunities: Array.isArray(value) ? value : [value] })}
             partnersTags={formData.partnersTags}  
-            setPartnersTags={(value) => setFormData({ ...formData, partnersTags: value })} 
+            setPartnersTags={(value) => setFormData({ ...formData, partnersTags: Array.isArray(value) ? value : [value] })} 
             isPartners={formData.isPartners}
             setIsPartners={(value) => setFormData({ ...formData, isPartners: value })}
             numberWinners={formData.numberWinners}
             setNumberWinners={(value) => setFormData({ ...formData, numberWinners: value })}
             blackListSel={formData.blackListSel}
-            setBlackListSel={(value) => setFormData({ ...formData, blackListSel: value })}            
+            setBlackListSel={(value) => setFormData({ ...formData, blackListSel: Array.isArray(value) ? value : [value] })}
+            telegramChannel={formData.telegramChannel || []}
+            setTelegramChannel={(value) => setFormData({ ...formData, telegramChannel: Array.isArray(value) ? value : [value] })}
           />
-
         );
 
       case 'DateTime':
@@ -173,16 +176,22 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
 
   // валидация даты начала и конца розыгрыша
   const canProceed = (() => {
-  if (currentStep === 'DateTime') {
-    return (
-      !!formData.startDateTime &&
-      !!formData.endDateTime &&
-      validateDateTime(formData.startDateTime, formData.endDateTime)
-    );
-  } else {
-    return isStepComplete(currentStep, formData);
-  }
-})();
+    if (currentStep === 'DateTime') {
+      if (formData.endByParticipants) {
+        // По участникам: memberMax обязательно и > 0
+        return !!formData.memberMax && Number(formData.memberMax) > 0;
+      } else {
+        // По дате: стандартная валидация дат
+        return (
+          !!formData.startDateTime &&
+          !!formData.endDateTime &&
+          validateDateTime(formData.startDateTime, formData.endDateTime)
+        );
+      }
+    } else {
+      return isStepComplete(currentStep, formData);
+    }
+  })();
 
   return (
     <Panel id={id} className={styles.panelOverride}>
@@ -192,10 +201,9 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             <BackIcon />
           </div>
         }
-        getHeaderClassName={() => styles.panelHeaderOverride}
-        getContentClassName={() => styles.panelHeaderContentOverride}
+        className={styles.panelHeaderOverride}
       >
-        <PanelHeaderContent>
+        <PanelHeaderContent className={styles.panelHeaderContentOverride}>
           <span className={styles.panelHeaderText}>{CreateRaffleText_Panel}</span>
         </PanelHeaderContent>
       </PanelHeader>

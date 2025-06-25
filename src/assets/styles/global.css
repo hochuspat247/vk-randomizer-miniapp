@@ -26,3 +26,8 @@ html {
   background: #000000 !important;
 }
 
+.vkuiFormItem__asterisk {
+  color: inherit !important;
+  opacity: 1 !important;
+}
+

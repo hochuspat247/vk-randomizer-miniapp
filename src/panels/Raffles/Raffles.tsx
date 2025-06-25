@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './Raffles.module.css';
 
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import { Panel, PanelHeader } from '@vkontakte/vkui';
+import { Panel, PanelHeader, Spinner } from '@vkontakte/vkui';
 import {Icon24ChevronLeft } from '@vkontakte/icons';
 import FilterIcon from '../../assets/icons/FilterIcon';
-import RaffleCardMocks from '../../mocks/RaffleCardMocks';
+import { useRaffleCards } from '@/hooks/useRaffleCards';
+import { useRaffleCarouselCards } from '@/hooks/useRaffleCarouselCards';
 import RaffleCard from '../../components/RaffleCard/RaffleCard';
-import RaffleCarouselCardMocks from '../../mocks/RaffleCarouselCardMocks';
 import RaffleCarouselCard from '../../components/RaffleCarouselCard/RaffleCarouselCard';
 
 import SupportCard from '@/components/SupportCard/SupportCard';
@@ -19,6 +19,8 @@ interface RafflesProps {
 const Raffles: React.FC<RafflesProps> = ({ id }) => {
 
 const router = useRouteNavigator();
+const { data: raffles, loading, error } = useRaffleCards();
+const { data: carouselCards, loading: carouselLoading, error: carouselError } = useRaffleCarouselCards();
 
   return (
      <Panel id={id}>
@@ -38,46 +40,35 @@ const router = useRouteNavigator();
                 <span className={styles.filterText}>Фильтр</span>
             </button>
             <div className={styles.rafflesCont}>
-                {RaffleCardMocks.map((raffle) => (
+                {loading && (
+                  <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}>
+                    <Spinner size="m" />
+                  </div>
+                )}
+                {error && (
+                  <div style={{ color: 'red', textAlign: 'center', padding: 24 }}>{error}</div>
+                )}
+                {!loading && !error && raffles && raffles.map((raffle) => (
                     <RaffleCard
                     key={raffle.raffleId}
-                    raffleId={raffle.raffleId}
-                    name={raffle.name}
-                    textRaffleState={raffle.textRaffleState}
-                    winnersCount={raffle.winnersCount}
-                    mode={raffle.mode}
-                    memberCount={raffle.memberCount}
-                    timeLeft={raffle.timeLeft}
-                    progress={raffle.progress}
-                    lastModified={raffle.lastModified}
-                    modifiedBy={raffle.modifiedBy}
-                    statusСommunity={raffle.statusСommunity}
-                    statusNestedCard={raffle.statusNestedCard}
-                    statusNestedText={raffle.statusNestedText}
-                    nickname={raffle.nickname}
-                    membersCountNested={raffle.membersCountNested}
-                    adminType={raffle.adminType}
+                    {...raffle}
                     />
                 ))}
 
                 <div className={styles.rafflesMiniCont}>
                 <div className={styles.rafflesMini}>
                     <span className={styles.completedText}>Завершенные</span>
-                    {RaffleCarouselCardMocks
+                    {carouselLoading && <Spinner size="s" />}
+                    {carouselError && <div style={{ color: 'red', padding: 8 }}>{carouselError}</div>}
+                    {!carouselLoading && !carouselError && carouselCards && carouselCards
                         .filter(raffle => 
                             raffle.status === 'resultsWhite' || 
                             raffle.status === 'results'
                         )
-                        .map((raffle, index) => (
+                        .map((raffle) => (
                             <RaffleCarouselCard
                                 key={raffle.raffleId}
-                                raffleId={raffle.raffleId}
-                                name={raffle.name}
-                                status={raffle.status}
-                                stateText={raffle.stateText}
-                                members={raffle.members}
-                                endDate={raffle.endDate}
-                                updatedAt={raffle.updatedAt}
+                                {...raffle}
                             />
                         ))
                     }
@@ -87,22 +78,18 @@ const router = useRouteNavigator();
 
                     <div className={styles.rafflesMini}>
                         <span className={styles.completedText}>Неактивные</span>
-                        {RaffleCarouselCardMocks
+                        {carouselLoading && <Spinner size="s" />}
+                        {carouselError && <div style={{ color: 'red', padding: 8 }}>{carouselError}</div>}
+                        {!carouselLoading && !carouselError && carouselCards && carouselCards
                             .filter(raffle => 
                                 raffle.status === 'draft' || 
                                 raffle.status === 'pending' ||
                                 raffle.status === 'deleted'
                             )
-                            .map((raffle, index) => (
+                            .map((raffle) => (
                                 <RaffleCarouselCard
                                     key={raffle.raffleId}
-                                    raffleId={raffle.raffleId}
-                                    name={raffle.name}
-                                    status={raffle.status}
-                                    stateText={raffle.stateText}
-                                    members={raffle.members}
-                                    endDate={raffle.endDate}
-                                    updatedAt={raffle.updatedAt}
+                                    {...raffle}
                                 />
                             ))
                         }

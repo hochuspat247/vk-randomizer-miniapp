@@ -4,11 +4,18 @@
     flex-direction: column;
     flex: 1 0 0;
     align-self: stretch;
+    width: 100%;
     background: var(--Dark-Background-Background-Modal, #2D2D2E);
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.05);
     gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 8px;
+  }
 }
 
 .cardTop {

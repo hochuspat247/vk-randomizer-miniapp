@@ -61,7 +61,6 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setPrizeDescription={v => updateField('prizeDescription', v)}
             photos={formData.photos}
             onPhotosChange={photos => updateField('photos', photos)}
-            communityOptions={formData.communityOptions}
           />
         );
 
@@ -138,10 +137,9 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             <BackIcon />
           </div>
         }
-        getHeaderClassName={() => styles.panelHeaderOverride}
-        getContentClassName={() => styles.panelHeaderContentOverride}
+        className={styles.panelHeaderOverride}
       >
-        <PanelHeaderContent>
+        <PanelHeaderContent className={styles.panelHeaderContentOverride}>
           <span className={styles.panelHeaderText}>
             {CreateRaffleText_Panel}
           </span>

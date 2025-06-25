@@ -6,7 +6,6 @@ import persic from "@assets/images/persik.png"
 
 export const editRaffleMock: FormData = {
   community: 'Мемы дня',
-  communityOptions: ['Мемы дня', 'Игровые новости', 'Кулинарные рецепты'],
   giveawayName: 'Супер приз!',
   prizeDescription: 'Дарим айфон 15',
   photos: [],
@@ -20,10 +19,8 @@ export const editRaffleMock: FormData = {
   blackListOptions: ['@klecke', '@,ldel', '@l;vl', '@klecke', '@,ldel', '@l;vl'],
   startDateTime: new Date().toISOString(),
   endDateTime: new Date(Date.now() + 3600_000).toISOString(),
-  autoSelectWinners: false,
   publishResults: false,
   onlySubscribers: false,
-  showInPartners: true,
   isPartners: true,
   hideParticipantsCount: false,
   excludeMe: false,

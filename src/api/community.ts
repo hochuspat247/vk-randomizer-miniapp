@@ -1,98 +1,103 @@
-// Запросы для работы с сообществами
+// Запросы для работы с сообществами через VK API
 
+import { VKApi } from './vkApi';
+import { transformVKGroupsToCommunityCards, filterAdminGroups, getRoleDisplayName } from '@/utils/vkTransformers';
 import { 
   CommunityCard, 
   CreateCommunityCardRequest, 
   UpdateCommunityCardRequest,
-  ApiResponse,
-  ApiError 
+  CommunityBanner 
 } from '../types/community';
-import { API_BASE_URL } from './config';
 
-// Базовые функции для HTTP запросов
-const handleResponse = async <T>(response: Response): Promise<T> => {
-  if (!response.ok) {
-    const errorData: ApiError = await response.json().catch(() => ({ detail: [] }));
-    throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.detail?.[0]?.msg || 'Unknown error'}`);
+export const communitiesApi = {
+  // Получить список всех карточек сообществ из VK API (включая все роли)
+  async getCards(): Promise<CommunityCard[]> {
+    try {
+      // Получаем все сообщества, где у пользователя есть права (админ, редактор, модератор, рекламодатель)
+      const vkGroups = await VKApi.getUserGroupsWithRights();
+      return transformVKGroupsToCommunityCards(vkGroups);
+    } catch (error) {
+      console.error('Ошибка получения сообществ из VK API:', error);
+      throw error;
+    }
+  },
+
+  // Получить только сообщества где пользователь администратор (для обратной совместимости)
+  async getAdminGroups(): Promise<CommunityCard[]> {
+    try {
+      const vkGroups = await VKApi.getUserAdminGroups();
+      return transformVKGroupsToCommunityCards(vkGroups);
+    } catch (error) {
+      console.error('Ошибка получения административных сообществ:', error);
+      throw error;
+    }
+  },
+
+  // Получить все сообщества пользователя (включая те, где он не администратор)
+  async getAllUserGroups(): Promise<CommunityCard[]> {
+    try {
+      const vkGroups = await VKApi.getUserGroups();
+      const adminGroups = filterAdminGroups(vkGroups);
+      return transformVKGroupsToCommunityCards(adminGroups);
+    } catch (error) {
+      console.error('Ошибка получения всех сообществ пользователя:', error);
+      throw error;
+    }
+  },
+
+  // Получить карточку сообщества по ID из VK API
+  async getCardById(cardId: string): Promise<CommunityCard> {
+    try {
+      const groupId = parseInt(cardId);
+      if (isNaN(groupId)) {
+        throw new Error('Неверный ID сообщества');
+      }
+      
+      const vkGroup = await VKApi.getGroupInfo(groupId);
+      const communityCards = transformVKGroupsToCommunityCards([vkGroup]);
+      return communityCards[0];
+    } catch (error) {
+      console.error('Ошибка получения сообщества по ID:', error);
+      throw error;
+    }
+  },
+
+  // Создать новую карточку сообщества (заглушка, так как создание через VK API не поддерживается)
+  async createCard(cardData: CreateCommunityCardRequest): Promise<CommunityCard> {
+    throw new Error('Создание сообществ через VK API не поддерживается');
+  },
+
+  // Полностью обновить карточку сообщества (заглушка)
+  async updateCard(cardId: string, cardData: CreateCommunityCardRequest): Promise<CommunityCard> {
+    throw new Error('Обновление сообществ через VK API не поддерживается');
+  },
+
+  // Частично обновить карточку сообщества (заглушка)
+  async patchCard(cardId: string, cardData: UpdateCommunityCardRequest): Promise<CommunityCard> {
+    throw new Error('Обновление сообществ через VK API не поддерживается');
+  },
+
+  // Удалить карточку сообщества (заглушка)
+  async deleteCard(cardId: string): Promise<void> {
+    throw new Error('Удаление сообществ через VK API не поддерживается');
+  },
+
+  // Получить баннеры сообществ
+  async getBanners(): Promise<CommunityBanner[]> {
+    try {
+      const vkGroups = await VKApi.getUserGroupsWithRights();
+      const communityCards = transformVKGroupsToCommunityCards(vkGroups);
+      
+      return communityCards.map(card => ({
+        avatarUrl: card.avatarUrl,
+        name: card.name,
+        adminType: getRoleDisplayName(card.adminType)
+      }));
+    } catch (error) {
+      console.error('Ошибка получения баннеров сообществ:', error);
+      throw error;
+    }
   }
-  return response.json();
 };
 
-const apiRequest = async <T>(
-  endpoint: string, 
-  options: RequestInit = {}
-): Promise<T> => {
-  const url = `${API_BASE_URL}${endpoint}`;
-  const response = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-    ...options,
-  });
-  
-  return handleResponse<T>(response);
-};
-
-// API функции для сообществ
-
-/**
- * Получить список всех карточек сообществ
- */
-export const getCommunityCards = async (): Promise<CommunityCard[]> => {
-  return apiRequest<CommunityCard[]>('/communities/cards');
-};
-
-/**
- * Создать новую карточку сообщества
- */
-export const createCommunityCard = async (
-  card: CreateCommunityCardRequest
-): Promise<CommunityCard> => {
-  return apiRequest<CommunityCard>('/communities/cards', {
-    method: 'POST',
-    body: JSON.stringify(card),
-  });
-};
-
-/**
- * Получить карточку сообщества по ID
- */
-export const getCommunityCardById = async (cardId: string): Promise<CommunityCard> => {
-  return apiRequest<CommunityCard>(`/communities/cards/${cardId}`);
-};
-
-/**
- * Обновить карточку сообщества (полное обновление)
- */
-export const updateCommunityCard = async (
-  cardId: string, 
-  card: CreateCommunityCardRequest
-): Promise<CommunityCard> => {
-  return apiRequest<CommunityCard>(`/communities/cards/${cardId}`, {
-    method: 'PUT',
-    body: JSON.stringify(card),
-  });
-};
-
-/**
- * Частично обновить карточку сообщества
- */
-export const patchCommunityCard = async (
-  cardId: string, 
-  card: UpdateCommunityCardRequest
-): Promise<CommunityCard> => {
-  return apiRequest<CommunityCard>(`/communities/cards/${cardId}`, {
-    method: 'PATCH',
-    body: JSON.stringify(card),
-  });
-};
-
-/**
- * Удалить карточку сообщества
- */
-export const deleteCommunityCard = async (cardId: string): Promise<void> => {
-  return apiRequest<void>(`/communities/cards/${cardId}`, {
-    method: 'DELETE',
-  });
-};
+export default communitiesApi;

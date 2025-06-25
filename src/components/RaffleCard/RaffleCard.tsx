@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './RaffleCard.module.css';
 import RaffleState from '../RaffleState/RaffleState';
 import NestedCommunityCard from '../NestedCommunityCard/NestedCommunityCard';
@@ -22,6 +22,8 @@ import { declOfNum } from '@/panels/CreateRaffle/utils/declension';
 import UserCheckIcon from '@/assets/icons/UserCheckIcon';
 import { router } from '@/routes';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import { nestedCommunityApi, NestedCommunityCard as NestedCommunityCardType } from '@/api/nestedCommunity';
+import { Spinner } from '@vkontakte/vkui';
 
 interface RaffleCardProps {
   raffleId: string;
@@ -72,6 +74,25 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
 }) => {
   const [expanded, setExpanded] = useState(true);
   const router = useRouteNavigator(); 
+
+  // --- Nested community card fetch ---
+  const [nestedCard, setNestedCard] = useState<NestedCommunityCardType | null>(null);
+  const [nestedLoading, setNestedLoading] = useState(false);
+  const [nestedError, setNestedError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!expanded) return;
+    setNestedLoading(true);
+    setNestedError(null);
+    nestedCommunityApi.getCards()
+      .then(cards => {
+        const found = cards.find(card => card.nickname === nickname);
+        setNestedCard(found || null);
+      })
+      .catch(e => setNestedError(e.message || 'Ошибка загрузки'))
+      .finally(() => setNestedLoading(false));
+  }, [expanded, nickname]);
+  // --- End nested fetch ---
 
   const renderBadgesPE = () => {
     switch (mode) {
@@ -192,14 +213,23 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
       </div>
 
       {expanded && (
-        <NestedCommunityCard
-          name={name}
-          nickname={nickname}
-          status={statusNestedCard}
-          statusText={statusNestedText}
-          membersCount={membersCountNested}
-          adminType={adminType}
-        />
+        <div style={{ marginTop: 12 }}>
+          {nestedLoading && <Spinner size="s" />}
+          {nestedError && <div style={{ color: 'red', padding: 8 }}>{nestedError}</div>}
+          {nestedCard && (
+            <NestedCommunityCard
+              name={nestedCard.name}
+              nickname={nestedCard.nickname}
+              status={nestedCard.status === null || nestedCard.status === undefined ? 'undefined' : nestedCard.status}
+              statusText={nestedCard.statusText}
+              membersCount={nestedCard.membersCount}
+              adminType={nestedCard.adminType}
+            />
+          )}
+          {!nestedLoading && !nestedError && !nestedCard && (
+            <div style={{ color: '#999', padding: 8 }}>Нет данных о вложенном сообществе</div>
+          )}
+        </div>
       )}
     </div>
   );

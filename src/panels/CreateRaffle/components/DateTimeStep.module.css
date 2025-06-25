@@ -25,3 +25,8 @@
 .formItemT {
   padding: 0;
 }
+
+.vkuiFormItem__asterisk {
+  color: inherit !important;
+  opacity: 1 !important;
+}

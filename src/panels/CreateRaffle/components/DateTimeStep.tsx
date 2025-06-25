@@ -162,14 +162,14 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
       {/* Переключатель режима валидации (но поля отображаются всегда) */}
       <FormItem className={styles.formItemT}>
         <ToggleSwitch
-          checked={endByParticipants}
-          onChange={setEndByParticipants}
+          checked={!endByParticipants}
+          onChange={v => setEndByParticipants(!v)}
           label="Условия завершения розыгрыша *"
         />
       </FormItem>
 
       {/* Всегда показываем начало */}
-      <FormItem className={styles.formItem} top={`Старт розыгрыша ${endByParticipants ? "*" : ""}`}>
+      <FormItem className={styles.formItem} top={<span className="selectTitle">Старт розыгрыша *</span>}>
         <Select
           placeholder="Выберите дату начала"
           options={START_OPTIONS.map(o => o.label)}
@@ -190,37 +190,41 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
         )}
       </FormItem>
 
-      {/* Всегда показываем лимит участников */}
-      <FormItem className={styles.formItem} top={`Max колличество участников ${endByParticipants ? "" : "*"}`}>
-        <InputNumber
-          type="input"
-          value={memberMax}
-          onChange={e => setMemberMax(e.target.value)}
-          placeholder="Введите max количество участников"
-        />
-      </FormItem>
-
-      {/* Всегда показываем окончание */}
-      <FormItem className={styles.formItem} top={`Заврешение розыгрыша ${endByParticipants ? "*" : ""}`}>
-        <Select
-          placeholder="Укажите дату окончания"
-          options={END_OPTIONS.map(o => o.label)}
-          value={endLabel}
-          onChange={onEndSelect}
-        />
-        {endOption === 'custom' && (
-          <DateTimePicker
-            value={endDateTime}
-            onChange={e => {
-              setEndDirty(true);
-              setEndDateTime(e.target.value);
-              setIsSelectedEndTime('custom');
-            }}
-            placeholder="Укажите дату и время"
-            tittle="Завершение розыгрыша"
+      {/* Показываем лимит участников только если выбран режим 'По участникам' */}
+      {endByParticipants && (
+        <FormItem className={styles.formItem} top={<span className="selectTitle">Max колличество участников *</span>}>
+          <InputNumber
+            type="input"
+            value={memberMax}
+            onChange={e => setMemberMax(e.target.value)}
+            placeholder="Введите max количество участников"
           />
-        )}
-      </FormItem>
+        </FormItem>
+      )}
+
+      {/* Показываем окончание только если выбран режим 'По дате' */}
+      {!endByParticipants && (
+        <FormItem className={styles.formItem} top={`Заврешение розыгрыша *`}>
+          <Select
+            placeholder="Укажите дату окончания"
+            options={END_OPTIONS.map(o => o.label)}
+            value={endLabel}
+            onChange={onEndSelect}
+          />
+          {endOption === 'custom' && (
+            <DateTimePicker
+              value={endDateTime}
+              onChange={e => {
+                setEndDirty(true);
+                setEndDateTime(e.target.value);
+                setIsSelectedEndTime('custom');
+              }}
+              placeholder="Укажите дату и время"
+              tittle="Завершение розыгрыша"
+            />
+          )}
+        </FormItem>
+      )}
     </FormLayoutGroup>
   );
 };

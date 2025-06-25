@@ -1,24 +1,27 @@
 import React from 'react';
 import Select from '@components/Select/Select';
 import CustomCheckbox from '@components/CustomCheckbox/CustomCheckbox';
-import { CONDITION_OPTIONS, COMMUNITY_TAG_OPTIONS, BLACK_LIST, COMMUNITY_PARTNERS_OPTIONS } from '../constants';
+import { CONDITION_OPTIONS, COMMUNITY_TAG_OPTIONS, BLACK_LIST, COMMUNITY_PARTNERS_OPTIONS, TELEGRAM_CHANNEL_OPTIONS } from '../constants';
 import styles from './ConditionStep.module.css';
 import { ConfigProvider } from '@vkontakte/vkui';
 import InputNumber from '@/components/InputNumbers/InputNumbers';
+import Input from '@components/Input/Input';
 
 interface ConditionStepProps {
   participationConditions: string[];
-  setParticipationConditions: (value: string[]) => void;
+  setParticipationConditions: (value: string[] | string) => void;
   requiredCommunities: string[];
-  setRequiredCommunities: (value: string[]) => void;
+  setRequiredCommunities: (value: string[] | string) => void;
   partnersTags: string[];
-  setPartnersTags: (value: string[]) => void;
+  setPartnersTags: (value: string[] | string) => void;
   isPartners: boolean;
   setIsPartners: (value: boolean) => void;
   numberWinners: string;
   setNumberWinners: (value: string) => void;
   blackListSel: string[];
-  setBlackListSel: (value: string[]) => void;
+  setBlackListSel: (value: string[] | string) => void;
+  telegramChannel: string[];
+  setTelegramChannel: (value: string[] | string) => void;
 }
 
 export const ConditionStep: React.FC<ConditionStepProps> = ({
@@ -34,7 +37,10 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
   setNumberWinners,
   blackListSel,
   setBlackListSel,
+  telegramChannel,
+  setTelegramChannel,
 }) => {
+  const isTelegramSelected = participationConditions.includes('Подписка на Telegram-канал');
   return (
     <div className={styles.conditionContainer}>
       <div className={styles.formField1}>
@@ -42,18 +48,32 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
           title="Обязательные условия участия *"
           placeholder="Выберите условия"
           options={CONDITION_OPTIONS}
-          onChange={setParticipationConditions}
+          onChange={val => setParticipationConditions(Array.isArray(val) ? val : [val])}
           value={participationConditions}
           multiple={true}
         />
       </div>
+
+      {isTelegramSelected && (
+        <div className={styles.formFieldTelegram}>
+          <Select
+            title="Выберите Telegram-канал"
+            placeholder="Выберите или введите канал"
+            options={TELEGRAM_CHANNEL_OPTIONS}
+            value={telegramChannel}
+            onChange={val => setTelegramChannel(Array.isArray(val) ? val : [val])}
+            multiple={true}
+            allowInput={true}
+          />
+        </div>
+      )}
 
       <div className={styles.formField2}>
         <Select
           title="Введите теги обязательных сообществ *"
           placeholder="Выберите сообщества"
           options={COMMUNITY_TAG_OPTIONS}
-          onChange={setRequiredCommunities}
+          onChange={val => setRequiredCommunities(Array.isArray(val) ? val : [val])}
           value={requiredCommunities}
           multiple={true}
           allowInput={true}
@@ -76,7 +96,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
           title="Введите теги партнеров"
           placeholder="Выберите партнеров"
           options={COMMUNITY_PARTNERS_OPTIONS}
-          onChange={setPartnersTags}
+          onChange={val => setPartnersTags(Array.isArray(val) ? val : [val])}
           value={partnersTags}
           multiple={true}
           allowInput={true}
@@ -96,7 +116,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
           title="Черный список участников"
           placeholder="Выберите или введите тег"
           options={BLACK_LIST}
-          onChange={setBlackListSel}
+          onChange={val => setBlackListSel(Array.isArray(val) ? val : [val])}
           value={blackListSel}
           multiple={true}
           allowInput={true}

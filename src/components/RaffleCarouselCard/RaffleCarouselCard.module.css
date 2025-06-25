@@ -7,14 +7,22 @@
     flex-direction: column;
     padding: 14px;
     gap: 12px;
-  }
+    width: 100%;
+    margin: 0 auto;
+}
 
-  .cardTop {
+@media (max-width: 600px) {
+  .card {
+    padding: 8px;
+  }
+}
+
+.cardTop {
     display: flex;
     justify-content: space-between;
-  }
+}
 
-  .raffleL {
+.raffleL {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -77,14 +85,13 @@
     -webkit-line-clamp: 2;
 }
 
-  
-  .rightBadges {
+.rightBadges {
     display: flex;
     gap: 4px;
     flex-direction: column;
-  }
-  
-  .badge {
+}
+
+.badge {
     display: flex;
     padding: 4px 6px;
     border-radius: 6px;
@@ -95,39 +102,39 @@
     font-weight: 700;
     color: #FFF;
     text-transform: uppercase;
-  }
-  
-  .footer {
+}
+
+.footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-  }
-  
-  .updated {
+}
+
+.updated {
     color: #76787A;
     font-size: 10px;
     font-weight: 400;
     line-height: normal;
-  }
-  
-  .actions {
+}
+
+.actions {
     display: flex;
     gap: 8px;
-  }
-  
-  .iconBtn {
+}
+
+.iconBtn {
     background: none;
     border: none;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
 
-  .cont {
+.cont {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+}
   

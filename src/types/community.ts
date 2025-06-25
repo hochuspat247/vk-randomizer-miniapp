@@ -6,11 +6,17 @@ export interface CommunityCard {
   nickname: string;
   membersCount: string;
   raffleCount: string;
-  adminType: 'owner' | 'admin';
+  adminType: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser';
   avatarUrl: string;
   status: 'green' | 'yellow' | 'red';
   buttonDesc: string;
   stateText: string;
+}
+
+export interface CommunityBanner {
+  avatarUrl?: string;
+  name: string;
+  adminType: string;
 }
 
 export interface CreateCommunityCardRequest {
@@ -19,7 +25,7 @@ export interface CreateCommunityCardRequest {
   nickname: string;
   membersCount: string;
   raffleCount: string;
-  adminType: 'owner' | 'admin';
+  adminType: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser';
   avatarUrl: string;
   status: 'green' | 'yellow' | 'red';
   buttonDesc: string;
@@ -31,7 +37,7 @@ export interface UpdateCommunityCardRequest {
   nickname?: string;
   membersCount?: string;
   raffleCount?: string;
-  adminType?: 'owner' | 'admin';
+  adminType?: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser';
   avatarUrl?: string;
   status?: 'green' | 'yellow' | 'red';
   buttonDesc?: string;

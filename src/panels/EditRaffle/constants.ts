@@ -1,10 +1,7 @@
-export const COMMUNITY_OPTIONS = ['Мемы дня', 'Игровые новости', 'Кулинарные рецепты'];
 export const BLACK_LIST = ['@klecke', '@,ldel', '@l;vl', '@klecke', '@,ldel', '@l;vl'];
 export const CONDITION_OPTIONS = [
-  'лайк',
-  'Сделать репост записи',
-  'Оставить комментарий',
-  'Отметить друзей',
+  'Подписка на сообщество',
+  'Подписка на Telegram-канал',
 ];
 export const COMMUNITY_TAG_OPTIONS = ['@mscw_runclub', '@m_culture', '@mscw_runclub', '@m_culture'];
 export const COMMUNITY_PARTNERS_OPTIONS = ['@mscw_rb', '@m_cure', '@ms_runclub', '@m_cure']
@@ -22,4 +19,10 @@ export const END_OPTIONS = [
   { value: '14days', label: 'Через 14 дней' },
   { value: '1month', label: 'Через месяц' },
   { value: 'custom', label: 'Выбрать дату и время' },
+];
+
+export const TELEGRAM_CHANNEL_OPTIONS = [
+  '@test_channel1',
+  '@test_channel2',
+  '@test_channel3',
 ]; 

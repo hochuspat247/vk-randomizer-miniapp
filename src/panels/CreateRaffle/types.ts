@@ -28,4 +28,5 @@ export interface FormData {
   isSelectedEndTime: string;
   startDateLabel: string;
   endDateLabel: string;
+  telegramChannel?: string[];
 } 

@@ -6,7 +6,6 @@ export type CreateRaffleStep = 'General' | 'Condition' | 'DateTime' | 'Addons';
 
 export interface FormData {
   community: string;
-  communityOptions: string[];
   giveawayName: string;
   prizeDescription: string;
   photos: File[];
@@ -98,5 +97,4 @@ export interface GeneralStepProps {
   setPrizeDescription: (value: string) => void;
   photos: File[];
   onPhotosChange: (photos: File[]) => void;
-  communityOptions: string[];
 }

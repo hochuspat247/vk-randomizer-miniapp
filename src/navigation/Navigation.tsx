@@ -7,7 +7,8 @@ import { router, DEFAULT_VIEW, PANELS } from '../routes';
 // import Raffles from '@panels/Raffles/Raffles';
 // import Community from '@panels/Community/Community';
 // import TestPanel from '@/panels/TestPanel/TestPanel';
-import { CreateRaffle, Notifications } from '@panels';
+import CreateRaffle from '@/panels/CreateRaffle/CreateRaffle';
+import Notifications from '@/panels/Notifications/Notifications';
 
 import Raffles from '@panels/Raffles/Raffles';
 import Community from '@panels/Community/Community';
@@ -22,7 +23,7 @@ const Navigation: React.FC = () => {
   const { panel: activePanel } = useActiveVkuiLocation();
 
   return (
-    <RouterProvider router={router} navigator={routeNavigator}>
+    <RouterProvider router={router}>
       <ConfigProvider colorScheme="dark">
         <Epic
           activeStory={DEFAULT_VIEW}
@@ -31,28 +32,28 @@ const Navigation: React.FC = () => {
               <TabbarItem
                 selected={activePanel === PANELS.CREATE_RAFFLE}
                 onClick={() => routeNavigator.push('/')}
-                text="Создать"
+                aria-label="Создать розыгрыш"
               >
                 <Icon28AddCircleOutline />
               </TabbarItem>
               <TabbarItem
                 selected={activePanel === PANELS.RAFFLES}
                 onClick={() => routeNavigator.push('/raffles')}
-                text="Розыгрыши"
+                aria-label="Просмотр розыгрышей"
               >
                 <Icon28NewsfeedOutline />
               </TabbarItem>
               <TabbarItem
                 selected={activePanel === PANELS.NOTIFICATIONS}
                 onClick={() => routeNavigator.push('/notifications')}
-                text="Уведомления"
+                aria-label="Просмотр уведомлений"
               >
                 <Icon28Notifications />
               </TabbarItem>
               <TabbarItem
                 selected={activePanel === PANELS.COMMUNITY}
                 onClick={() => routeNavigator.push('/community')}
-                text="Сообщество"
+                aria-label="Управление сообществом"
               >
                 <Icon28UsersOutline />
               </TabbarItem>

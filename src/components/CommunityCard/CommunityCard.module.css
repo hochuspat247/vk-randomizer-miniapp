@@ -7,9 +7,19 @@
   align-items: center;
   gap: 18px;
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.10);
   background: var(--Dark-Background-Background-Modal, #2D2D2E);
+}
+
+@media (max-width: 600px) {
+  .container {
+    max-width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 
 .containerYellow {

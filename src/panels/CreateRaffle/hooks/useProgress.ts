@@ -8,9 +8,7 @@ export const useProgress = (formData: FormData) => {
   const initialEnd   = useRef(formData.endDateTime);
 
   useEffect(() => {
-    const totalFields = 10; // 10 обязательных полей
-    const progressPerField = 100 / totalFields;
-
+    let totalFields = 8; // General + Condition
     let filledFields = 0;
 
     // General
@@ -26,11 +24,22 @@ export const useProgress = (formData: FormData) => {
     if (formData.blackListSel.length > 0) filledFields += 1;
 
     // DateTime
-    if (formData.startDateTime !== initialStart.current) filledFields += 1;
-    if (formData.endDateTime   !== initialEnd.current)   filledFields += 1;
+    if (formData.endByParticipants) {
+      totalFields += 1; // только memberMax
+      if (formData.memberMax.trim()) filledFields += 1;
+    } else {
+      totalFields += 2; // startDateTime и endDateTime
+      if (formData.startDateTime !== initialStart.current) filledFields += 1;
+      if (formData.endDateTime !== initialEnd.current) filledFields += 1;
+    }
 
-    const newProgress = Math.round(filledFields * progressPerField);
-    setProgress(newProgress);
+    const newProgress = Math.round((filledFields / totalFields) * 100);
+    // Если пользователь на AddonsStep (все обязательные поля заполнены), прогресс всегда 100%
+    if (newProgress >= 90) {
+      setProgress(100);
+    } else {
+      setProgress(newProgress);
+    }
   }, [formData]);
 
   return progress;

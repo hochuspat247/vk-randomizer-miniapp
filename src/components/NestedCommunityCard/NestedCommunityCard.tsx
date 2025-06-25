@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './NestedCommunityCard.module.css';
 
-import { Icon20DiamondOutline, Icon48Linked, Icon16PenOutline, Icon16InfoOutline } from '@vkontakte/icons';
+import { Icon20DiamondOutline, Icon48Linked, Icon16PenOutline, Icon16InfoOutline, Icon20PinOutline, Icon20HelpOutline, Icon20MegaphoneOutline } from '@vkontakte/icons';
 import Crown from '@assets/icons/Crown';
 import ErrorNested from '@assets/icons/ErrorNested';
+import { getRoleDisplayName } from '@/utils/vkTransformers';
 
 import WidgetStatusBadge from '../WidgetStatusBadge/WidgetStatusBadge';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
@@ -17,11 +18,31 @@ import {
 
 interface NestedCommunityCardProps {
   name: string;
-  status: 'green' | 'yellow' | 'red' | 'undefined'; // поддержка всех статусов
+  status: 'green' | 'yellow' | 'red' | undefined; // поддержка всех статусов
   statusText: string;
   nickname: string;
   membersCount: string;
-  adminType: 'admin' | 'owner'; // строго ограничен
+  adminType: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser'; // обновленные роли
+}
+
+// Функция для получения иконки роли
+function getRoleIcon(role: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser') {
+  switch (role) {
+    case 'owner':
+      return <Icon20DiamondOutline width={10} height={10}/>;
+    case 'admin':
+      return <Crown width={10} height={10}/>;
+    case 'editor':
+      return <Icon20PinOutline width={10} height={10}/>;
+    case 'moderator':
+      return <Icon20HelpOutline width={10} height={10}/>;
+    case 'advertiser':
+      return <Icon20MegaphoneOutline width={10} height={10}/>;
+    case 'member':
+      return <Icon20DiamondOutline width={10} height={10}/>;
+    default:
+      return <Icon20DiamondOutline width={10} height={10}/>;
+  }
 }
 
 const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
@@ -32,14 +53,13 @@ const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
   membersCount,
   adminType,
 }) => {
-  const statusClassMap: Record<NestedCommunityCardProps['status'], string> = {
+  const statusClassMap: Record<'green' | 'yellow' | 'red', string> = {
     green: styles.badgeGreen,
     yellow: styles.badgeYellow,
     red: styles.badgeRed,
-    undefined: styles.badgeUndefined,
   };
 
-  const adminClass = statusClassMap[status] || '';
+  const adminClass = status ? statusClassMap[status] : styles.badgeUndefined;
 
   return (
     <div className={styles.card}>
@@ -70,17 +90,8 @@ const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
               </>
             ) : (
               <>
-                {adminType === 'admin' ? (
-                  <>
-                    <Crown width={10} height={10}/>
-                    <span className={styles.text}>{ADMIN_Nested}</span>
-                  </>
-                ) : (
-                  <>
-                    <Icon20DiamondOutline width={10} height={10}/>
-                    <span className={styles.text}>{OWNER}</span>
-                  </>
-                )}
+                {getRoleIcon(adminType)}
+                <span className={styles.text}>{getRoleDisplayName(adminType)}</span>
               </>
             )}
           </div>

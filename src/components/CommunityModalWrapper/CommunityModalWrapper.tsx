@@ -1,7 +1,7 @@
 // src/components/CommunityModalCard/CommunityModalWrapper.tsx
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { communityModalMocks } from '@/mocks/CommunityModalCardMocks';
+import { useCommunityModals } from '@/hooks/useCommunityModals';
 import styles from './CommunityModalWrapper.module.css';
 import CommunityModalCard from '../CommunityModalCard/CommunityModalCard';
 
@@ -12,23 +12,24 @@ interface Props {
 const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
   const [step, setStep] = useState<'select' | 'permission' | 'success'>('select');
   const [selected, setSelected] = useState('');
+  const { data: modals, loading, error } = useCommunityModals();
 
-  const selectMock     = communityModalMocks.find(m => m.type === 'select')!;
-  const permissionMock = communityModalMocks.find(m => m.type === 'permission')!;
-  const successMock    = communityModalMocks.find(m => m.type === 'success')!;
+  const selectMock = modals?.find(m => m.type === 'select');
+  const permissionMock = modals?.find(m => m.type === 'permission');
+  const successMock = modals?.find(m => m.type === 'success');
 
-  const handleSelectSubmit    = () => setStep('permission');
+  const handleSelectSubmit = () => setStep('permission');
   const handlePermissionAllow = () => setStep('success');
-  const handleBackToSelect    = () => setStep('select');
+  const handleBackToSelect = () => setStep('select');
 
-  // Собираем всё в один узел
   const modal = (
     <div className={styles.overlay} onClick={() => {
-    console.log('klkk');
-    onClose();
-  }}>
+      onClose();
+    }}>
       <div className={styles.cardWrapper} onClick={e => e.stopPropagation()}>
-        {step === 'select' && (
+        {loading && <div style={{ padding: 24, textAlign: 'center' }}>Загрузка...</div>}
+        {error && <div style={{ color: 'red', padding: 24, textAlign: 'center' }}>{error}</div>}
+        {!loading && !error && step === 'select' && selectMock && (
           <CommunityModalCard
             type="select"
             placeholder={selectMock.placeholder}
@@ -38,20 +39,20 @@ const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
             onSubmit={handleSelectSubmit}
           />
         )}
-        {step === 'permission' && (
+        {!loading && !error && step === 'permission' && permissionMock && (
           <CommunityModalCard
             type="permission"
-            communityName={selected}
+            communityName={permissionMock.communityName}
             communityAvatar={permissionMock.communityAvatar}
             subscribers={permissionMock.subscribers}
             onSubmit={handlePermissionAllow}
             onBack={handleBackToSelect}
           />
         )}
-        {step === 'success' && (
+        {!loading && !error && step === 'success' && successMock && (
           <CommunityModalCard
             type="success"
-            communityName={selected}
+            communityName={successMock.communityName}
             communityAvatar={successMock.communityAvatar}
             onClose={onClose}
           />
@@ -60,7 +61,6 @@ const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
     </div>
   );
 
-  // Портал “выносит” его прямо в <body>
   return ReactDOM.createPortal(modal, document.body);
 };
 

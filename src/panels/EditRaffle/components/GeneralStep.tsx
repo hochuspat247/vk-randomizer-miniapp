@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FormItem, Input, CustomSelect, FormLayoutGroup } from '@vkontakte/vkui';
 import PhotoUpload from '@components/PhotoUpload/PhotoUpload';
+import { useCommunities } from '@/api/hooks';
 import styles from './GeneralStep.module.css';
 import { GeneralStepProps } from '../types';
 
@@ -14,12 +15,16 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
   setPrizeDescription,
   photos,
   onPhotosChange,
-  communityOptions
 }) => {
-  const communityOpt = communityOptions.map(option => ({
-      label: option,
-      value: option
+  const { data: communities } = useCommunities();
+
+  const communityOptions = useMemo(() => {
+    if (!communities) return [];
+    return communities.map(community => ({
+      label: community.name,
+      value: community.name
     }));
+  }, [communities]);
 
   return (
     <FormLayoutGroup className={styles.formLayoutGroup} mode="vertical">
@@ -36,7 +41,7 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
         <CustomSelect
           value={community}
           onChange={(e) => setCommunity(e.target.value)}
-          options={communityOpt}
+          options={communityOptions}
           placeholder="Выберите сообщество"
         />
       </FormItem>

@@ -17,7 +17,6 @@
     display: flex;
     justify-content: center;
     align-self: stretch;
-    /* background: url(<path-to-image>) lightgray 50% / cover no-repeat; */
 }
 
 .image {

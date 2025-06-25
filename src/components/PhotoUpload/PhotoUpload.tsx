@@ -16,6 +16,11 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
   const [photoFiles, setPhotoFiles] = React.useState<File[]>(initialPhotos);
   const [photoPreviews, setPhotoPreviews] = React.useState<string[]>([]);
 
+  // Sync with initialPhotos prop changes
+  useEffect(() => {
+    setPhotoFiles(initialPhotos);
+  }, [initialPhotos]);
+
   // Генерация превью для фото
   useEffect(() => {
     const generatePreviews = async () => {
@@ -38,7 +43,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
 
   useEffect(() => {
     onPhotosChange?.(photoFiles);
-  }, [photoFiles, onPhotosChange]);
+  }, [photoFiles]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

@@ -47,12 +47,7 @@ export const AddonsStep: React.FC<AddonsStepProps> = ({
             showAdditionalIcon={true}
           />
 
-          <CustomCheckbox
-            label="Учитывать только подписчиков"
-            checked={onlySubscribers}
-            onChange={setOnlySubscribers}
-            showAdditionalIcon={true}
-          />
+
 
           <CustomCheckbox
             label="Не учитывать в розыгрыше меня"

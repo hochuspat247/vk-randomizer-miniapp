@@ -5,10 +5,13 @@
   overflow-x: hidden;
 }
 
+/* Удаляю или закомментирую белый фон и border-bottom для PanelHeader */
+/*
 .panelHeaderOverride {
-  background-color: #fff;
-  border-bottom: 1px solid #e1e3e6;
+    background-color: #fff;
+    border-bottom: 1px solid #e1e3e6;
 }
+*/
 
 .panelHeaderContentOverride {
   display: flex;
@@ -16,13 +19,27 @@
   justify-content: center;
 }
 
-:global(.vkuiPanelHeader__in) {
-  background-color: #000;
+:global(.vkuiPanelHeader),
+:global(.vkuiPanelHeader__in),
+:global(.vkuiPanelHeader__content),
+:global(.vkuiPanelHeader--platform-android),
+:global(.vkuiPanelHeader--platform-ios),
+:global(.vkuiPanelHeader--platform-web) {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: #000 !important;
 }
 
-:global(.vkuiSeparator__appearancePrimary) {
-    color: #000;
+:global(.vkuiSeparator__appearancePrimary),
+:global(.vkuiSeparator__in) {
+  background: transparent !important;
+  border: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
+
 .container {
   flex: 1;
   padding: 16px;
@@ -204,4 +221,12 @@ letter-spacing: 0.2px;
 
 :global(.vkuiPanel__in) {
   background-color: #000 !important;
+}
+
+:global(.vkuiSpacing__host) {
+  background: transparent !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }

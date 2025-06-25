@@ -1,1 +1,0 @@
-export const API_BASE_URL = 'https://randomizer.avenir-team.ru/api/v1'; 

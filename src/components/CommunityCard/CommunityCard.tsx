@@ -5,9 +5,13 @@ import {
   Icon20Users3Outline,
   Icon20DiamondOutline,
   Icon20GearOutline,
+  Icon20PinOutline,
+  Icon20HelpOutline,
+  Icon20MegaphoneOutline,
 } from '@vkontakte/icons';
 
 import { ADMIN, OWNER, RAFFLE, Change_Widget } from '../../constants/Texts/CommunityCardText';
+import { getRoleDisplayName } from '@/utils/vkTransformers';
 
 import WidgetStatusBadge from '../WidgetStatusBadge/WidgetStatusBadge';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
@@ -22,24 +26,39 @@ import ArrowRAct from '../../assets/icons/ArrowRAct';
 import Update from '../../assets/icons/Update';
 import { declOfNum } from '@/panels/CreateRaffle/utils/declension';
 
-
-
 interface CommunityCardProps {
-  id: string;
   membersCount: string;
   raffleCount: string;
-  adminType: 'admin' | 'owner';
+  adminType: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser';
   avatarUrl: string;
   status: 'green' | 'yellow' | 'red';
   name: string;
   nickname: string;
   buttonDesc: string;
   stateText: string;
-  
+}
+
+// Функция для получения иконки роли
+function getRoleIcon(role: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser') {
+  switch (role) {
+    case 'owner':
+      return <Icon20DiamondOutline className={styles.icon} />;
+    case 'admin':
+      return <Crown />;
+    case 'editor':
+      return <Icon20PinOutline className={styles.icon} />;
+    case 'moderator':
+      return <Icon20HelpOutline className={styles.icon} />;
+    case 'advertiser':
+      return <Icon20MegaphoneOutline className={styles.icon} />;
+    case 'member':
+      return <Icon20Users3Outline className={styles.icon} />;
+    default:
+      return <Icon20Users3Outline className={styles.icon} />;
+  }
 }
 
 const CommunityCard: React.FC<CommunityCardProps> = ({
-  id,
   membersCount,
   raffleCount,
   adminType,
@@ -69,19 +88,11 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
           <span className={styles.text}>{membersCount}</span>
         </div>
 
-        {/* ADMIN / OWNER */}
+        {/* ROLE */}
         <div className={styles.badge}>
-          {adminType === 'admin' ? (
-            <>
-            <Crown /> {/* Иконка админа */}
-            </>
-          ) : (
-            <>
-            <Icon20DiamondOutline className={styles.icon} /> {/* Иконка владельца */}
-            </>
-          )}
+          {getRoleIcon(adminType)}
           <span className={styles.text}>
-            {adminType === 'admin' ? ADMIN : OWNER}
+            {getRoleDisplayName(adminType)}
           </span>
         </div>
 
@@ -145,6 +156,5 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
     </div>
   );
 };
-
 
 export default CommunityCard;
