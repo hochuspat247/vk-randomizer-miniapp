@@ -144,7 +144,7 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
                     const dateA = new Date(a.lastModified).getTime();
                     const dateB = new Date(b.lastModified).getTime();
                     return dateB - dateA;
-                  }).map(mapRaffleToCarouselCardProps)}
+                  }).slice(0, 10).map(mapRaffleToCarouselCardProps)}
                   buttonPlusOnClick={() => routeNavigator.push('/createRaffle')}
                   buttonOnClick={() => routeNavigator.push('/raffles')}
                 />
