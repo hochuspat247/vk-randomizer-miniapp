@@ -3,6 +3,7 @@ import { FormItem, Input, CustomSelect, FormLayoutGroup, ConfigProvider } from '
 import { Icon28AddOutline } from '@vkontakte/icons';
 import PhotoUpload from '@components/PhotoUpload/PhotoUpload';
 import { useCommunities } from '@/api/hooks';
+import { useActiveCommunities } from '@/api/hooks';
 import styles from './GeneralStep.module.css';
 
 interface GeneralStepProps {
@@ -27,14 +28,17 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
   onPhotosChange,
 }) => {
   const { data: communities } = useCommunities();
+  const { activeIds } = useActiveCommunities();
 
   const communityOptions = useMemo(() => {
     if (!communities) return [];
-    return communities.map(community => ({
-      label: community.name,
-      value: community.id
-    }));
-  }, [communities]);
+    return communities
+      .filter(community => activeIds.includes(community.id))
+      .map(community => ({
+        label: community.name,
+        value: community.id
+      }));
+  }, [communities, activeIds]);
 
   return (
     <FormLayoutGroup className={styles.formLayoutGroup} mode="vertical">

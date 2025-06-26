@@ -39,14 +39,15 @@ export const isStepComplete = (
         isDigits(formData.numberWinners)
       );
 
-    case 'DateTime':
+    case 'DateTime': {
       if (formData.endByParticipants) {
-        // режим «По дате» — надо заполнить обе даты
-        return !!formData.startDateTime && !!formData.endDateTime;
+        // По участникам: оба поля обязательны
+        return !!formData.startDateTime && !!formData.memberMax.trim();
       } else {
-        // режим «По участникам» — достаточно ввести memberMax
-        return !!formData.memberMax.trim() && isDigits(formData.memberMax);
+        // По дате: оба поля обязательны
+        return !!formData.startDateTime && !!formData.endDateTime;
       }
+    }
     case 'Addons':
       return true;
 
@@ -72,14 +73,9 @@ export const getMissingFields = (
     if (!formData.numberWinners.trim()) missing.push('Количество победителей');
     if (formData.blackListSel.length === 0) missing.push('Черный список');
   }  if (step === 'DateTime') {
-    if (formData.endByParticipants) {
-      // «По дате»
-      if (!formData.startDateTime) missing.push('Дата и время начала');
-      if (!formData.endDateTime)   missing.push('Дата и время окончания');
-    } else {
-      // «По участникам»
-      if (!formData.memberMax.trim()) missing.push('Максимальное количество участников');
-    }
+    if (!formData.startDateTime) missing.push('Дата и время начала');
+    if (!formData.endDateTime)   missing.push('Дата и время окончания');
+    if (!formData.endByParticipants && !formData.memberMax.trim()) missing.push('Максимальное количество участников');
   }
 
   return missing;

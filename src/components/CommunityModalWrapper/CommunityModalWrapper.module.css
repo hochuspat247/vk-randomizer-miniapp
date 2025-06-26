@@ -7,6 +7,15 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7); /* затемнение */
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+}
+
+.cardWrapper {
+  max-height: 90vh;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }

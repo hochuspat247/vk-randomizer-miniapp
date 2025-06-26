@@ -24,18 +24,21 @@ export const useProgress = (formData: FormData) => {
     if (formData.blackListSel.length > 0) filledFields += 1;
 
     // DateTime
+    let bonus = 0;
+    if (formData.startDateTime) bonus += 10;
     if (formData.endByParticipants) {
-      totalFields += 1; // только memberMax
+      totalFields += 2; // startDateTime и memberMax
+      if (formData.startDateTime) filledFields += 1;
       if (formData.memberMax.trim()) filledFields += 1;
     } else {
       totalFields += 2; // startDateTime и endDateTime
-      if (formData.startDateTime !== initialStart.current) filledFields += 1;
-      if (formData.endDateTime !== initialEnd.current) filledFields += 1;
+      if (formData.startDateTime) filledFields += 1;
+      if (formData.endDateTime) filledFields += 1;
     }
 
-    const newProgress = Math.round((filledFields / totalFields) * 100);
-    // Если пользователь на AddonsStep (все обязательные поля заполнены), прогресс всегда 100%
-    if (newProgress >= 90) {
+    let newProgress = Math.round((filledFields / totalFields) * 100) + bonus;
+    if (newProgress > 100) newProgress = 100;
+    if (newProgress >= 100) {
       setProgress(100);
     } else {
       setProgress(newProgress);

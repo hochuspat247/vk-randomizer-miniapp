@@ -43,8 +43,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     requiredCommunities: [],
     numberWinners: '',
     blackListSel: [],
-    startDateTime: new Date().toISOString(),
-    endDateTime: new Date().toISOString(),
+    startDateTime: '',
+    endDateTime: '',
     publishResults: false,
     onlySubscribers: false,
     isPartners: false,
@@ -247,17 +247,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   // валидация даты начала и конца розыгрыша
   const canProceed = (() => {
     if (currentStep === 'DateTime') {
-      if (formData.endByParticipants) {
-        // По участникам: memberMax обязательно и > 0
-        return !!formData.memberMax && Number(formData.memberMax) > 0;
-      } else {
-        // По дате: стандартная валидация дат
-        return (
-          !!formData.startDateTime &&
-          !!formData.endDateTime &&
-          validateDateTime(formData.startDateTime, formData.endDateTime)
-        );
-      }
+      return isStepComplete('DateTime', formData);
     } else {
       return isStepComplete(currentStep, formData);
     }
