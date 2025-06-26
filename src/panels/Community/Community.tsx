@@ -13,13 +13,13 @@ interface CommuniytProps {
 
 const Community: React.FC<CommuniytProps> = ({ id }) => {
   const router = useRouteNavigator();
-  const { data: communities, loading, error, refetch } = useCommunities();
+  const { data: communities, loading, error, refresh } = useCommunities();
 
   const activeCommunities = communities?.filter(community => community.status === 'green') || [];
   const inactiveCommunities = communities?.filter(community => community.status !== 'green') || [];
 
   const handleRefresh = () => {
-    refetch();
+    refresh();
   };
 
   if (loading) {

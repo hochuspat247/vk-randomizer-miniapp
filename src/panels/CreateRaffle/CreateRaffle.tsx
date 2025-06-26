@@ -3,6 +3,7 @@ import {
   Panel,
   PanelHeader,
   PanelHeaderContent,
+  Spinner,
 } from '@vkontakte/vkui';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import BackIcon from '../../assets/icons/BackIcon';
@@ -29,6 +30,8 @@ import persikImage from '@/assets/images/persik.png';
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
   const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('General');
+  const [loading, setLoading] = useState(false);
+  const [shouldShowPreview, setShouldShowPreview] = useState(false);
 
   // Состояния формы
   const [formData, setFormData] = useState<FormData>({
@@ -80,16 +83,11 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   }, [formData.community, communities]);
 
   const handleNextStep = (e: React.MouseEvent) => {
-    // e.preventDefault();
-    // if (!isStepComplete(currentStep, formData)) {
-    //   const missing = getMissingFields(currentStep, formData);
-    //   alert(`Заполните обязательные поля: ${missing.join(', ')}`);
-    //   return;
-    // }
     const steps: CreateRaffleStep[] = ['General', 'Condition', 'DateTime', 'Addons'];
     const currentIndex = steps.indexOf(currentStep);
     if (currentIndex < steps.length - 1) {
       setCurrentStep(steps[currentIndex + 1]);
+      console.log('handleNextStep: переход к шагу', steps[currentIndex + 1]);
     }
   };
 
@@ -99,57 +97,62 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     const currentIndex = steps.indexOf(currentStep);
     if (currentIndex > 0) {
       setCurrentStep(steps[currentIndex - 1]);
+      console.log('handlePrevStep: переход к шагу', steps[currentIndex - 1]);
     } else {
       routeNavigator.back();
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log('handleSubmit вызван', e);
     e.preventDefault();
     if (progress < 100) {
       alert('Заполните все обязательные поля!');
       return;
     }
-    // Найти выбранное сообщество
-    const selectedCommunity = (communities || []).find(c => String(c.id) === String(formData.community));
-    console.log('selectedCommunity:', selectedCommunity, 'formData.community:', formData.community, 'communities:', communities);
-    // Получить фото розыгрыша
-    let imageSrc = '';
-    if (formData.photos && formData.photos.length > 0) {
-      imageSrc = URL.createObjectURL(formData.photos[0]);
-    }
-    if (!imageSrc) {
-      imageSrc = persikImage;
-    }
-    // Формируем объект для API
-    const raffleCard: RaffleCard = {
-      raffleId: String(Date.now()),
-      name: formData.giveawayName,
-      textRaffleState: 'Активно',
-      winnersCount: Number(formData.numberWinners),
-      mode: formData.endByParticipants ? 'members' : 'time',
-      timeLeft: '14Д 0Ч',
-      progress: 0,
-      lastModified: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-      modifiedBy: 'Администратор',
-      statusСommunity: 'connected',
-      statusNestedCard: 'green',
-      statusNestedText: 'Все работает',
-      nickname: selectedCommunity?.nickname || '',
-      membersCountNested: selectedCommunity?.membersCount || '100K',
-      adminType: selectedCommunity?.adminType === 'owner' ? 'owner' : 'admin',
-      imageSrc,
-      channelAvatarSrc: selectedCommunity?.avatarUrl || '',
-      channelName: selectedCommunity?.name || '',
-      description: formData.prizeDescription,
-      endTime: formData.endDateTime,
-      communityId: selectedCommunity?.id,
-    };
+    setShouldShowPreview(true); // Ставим флаг, чтобы скрыть форму и показать спиннер
     try {
+      // Найти выбранное сообщество
+      const selectedCommunity = (communities || []).find(c => String(c.id) === String(formData.community));
+      console.log('selectedCommunity:', selectedCommunity, 'formData.community:', formData.community, 'communities:', communities);
+      // Получить фото розыгрыша
+      let imageSrc = '';
+      if (formData.photos && formData.photos.length > 0) {
+        imageSrc = URL.createObjectURL(formData.photos[0]);
+      }
+      if (!imageSrc) {
+        imageSrc = persikImage;
+      }
+      // Формируем объект для API
+      const raffleCard: RaffleCard = {
+        raffleId: String(Date.now()),
+        name: formData.giveawayName,
+        textRaffleState: 'Активно',
+        winnersCount: Number(formData.numberWinners),
+        mode: formData.endByParticipants ? 'members' : 'time',
+        timeLeft: '14Д 0Ч',
+        progress: 0,
+        lastModified: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        modifiedBy: 'Администратор',
+        statusСommunity: 'connected',
+        statusNestedCard: 'green',
+        statusNestedText: 'Все работает',
+        nickname: selectedCommunity?.nickname || '',
+        membersCountNested: selectedCommunity?.membersCount || '100K',
+        adminType: selectedCommunity?.adminType === 'owner' ? 'owner' : 'admin',
+        imageSrc,
+        channelAvatarSrc: selectedCommunity?.avatarUrl || '',
+        channelName: selectedCommunity?.name || '',
+        description: formData.prizeDescription,
+        endTime: formData.endDateTime,
+        communityId: selectedCommunity?.id,
+      };
+      // Жестко: переход к предпросмотру только после submit (только здесь!)
       const response = await rafflesApi.createRaffleCard(raffleCard) as { raffle: RaffleCard };
-      routeNavigator.push(`/previewpanel/${response.raffle.raffleId}`);
+      routeNavigator.push(`/previewpanel/${response.raffle.raffleId}`); // <-- Только после 'Завершить'!
     } catch (e) {
       alert('Ошибка при создании розыгрыша!');
+      setShouldShowPreview(false); // Сбросить флаг при ошибке
     }
   };
 
@@ -158,6 +161,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   }, []);
 
   const renderStepContent = () => {
+    console.log('renderStepContent: currentStep =', currentStep, 'shouldShowPreview =', shouldShowPreview);
     switch (currentStep) {
       case 'General':
         return (
@@ -278,14 +282,14 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         <ProgressBadge type={currentStep} progress={progress} />
 
         <form className={styles.formContainer} onSubmit={handleSubmit}>
-          <div className={styles.formLayout}>{renderStepContent()}</div>
+          {!shouldShowPreview && <div className={styles.formLayout}>{renderStepContent()}</div>}
 
-          {currentStep === 'General' && (
+          {!shouldShowPreview && currentStep === 'General' && (
             <div className={styles.navigationContainer}>
               <button
                 type="button"
                 className={styles.nextButton}
-                disabled={!isStepComplete(currentStep, formData)}
+                disabled={!isStepComplete(currentStep, formData) || shouldShowPreview}
                 onClick={handleNextStep}
               >
                 <span className={styles.nextText}>Далее</span>
@@ -294,9 +298,9 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             </div>
           )}
 
-          {currentStep !== 'General' && (
+          {!shouldShowPreview && currentStep !== 'General' && (
             <div className={styles.navigationContainer}>
-              <button type="button" className={styles.backButton} onClick={handlePrevStep}>
+              <button type="button" className={styles.backButton} onClick={handlePrevStep} disabled={shouldShowPreview}>
                 <ChevronLeftIcon />
                 <span className={styles.buttonText}>Назад</span>
               </button>
@@ -305,7 +309,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
                 <button
                   type="button"
                   className={styles.nextButton2}
-                  disabled={!canProceed}
+                  disabled={!canProceed || shouldShowPreview}
                   onClick={handleNextStep}
                 >
                   <span className={styles.buttonText}>Далее</span>
@@ -313,10 +317,10 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
                 </button>
               ) : (
                 <button
-                  type="submit"
+                  type="button"
                   className={styles.nextButton}
-                  disabled={progress < 100}
-                  onClick={() => routeNavigator.push("/previewpanel")}
+                  disabled={progress < 100 || shouldShowPreview}
+                  onClick={handleSubmit}
                 >
                   <span className={styles.buttonText}>Завершить</span>
                 </button>
@@ -324,6 +328,11 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             </div>
           )}
         </form>
+        {shouldShowPreview && (
+          <div className={styles.loadingOverlay}>
+            <Spinner size="l" />
+          </div>
+        )}
       </div>
     </Panel>
   );

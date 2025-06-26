@@ -27,42 +27,9 @@ const Navigation: React.FC = () => {
       <ConfigProvider colorScheme="dark">
         <Epic
           activeStory={DEFAULT_VIEW}
-          tabbar={
-            <Tabbar>
-              <TabbarItem
-                selected={activePanel === PANELS.CREATE_RAFFLE}
-                onClick={() => routeNavigator.push('/')}
-                aria-label="Создать розыгрыш"
-              >
-                <Icon28AddCircleOutline />
-              </TabbarItem>
-              <TabbarItem
-                selected={activePanel === PANELS.RAFFLES}
-                onClick={() => routeNavigator.push('/raffles')}
-                aria-label="Просмотр розыгрышей"
-              >
-                <Icon28NewsfeedOutline />
-              </TabbarItem>
-              <TabbarItem
-                selected={activePanel === PANELS.NOTIFICATIONS}
-                onClick={() => routeNavigator.push('/notifications')}
-                aria-label="Просмотр уведомлений"
-              >
-                <Icon28Notifications />
-              </TabbarItem>
-              <TabbarItem
-                selected={activePanel === PANELS.COMMUNITY}
-                onClick={() => routeNavigator.push('/community')}
-                aria-label="Управление сообществом"
-              >
-                <Icon28UsersOutline />
-              </TabbarItem>
-            </Tabbar>
-          }
         >
           <View activePanel={activePanel || PANELS.CREATE_RAFFLE} nav={DEFAULT_VIEW}>
             <CreateRaffle id={PANELS.CREATE_RAFFLE} />
-            <Notifications id={PANELS.NOTIFICATIONS} />
             <Raffles id={PANELS.RAFFLES} />
             <Community id={PANELS.COMMUNITY} />
             <TestPanel id={PANELS.TEST_PANEL} />

@@ -10,6 +10,7 @@ import CarouselCard       from '@/components/CarouselCard/CarouselCard';
 import { useCommunities, useActiveCommunities } from '@/api/hooks';
 import { useRaffleCards } from '@/hooks/useRaffleCards';
 import { notificationsApi } from '@/api/notifications';
+import { VKApi } from '@/api/vkApi';
 
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import styles from './MainPanel.module.css';
@@ -29,7 +30,7 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
   const [isMainTab, setIsMainTab] = useState(initialTab === 'main');
   const [showModal, setShowModal] = useState(false);              // ← управляем показом
   const routeNavigator = useRouteNavigator();
-  const { data: communities } = useCommunities();
+  const { data: communities, refresh } = useCommunities();
   const { activeIds } = useActiveCommunities();
   const { data: raffles, loading: carouselLoading, error: carouselError } = useRaffleCards();
   const [notifications, setNotifications] = useState<any[] | null>(null);
@@ -47,6 +48,12 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
         adminType: getRoleDisplayName(community.adminType)
       }));
       setCommunityBanners(banners);
+      console.log('Обновлены баннеры сообществ:', {
+        totalCommunities: communities.length,
+        activeIds: activeIds.length,
+        filteredCount: filtered.length,
+        banners: banners.length
+      });
     }
   }, [communities, activeIds]);
 
@@ -58,8 +65,30 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
   }, []);
 
   useEffect(() => {
-  console.log('showModal changed:', showModal);
-}, [showModal]);
+    console.log('showModal changed:', showModal);
+  }, [showModal]);
+
+  // Обработчик закрытия модального окна с обновлением данных
+  const handleModalClose = async () => {
+    console.log('Закрытие модального окна, начинаем обновление данных...');
+    setShowModal(false);
+    
+    // Очищаем кэш VK API для получения свежих данных
+    VKApi.clearCombinedCache();
+    console.log('Кэш VK API очищен');
+    
+    // Небольшая задержка для очистки кэша
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // Обновляем данные сообществ после закрытия модального окна
+    console.log('Обновляем данные сообществ...');
+    await refresh();
+    console.log('Данные сообществ обновлены');
+    
+    // Принудительно обновляем компонент для пересчета communityBanners
+    setCommunityBanners(prev => [...prev]);
+    console.log('Компонент принудительно обновлен');
+  };
 
   // Маппинг RaffleCard -> RaffleCarouselCardProps
   function mapRaffleToCarouselCardProps(raffle: any) {
@@ -153,7 +182,7 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
 
       {/* ===== Модалка (перекрывает весь экран) ===== */}
       {showModal && (
-        <CommunityModalWrapper onClose={() => setShowModal(false)} />
+        <CommunityModalWrapper onClose={handleModalClose} />
       )}
     </Panel>
   );

@@ -14,7 +14,7 @@ interface Props {
 const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
   const [step, setStep] = useState<'select' | 'permission' | 'success'>('select');
   const [selected, setSelected] = useState('');
-  const { data: communities, refetch, loading, error } = useCommunities();
+  const { data: communities, refresh, loading, error } = useCommunities();
   const { addCommunity } = useActiveCommunities();
   const [subscribers, setSubscribers] = useState<{ name: string; avatar: string }[]>([]);
   const [loadingSubs, setLoadingSubs] = useState(false);
@@ -41,6 +41,14 @@ const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
   const handlePermissionAllow = async () => {
     if (selectedCommunity) {
       addCommunity(selectedCommunity.id);
+      
+      // Маппинг ролей для бэкенда (принимает только 'owner' или 'admin')
+      const mapAdminType = (role: string): 'owner' | 'admin' => {
+        if (role === 'owner') return 'owner';
+        // Все остальные роли (admin, editor, moderator, advertiser) -> admin
+        return 'admin';
+      };
+      
       // Формируем карточку для БД
       const card = {
         id: selectedCommunity.id,
@@ -48,27 +56,34 @@ const CommunityModalWrapper: React.FC<Props> = ({ onClose }) => {
         nickname: selectedCommunity.nickname,
         membersCount: selectedCommunity.membersCount,
         raffleCount: selectedCommunity.raffleCount,
-        adminType: selectedCommunity.adminType,
+        adminType: mapAdminType(selectedCommunity.adminType),
         avatarUrl: selectedCommunity.avatarUrl,
         status: selectedCommunity.status,
         buttonDesc: selectedCommunity.buttonDesc,
         stateText: selectedCommunity.status === 'green' ? 'Активен' : 'Неактивен'
       };
+      
       try {
         await communitiesApi.createCardInDB(card);
+        console.log('Карточка успешно сохранена в БД');
       } catch (e: any) {
-        if (e?.response?.status !== 400) {
-          // 400 — карточка уже есть, остальные ошибки — показать/логировать
-          console.error('Ошибка сохранения карточки:', e);
+        // Игнорируем ошибки 400 (карточка уже существует) и 422 (валидация)
+        if (e?.response?.status === 400 || e?.response?.status === 422) {
+          console.log('Карточка уже существует или ошибка валидации, продолжаем...');
+        } else {
+          // Логируем только критические ошибки
+          console.error('Критическая ошибка сохранения карточки:', e);
         }
       }
+      
+      // Переходим к успеху независимо от результата сохранения в БД
       setStep('success');
     }
   };
   const handleBackToSelect = () => setStep('select');
   const handleSuccessClose = () => {
+    // Закрываем модальное окно - обновление данных происходит в родительском компоненте
     onClose();
-    refetch(); // обновить список на главной
   };
 
   const modal = (
