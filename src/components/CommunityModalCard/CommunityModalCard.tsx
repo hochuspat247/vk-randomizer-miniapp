@@ -23,6 +23,13 @@ interface Subscriber {
   avatar: string;
 }
 
+interface CommunitySelectOption {
+  id: string;
+  name: string;
+  avatarUrl?: string;
+  membersCount?: string;
+}
+
 interface CommunityModalCardProps {
   type: 'select' | 'permission' | 'success';
   placeholder?: string;
@@ -30,7 +37,8 @@ interface CommunityModalCardProps {
   communityName?: string;
   communityAvatar?: string;
   subscribers?: Subscriber[];
-  onSubmit?: (selected: string) => void;
+  userRole?: string;
+  onSubmit?: () => void;
   onBack?: () => void;
   value?: string;
   onChange?: (value: string) => void;
@@ -44,6 +52,7 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
   communityName,
   communityAvatar,
   subscribers = [],
+  userRole,
   onSubmit,
   onBack,
   value,
@@ -72,8 +81,9 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
                 <Select
                   placeholder={placeholder || ''}
                   options={options}
-                  onChange={onChange}
-                  value={value}
+                  onChange={val => { if (typeof val === 'string') onChange?.(val); }}
+                  value={value || ''}
+                  allowInput={true}
                 />
               ) : (
                 <div className={styles.selectPlaceholder}>{NO_COMMUNITIES_PLACEHOLDER}</div>
@@ -82,7 +92,7 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
             <button
               type="button"
               className={styles.button}
-              onClick={() => value && onSubmit?.(value)}
+              onClick={() => value && onSubmit?.()}
               disabled={!value}
             >
               {CONNECT_BUTTON}
@@ -103,7 +113,7 @@ const CommunityModalCard: React.FC<CommunityModalCardProps> = ({
               </div>
             </div>
             <div className={styles.title}>{communityName}</div>
-            <div className={styles.subtitle}>{PERMISSION_SUBTITLE}</div>
+            <div className={styles.subtitle}>{userRole || PERMISSION_SUBTITLE}</div>
 
             <div className={styles.subscribers}>
               <div className={styles.subAvatars}>

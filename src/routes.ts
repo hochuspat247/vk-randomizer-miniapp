@@ -16,6 +16,11 @@ export const router = createHashRouter([
     panel: 'previewpanel',
     view: 'default',
   },
+  {
+    path: '/previewpanel/:id',
+    panel: 'previewpanel',
+    view: 'default',
+  },
    {
     path: '/faqpanel',
     panel: 'faqpanel',
@@ -23,6 +28,11 @@ export const router = createHashRouter([
   },
   {
     path: '/editrafflepanel',
+    panel: 'editrafflepanel',
+    view: 'default',
+  },
+  {
+    path: '/editraffle/:id',
     panel: 'editrafflepanel',
     view: 'default',
   },

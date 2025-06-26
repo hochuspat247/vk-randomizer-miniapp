@@ -1,7 +1,8 @@
 // src/components/EditRaffle/EditRaffle.tsx
-import React from 'react';
-import { Panel, PanelHeader, PanelHeaderContent } from '@vkontakte/vkui';
-import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+import React, { useEffect, useState } from 'react';
+import { Panel, PanelHeader, PanelHeaderContent, Spinner } from '@vkontakte/vkui';
+import { useRouteNavigator, useParams } from '@vkontakte/vk-mini-apps-router';
+import { rafflesApi } from '@/api/raffle';
 
 import BackIcon from '../../assets/icons/BackIcon';
 import ChevronRightIcon from '../../assets/icons/ChevronRightIcon';
@@ -23,12 +24,132 @@ import { useProgress }    from './hooks/useProgress';
 
 const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const nav = useRouteNavigator();
+  const params = useParams();
+  const raffleId = params?.id;
+
+  // Состояние загрузки
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Все хуки
   const { formData, updateField, updateFields } = useFormData();
   const { currentStep, nextStep, prevStep }     = useSteps();
   const canProceed                              = useCanProceed(currentStep, formData);
   const progress                                = useProgress(formData);
+
+  // Загрузка реальных данных розыгрыша
+  useEffect(() => {
+    if (!raffleId) {
+      console.log('No raffleId provided, skipping data load');
+      setLoadError('ID розыгрыша не найден');
+      setIsLoading(false);
+      return;
+    }
+
+    console.log('Loading raffle with ID:', raffleId);
+    
+    // Сбрасываем ошибку при новой загрузке
+    setLoadError(null);
+    setIsLoading(true);
+    
+    rafflesApi.getRaffleById(raffleId)
+      .then((data) => {
+        console.log('Raw API response:', data);
+        
+        // API возвращает {raffle: {...}}
+        const raffle = data.raffle;
+        console.log('Extracted raffle data:', raffle);
+        
+        if (!raffle) {
+          throw new Error('Данные розыгрыша не найдены');
+        }
+
+        const comm = raffle.nickname ? String(raffle.nickname).replace(/^@/, '') : '';
+        console.log('Community nickname for form:', comm);
+        
+        // Обновляем форму с данными с бэкенда
+        const formUpdate = {
+          community: comm,
+          giveawayName: raffle.name || '',
+          prizeDescription: raffle.description || '',
+          photos: [],
+          conditionOptions: [],
+          communityTagOptions: [],
+          participationConditions: [],
+          requiredCommunities: [],
+          communityPartnersTags: [],
+          numberWinners: String(raffle.winnersCount || ''),
+          blackListOptions: [],
+          blackListSel: [],
+          startDateTime: '',
+          endDateTime: raffle.endTime || '',
+          endByParticipants: raffle.mode === 'members',
+          publishResults: false,
+          onlySubscribers: false,
+          isPartners: false,
+          hideParticipantsCount: false,
+          excludeMe: false,
+          excludeAdmins: false,
+          partnersTags: [],
+          memberMax: raffle.memberCount || '',
+          isSelectedStartTime: '',
+          isSelectedEndTime: '',
+          startDateLabel: '',
+          endDateLabel: '',
+        };
+        
+        console.log('Updating form with data:', formUpdate);
+        updateFields(formUpdate);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error loading raffle:', error);
+        setLoadError(error.message || 'Ошибка загрузки розыгрыша');
+        setIsLoading(false);
+      });
+  }, [raffleId]);
+
+  useEffect(() => {
+    console.log('formData updated:', formData);
+  }, [formData]);
+
+  console.log('EditRaffle render, formData:', formData, 'isLoading:', isLoading, 'error:', loadError);
+
+  // Показываем ошибку загрузки
+  if (loadError) {
+    return (
+      <Panel id={id} className={styles.panelOverride}>
+        <PanelHeader className={styles.panelHeaderOverride}>
+          <PanelHeaderContent className={styles.panelHeaderContentOverride}>
+            <span className={styles.panelHeaderText}>Ошибка</span>
+          </PanelHeaderContent>
+        </PanelHeader>
+        <div className={styles.container}>
+          <div style={{ color: 'red', textAlign: 'center', padding: 24 }}>
+            {loadError}
+          </div>
+        </div>
+      </Panel>
+    );
+  }
+
+  // Показываем спиннер во время загрузки
+  if (isLoading) {
+    return (
+      <Panel id={id} className={styles.panelOverride}>
+        <PanelHeader className={styles.panelHeaderOverride}>
+          <PanelHeaderContent className={styles.panelHeaderContentOverride}>
+            <span className={styles.panelHeaderText}>Загрузка...</span>
+          </PanelHeaderContent>
+        </PanelHeader>
+        <div className={styles.container}>
+          <div style={{ display: 'flex', justifyContent: 'center', padding: 24 }}>
+            <Spinner size="m" />
+          </div>
+        </div>
+      </Panel>
+    );
+  }
 
   // Навигация «назад»
   function handlePrev() {
@@ -44,7 +165,8 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log('Form data:', formData);
-    nav.push('/');
+    // Возвращаемся к списку розыгрышей после завершения редактирования
+    nav.push('/raffles');
   }
 
   // Рендерим нужный шаг, передавая updateField / updateFields
@@ -61,6 +183,7 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setPrizeDescription={v => updateField('prizeDescription', v)}
             photos={formData.photos}
             onPhotosChange={photos => updateField('photos', photos)}
+            communityDisabled={true}
           />
         );
 
@@ -180,8 +303,8 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
               <button 
                 type="button" 
                 className={styles.nextButton}
-                onClick={() => nav.push("/previewpanel")}
-            >
+                onClick={() => nav.push("/raffles")}
+              >
                 <span className={styles.buttonText}>Завершить</span>
               </button>
             )}

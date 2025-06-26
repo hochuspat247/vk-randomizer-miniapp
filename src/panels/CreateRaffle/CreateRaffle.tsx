@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   Panel,
   PanelHeader,
@@ -20,6 +20,11 @@ import { ConditionStep } from './components/ConditionStep';
 import { DateTimeStep } from './components/DateTimeStep';
 import { AddonsStep } from './components/AddonsStep';
 import { validateDateTime } from './utils/dateTimeUtils';
+import { useCommunities, useActiveCommunities } from '@/api/hooks';
+import { VKApi } from '@/api/vkApi';
+import { rafflesApi } from '@/api/raffle';
+import { RaffleCard } from '@/types/raffle';
+import persikImage from '@/assets/images/persik.png';
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
@@ -55,6 +60,25 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
 
   const progress = useProgress(formData);
 
+  const { data: communities } = useCommunities();
+  const { activeIds } = useActiveCommunities();
+  const [subscriberTags, setSubscriberTags] = useState<string[]>([]);
+
+  // Получаем никнеймы активных сообществ
+  const activeCommunityTags = (communities || []).filter(c => activeIds.includes(c.id)).map(c => c.nickname.startsWith('@') ? c.nickname : '@' + c.nickname);
+
+  // Подгружаем подписчиков выбранного сообщества
+  useEffect(() => {
+    const selected = (communities || []).find(c => c.id === formData.community);
+    if (selected) {
+      VKApi.getCommunityMembers(selected.id).then(users => {
+        setSubscriberTags(users.map(u => u.name)); // или u.nickname если есть
+      });
+    } else {
+      setSubscriberTags([]);
+    }
+  }, [formData.community, communities]);
+
   const handleNextStep = (e: React.MouseEvent) => {
     // e.preventDefault();
     // if (!isStepComplete(currentStep, formData)) {
@@ -80,13 +104,53 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (progress < 100) {
       alert('Заполните все обязательные поля!');
       return;
     }
-    console.log('Form data:', formData);
+    // Найти выбранное сообщество
+    const selectedCommunity = (communities || []).find(c => String(c.id) === String(formData.community));
+    console.log('selectedCommunity:', selectedCommunity, 'formData.community:', formData.community, 'communities:', communities);
+    // Получить фото розыгрыша
+    let imageSrc = '';
+    if (formData.photos && formData.photos.length > 0) {
+      imageSrc = URL.createObjectURL(formData.photos[0]);
+    }
+    if (!imageSrc) {
+      imageSrc = persikImage;
+    }
+    // Формируем объект для API
+    const raffleCard: RaffleCard = {
+      raffleId: String(Date.now()),
+      name: formData.giveawayName,
+      textRaffleState: 'Активно',
+      winnersCount: Number(formData.numberWinners),
+      mode: formData.endByParticipants ? 'members' : 'time',
+      timeLeft: '14Д 0Ч',
+      progress: 0,
+      lastModified: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      modifiedBy: 'Администратор',
+      statusСommunity: 'connected',
+      statusNestedCard: 'green',
+      statusNestedText: 'Все работает',
+      nickname: selectedCommunity?.nickname || '',
+      membersCountNested: selectedCommunity?.membersCount || '100K',
+      adminType: selectedCommunity?.adminType === 'owner' ? 'owner' : 'admin',
+      imageSrc,
+      channelAvatarSrc: selectedCommunity?.avatarUrl || '',
+      channelName: selectedCommunity?.name || '',
+      description: formData.prizeDescription,
+      endTime: formData.endDateTime,
+      communityId: selectedCommunity?.id,
+    };
+    try {
+      const response = await rafflesApi.createRaffleCard(raffleCard) as { raffle: RaffleCard };
+      routeNavigator.push(`/previewpanel/${response.raffle.raffleId}`);
+    } catch (e) {
+      alert('Ошибка при создании розыгрыша!');
+    }
   };
 
   const handlePhotosChange = useCallback((photos: File[]) => {
@@ -126,6 +190,8 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             setBlackListSel={(value) => setFormData({ ...formData, blackListSel: Array.isArray(value) ? value : [value] })}
             telegramChannel={formData.telegramChannel || []}
             setTelegramChannel={(value) => setFormData({ ...formData, telegramChannel: Array.isArray(value) ? value : [value] })}
+            communityTagOptions={activeCommunityTags}
+            blackListOptions={subscriberTags}
           />
         );
 

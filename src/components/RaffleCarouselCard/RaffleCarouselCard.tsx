@@ -5,6 +5,7 @@ import { Icon16Flag, Icon16PenOutline  } from '@vkontakte/icons';
 import RaffleState from '../RaffleState/RaffleState';
 import { Raffle_Id, Change_CarouselCard } from '@constants/Texts/RaffleCarouselCardText';
 import BadgeIcon from '../BadgeIcon/BadgeIcon';
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 
 interface RaffleCarouselCardProps {
   raffleId: string;
@@ -25,6 +26,11 @@ const RaffleCarouselCard: React.FC<RaffleCarouselCardProps> = ({
   endDate,
   updatedAt,
 }) => {
+  const router = useRouteNavigator();
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    router.push(`/editraffle/${raffleId}`);
+  };
   return (
     <div className={styles.card}>
       {/* Верхняя часть: Название + бейджи */}
@@ -53,7 +59,7 @@ const RaffleCarouselCard: React.FC<RaffleCarouselCardProps> = ({
 
         <div className={styles.actions}>
           <BadgeIcon icon={<Icon16Flag />} />
-          <BadgeIcon icon={<Icon16PenOutline />} />
+          <BadgeIcon icon={<Icon16PenOutline onClick={handleEdit} />} />
         </div>
       </div>
     </div>

@@ -7,8 +7,8 @@ import { ToggleSwitch }   from '@/components/ToggleSwitch/ToggleSwitch';
 import SupportCard        from '@/components/SupportCard/SupportCard';
 import CarouselCard       from '@/components/CarouselCard/CarouselCard';
 
-import { useCommunities } from '@/api/hooks';
-import { useRaffleCarouselCards } from '@/hooks/useRaffleCarouselCards';
+import { useCommunities, useActiveCommunities } from '@/api/hooks';
+import { useRaffleCards } from '@/hooks/useRaffleCards';
 import { notificationsApi } from '@/api/notifications';
 
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
@@ -30,7 +30,8 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
   const [showModal, setShowModal] = useState(false);              // ← управляем показом
   const routeNavigator = useRouteNavigator();
   const { data: communities } = useCommunities();
-  const { data: raffleCarouselCards, loading: carouselLoading, error: carouselError } = useRaffleCarouselCards();
+  const { activeIds } = useActiveCommunities();
+  const { data: raffles, loading: carouselLoading, error: carouselError } = useRaffleCards();
   const [notifications, setNotifications] = useState<any[] | null>(null);
   const [notifLoading, setNotifLoading] = useState(true);
   const [notifError, setNotifError] = useState<string | null>(null);
@@ -39,14 +40,15 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
   // Получаем баннеры сообществ с правильными ролями
   useEffect(() => {
     if (communities) {
-      const banners: CommunityBanner[] = communities.map(community => ({
+      const filtered = communities.filter(c => activeIds.includes(c.id));
+      const banners: CommunityBanner[] = filtered.map(community => ({
         avatarUrl: community.avatarUrl,
         name: community.name,
         adminType: getRoleDisplayName(community.adminType)
       }));
       setCommunityBanners(banners);
     }
-  }, [communities]);
+  }, [communities, activeIds]);
 
   useEffect(() => {
     notificationsApi.getNotifications()
@@ -58,6 +60,23 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
   useEffect(() => {
   console.log('showModal changed:', showModal);
 }, [showModal]);
+
+  // Маппинг RaffleCard -> RaffleCarouselCardProps
+  function mapRaffleToCarouselCardProps(raffle: any) {
+    let status: 'active' | 'pending' | 'results' | 'resultsWhite' | 'deleted' | 'draft' | 'completed' = 'active';
+    if (raffle.statusNestedCard === 'green') status = 'active';
+    else if (raffle.statusNestedCard === 'yellow') status = 'pending';
+    else if (raffle.statusNestedCard === 'red') status = 'deleted';
+    return {
+      raffleId: raffle.raffleId,
+      name: raffle.name,
+      status,
+      stateText: raffle.statusNestedText,
+      members: raffle.membersCountNested,
+      endDate: raffle.timeLeft || '',
+      updatedAt: raffle.lastModified || '',
+    };
+  }
 
   return (
     <Panel id={id}>
@@ -92,7 +111,11 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
                   buttonPlus="Добавить"
                   button="Смотреть все"
                   variant="raffle"
-                  raffleItems={raffleCarouselCards || []}
+                  raffleItems={(raffles || []).sort((a, b) => {
+                    const dateA = new Date(a.lastModified).getTime();
+                    const dateB = new Date(b.lastModified).getTime();
+                    return dateB - dateA;
+                  }).map(mapRaffleToCarouselCardProps)}
                   buttonPlusOnClick={() => routeNavigator.push('/createRaffle')}
                   buttonOnClick={() => routeNavigator.push('/raffles')}
                 />

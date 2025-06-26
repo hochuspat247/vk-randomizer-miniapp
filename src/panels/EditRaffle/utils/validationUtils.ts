@@ -33,8 +33,6 @@ export const isStepComplete = (
 
     case 'Condition':
       return (
-        formData.participationConditions.length > 0 &&
-        formData.requiredCommunities.length > 0 &&
         !!formData.numberWinners.trim() &&
         isDigits(formData.numberWinners)
       );
@@ -64,11 +62,9 @@ export const getMissingFields = (
   if (step === 'General') {
     if (!formData.community) missing.push('Сообщество');
     if (!formData.giveawayName.trim()) missing.push('Название розыгрыша');
-    if (!formData.prizeDescription.trim()) missing.push('Описание приза');
+    if (!formData.prizeDescription.trim()) missing.push('текст конкурсного поста');
     if (formData.photos.length === 0) missing.push('Фотографии');
   } else if (step === 'Condition') {
-    if (formData.participationConditions.length === 0) missing.push('Условия участия');
-    if (formData.requiredCommunities.length === 0) missing.push('Обязательные сообщества');
     if (!formData.numberWinners.trim()) missing.push('Количество победителей');
     if (formData.blackListSel.length === 0) missing.push('Черный список');
   }  if (step === 'DateTime') {

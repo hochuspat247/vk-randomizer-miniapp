@@ -7,12 +7,6 @@ export function useCanProceed(
   currentStep: CreateRaffleStep,
   formData: FormData
 ): boolean {
-  if (currentStep === 'DateTime') {
-    return Boolean(
-      formData.startDateTime &&
-      formData.endDateTime &&
-      validateDateTime(formData.startDateTime, formData.endDateTime)
-    );
-  }
-  return isStepComplete(currentStep, formData);
+  // В режиме редактирования разрешаем переход между шагами без валидации
+  return true;
 }

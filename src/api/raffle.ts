@@ -7,7 +7,7 @@ import {
   UpdateRaffleRequest 
 } from '../types/raffle';
 
-const RAFFLES_API_BASE = '/api/v1/raffles';
+const RAFFLES_API_BASE = '/api/v1/raffle-cards';
 
 export const rafflesApi = {
   // Получить список всех розыгрышей
@@ -16,8 +16,8 @@ export const rafflesApi = {
   },
 
   // Получить розыгрыш по ID
-  async getRaffleById(raffleId: string): Promise<RaffleCard> {
-    return httpClient.get<RaffleCard>(`${RAFFLES_API_BASE}/cards/${raffleId}`);
+  async getRaffleById(raffleId: string): Promise<{raffle: RaffleCard}> {
+    return httpClient.get<{raffle: RaffleCard}>(`${RAFFLES_API_BASE}/${raffleId}`);
   },
 
   // Создать новый розыгрыш
@@ -56,7 +56,11 @@ export const rafflesApi = {
   async getInactiveRaffles(): Promise<RaffleCard[]> {
     const allRaffles = await this.getRaffles();
     return allRaffles.filter(raffle => raffle.textRaffleState === 'Неактивен');
-  }
+  },
+
+  async createRaffleCard(raffle: RaffleCard) {
+    return httpClient.post(`${RAFFLES_API_BASE}/`, raffle);
+  },
 };
 
 export default rafflesApi;

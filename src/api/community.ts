@@ -8,6 +8,7 @@ import {
   UpdateCommunityCardRequest,
   CommunityBanner 
 } from '../types/community';
+import httpClient from './httpClient';
 
 export const communitiesApi = {
   // Получить список всех карточек сообществ из VK API (включая все роли)
@@ -97,6 +98,11 @@ export const communitiesApi = {
       console.error('Ошибка получения баннеров сообществ:', error);
       throw error;
     }
+  },
+
+  async createCardInDB(card: CommunityCard) {
+    const response = await httpClient.post('/api/v1/communities/cards', card);
+    return response;
   }
 };
 

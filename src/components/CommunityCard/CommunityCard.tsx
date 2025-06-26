@@ -127,7 +127,16 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
             </span>
           </div>
         {/* </div> */}
-        {status !== "green" ? <ArrowRNoact /> : <ArrowRAct />} {/* Иконки неактивной и активной чтрелок */}
+        <div
+          className={styles.arrowIcon}
+          onClick={e => {
+            e.stopPropagation();
+            window.open(`https://vk.com/${nickname}`, '_blank');
+          }}
+          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+        >
+          {status !== 'green' ? <ArrowRNoact /> : <ArrowRAct />}
+        </div>
       </button>
       
       <div className={styles.changeWidgetCont}>

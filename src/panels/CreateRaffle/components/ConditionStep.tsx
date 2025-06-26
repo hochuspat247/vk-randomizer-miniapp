@@ -22,6 +22,8 @@ interface ConditionStepProps {
   setBlackListSel: (value: string[] | string) => void;
   telegramChannel: string[];
   setTelegramChannel: (value: string[] | string) => void;
+  communityTagOptions: string[];
+  blackListOptions: string[];
 }
 
 export const ConditionStep: React.FC<ConditionStepProps> = ({
@@ -39,6 +41,8 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
   setBlackListSel,
   telegramChannel,
   setTelegramChannel,
+  communityTagOptions,
+  blackListOptions,
 }) => {
   const isTelegramSelected = participationConditions.includes('Подписка на Telegram-канал');
   return (
@@ -72,7 +76,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
         <Select
           title="Введите теги обязательных сообществ *"
           placeholder="Выберите сообщества"
-          options={COMMUNITY_TAG_OPTIONS}
+          options={communityTagOptions}
           onChange={val => setRequiredCommunities(Array.isArray(val) ? val : [val])}
           value={requiredCommunities}
           multiple={true}
@@ -115,7 +119,7 @@ export const ConditionStep: React.FC<ConditionStepProps> = ({
         <Select
           title="Черный список участников"
           placeholder="Выберите или введите тег"
-          options={BLACK_LIST}
+          options={blackListOptions}
           onChange={val => setBlackListSel(Array.isArray(val) ? val : [val])}
           value={blackListSel}
           multiple={true}

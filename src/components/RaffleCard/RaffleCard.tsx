@@ -44,6 +44,16 @@ interface RaffleCardProps {
   nickname: string;
   membersCountNested: string;
   adminType: 'admin' | 'owner';
+  
+  // VK enrichment
+  vkStatus?: 'connected' | 'notConfig' | 'error';
+  vkGroup?: {
+    id: number;
+    name: string;
+    screen_name: string;
+    photo_200?: string;
+    members_count: number;
+  };
 }
 
 const statusCommunityTextMap: Record<RaffleCardProps['statusСommunity'], string> = {
@@ -71,8 +81,10 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
   nickname,
   membersCountNested,
   adminType,
+  vkStatus,
+  vkGroup,
 }) => {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const router = useRouteNavigator(); 
 
   // --- Nested community card fetch ---
@@ -84,15 +96,18 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
     if (!expanded) return;
     setNestedLoading(true);
     setNestedError(null);
-    nestedCommunityApi.getCards()
-      .then(cards => {
-        const found = cards.find(card => card.nickname === nickname);
-        setNestedCard(found || null);
+    nestedCommunityApi.getCommunityByNickname(nickname)
+      .then(card => {
+        setNestedCard(card);
       })
       .catch(e => setNestedError(e.message || 'Ошибка загрузки'))
       .finally(() => setNestedLoading(false));
   }, [expanded, nickname]);
   // --- End nested fetch ---
+
+  // Используем VK статус для отображения, если доступен
+  const displayStatus = vkStatus || statusСommunity;
+  const displayStatusText = statusCommunityTextMap[displayStatus] || statusCommunityTextMap[statusСommunity];
 
   const renderBadgesPE = () => {
     switch (mode) {
@@ -189,7 +204,7 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
       </div>
 
       <div className={styles.wrapper}>
-        <button type="button" onClick={() => {router.push("/editrafflepanel")}} className={styles.editButton}>{EDIT_CONDITIONS}</button>
+        <button type="button" onClick={() => {router.push(`/editraffle/${raffleId}`)}} className={styles.editButton}>{EDIT_CONDITIONS}</button>
         <div className={styles.metaText}>
           {LAST_EDIT}: {lastModified} – {modifiedBy}
         </div>
@@ -198,8 +213,8 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
       <div className={styles.buttonOpenCont}>
         <div className={styles.communityStatCont}>
           <span className={styles.label}>{COMMUNITY_LABEL}</span>
-          <span className={`${styles.statusBadge} ${styles[statusСommunity]}`}>
-            {statusCommunityTextMap[statusСommunity]}
+          <span className={`${styles.statusBadge} ${styles[displayStatus]}`}>
+            {displayStatusText}
           </span>
         </div>
         <button
@@ -220,10 +235,11 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
             <NestedCommunityCard
               name={nestedCard.name}
               nickname={nestedCard.nickname}
-              status={nestedCard.status === null || nestedCard.status === undefined ? 'undefined' : nestedCard.status}
+              status={nestedCard.status === null || nestedCard.status === undefined ? undefined : nestedCard.status}
               statusText={nestedCard.statusText}
               membersCount={nestedCard.membersCount}
               adminType={nestedCard.adminType}
+              avatarUrl={nestedCard.avatarUrl}
             />
           )}
           {!nestedLoading && !nestedError && !nestedCard && (

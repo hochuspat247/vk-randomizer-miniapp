@@ -1,13 +1,12 @@
 /* Основные переопределения */
 .panelOverride {
   height: 100vh;
-  background-color: #fff;
   overflow-x: hidden;
 }
 
 .panelHeaderOverride {
-  background-color: #fff;
-  border-bottom: 1px solid #e1e3e6;
+  background-color: #ffffff00;
+  border-bottom: 1px solid #e1e3e600;
 }
 
 .panelHeaderContentOverride {

@@ -81,6 +81,11 @@ const Select: React.FC<CommunitySelectProps> = ({
     ? (Array.isArray(value) ? value : [])
     : (typeof value === 'string' ? [value] : []);
 
+  // Фильтрация опций по поисковому запросу
+  const filteredOptions = inputValue.trim().length > 0
+    ? options.filter(option => option.toLowerCase().includes(inputValue.trim().toLowerCase()))
+    : options;
+
   return (
     <div className={styles.selectContainer} ref={selectRef}>
       {title && <div className={styles.selectTitle}>{title}</div>}
@@ -125,28 +130,32 @@ const Select: React.FC<CommunitySelectProps> = ({
                 />
               </div>
             )}
-            {options.map(option => (
-              <div
-                key={option}
-                className={`${styles.option} ${
-                  (multiple
+            {filteredOptions.length === 0 ? (
+              <div className={styles.noOptions}>Нет совпадений</div>
+            ) : (
+              filteredOptions.map(option => (
+                <div
+                  key={option}
+                  className={`${styles.option} ${
+                    (multiple
+                      ? Array.isArray(value) && value.includes(option)
+                      : value === option
+                    ) ? (multiple ? styles.multipleSelected : styles.singleSelected) : ''
+                  }`}
+                  onClick={() => handleSelect(option)}
+                >
+                  {option}
+                  {(multiple
                     ? Array.isArray(value) && value.includes(option)
                     : value === option
-                  ) ? (multiple ? styles.multipleSelected : styles.singleSelected) : ''
-                }`}
-                onClick={() => handleSelect(option)}
-              >
-                {option}
-                {(multiple
-                  ? Array.isArray(value) && value.includes(option)
-                  : value === option
-                ) && (
-                  <span className={styles.checkmark}>
-                    <Icon16Done className={styles.checkIcon} />
-                  </span>
-                )}
-              </div>
-            ))}
+                  ) && (
+                    <span className={styles.checkmark}>
+                      <Icon16Done className={styles.checkIcon} />
+                    </span>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </div>
       )}

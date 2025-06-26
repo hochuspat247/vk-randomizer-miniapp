@@ -97,4 +97,5 @@ export interface GeneralStepProps {
   setPrizeDescription: (value: string) => void;
   photos: File[];
   onPhotosChange: (photos: File[]) => void;
+  communityDisabled?: boolean;
 }

@@ -72,7 +72,7 @@ export class VKApi {
     }
   }
 
-  private static async makeVKRequest(method: string, params: Record<string, any>): Promise<any> {
+  private static async makeVKRequest(method: string, params: Record<string, any>, retryCount = 0): Promise<any> {
     const token = await this.getAuthToken();
     
     try {
@@ -99,10 +99,20 @@ export class VKApi {
         const errorCode = error.error_data.error_code;
         const errorMsg = error.error_data.error_msg;
         
+        // Обработка ошибки превышения лимитов (код 6)
+        if (errorCode === 6 && retryCount < 3) {
+          const delay = Math.pow(2, retryCount) * 1000; // Экспоненциальная задержка: 1s, 2s, 4s
+          console.log(`Превышен лимит VK API, повторная попытка через ${delay}ms (попытка ${retryCount + 1}/3)`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return this.makeVKRequest(method, params, retryCount + 1);
+        }
+        
         if (errorCode === 260) {
           throw new Error('Доступ к списку сообществ запрещен настройками приватности');
         } else if (errorCode === 717) {
           throw new Error('Список сообществ недоступен');
+        } else if (errorCode === 6) {
+          throw new Error('Превышен лимит запросов к VK API. Попробуйте позже.');
         } else {
           throw new Error(`VK API error ${errorCode}: ${errorMsg}`);
         }
@@ -114,24 +124,65 @@ export class VKApi {
 
   // Получить все сообщества пользователя с правами (админ, редактор, модератор, рекламодатель)
   static async getUserGroupsWithRights(): Promise<VKGroup[]> {
-    try {
-      // Получаем сообщества отдельными запросами для каждой роли параллельно
-      const [adminGroups, editorGroups, moderatorGroups, advertiserGroups] = await Promise.all([
-        this.getAdminGroups(),
-        this.getEditorGroups(),
-        this.getModeratorGroups(),
-        this.getAdvertiserGroups()
-      ]);
+    return this.getCachedOrFetch('user_groups_with_rights', async () => {
+      try {
+        // Получаем сообщества последовательно, чтобы избежать превышения лимитов VK API
+        const allGroups: VKGroup[] = [];
+        
+        // Функция для добавления задержки между запросами
+        const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+        
+        // Получаем администраторские группы
+        try {
+          const adminGroups = await this.getAdminGroups();
+          allGroups.push(...adminGroups);
+        } catch (error) {
+          console.warn('Ошибка получения администраторских групп:', error);
+        }
+        
+        // Задержка между запросами
+        await delay(500);
+        
+        // Получаем редакторские группы
+        try {
+          const editorGroups = await this.getEditorGroups();
+          allGroups.push(...editorGroups);
+        } catch (error) {
+          console.warn('Ошибка получения редакторских групп:', error);
+        }
+        
+        // Задержка между запросами
+        await delay(500);
+        
+        // Получаем модераторские группы
+        try {
+          const moderatorGroups = await this.getModeratorGroups();
+          allGroups.push(...moderatorGroups);
+        } catch (error) {
+          console.warn('Ошибка получения модераторских групп:', error);
+        }
+        
+        // Задержка между запросами
+        await delay(500);
+        
+        // Получаем рекламодательские группы
+        try {
+          const advertiserGroups = await this.getAdvertiserGroups();
+          allGroups.push(...advertiserGroups);
+        } catch (error) {
+          console.warn('Ошибка получения рекламодательских групп:', error);
+        }
 
-      // Объединяем все группы и убираем дубликаты
-      const allGroups = [...adminGroups, ...editorGroups, ...moderatorGroups, ...advertiserGroups];
-      const uniqueGroups = this.removeDuplicateGroups(allGroups);
+        // Объединяем все группы и убираем дубликаты
+        const uniqueGroups = this.removeDuplicateGroups(allGroups);
+        console.log(`VK API: получено ${uniqueGroups.length} уникальных сообществ с правами`);
 
-      return uniqueGroups;
-    } catch (error) {
-      console.error('Ошибка получения сообществ с правами:', error);
-      throw error;
-    }
+        return uniqueGroups;
+      } catch (error) {
+        console.error('Ошибка получения сообществ с правами:', error);
+        throw error;
+      }
+    });
   }
 
   // Удалить дубликаты групп по ID
@@ -332,5 +383,30 @@ export class VKApi {
   static clearCacheForType(type: 'admin' | 'editor' | 'moderator' | 'advertiser'): void {
     const key = `${type}_groups`;
     cache.delete(key);
+    // Также очищаем комбинированный кэш
+    cache.delete('user_groups_with_rights');
+  }
+
+  // Очистить кэш комбинированных данных
+  static clearCombinedCache(): void {
+    cache.delete('user_groups_with_rights');
+  }
+
+  // Получить подписчиков сообщества (до 100 штук)
+  static async getCommunityMembers(groupId: string | number): Promise<{ name: string; avatar: string }[]> {
+    try {
+      const response = await this.makeVKRequest('groups.getMembers', {
+        group_id: groupId,
+        fields: 'photo_100,first_name,last_name',
+        count: 8 // для примера, можно увеличить до 100
+      });
+      return (response.items || []).map((user: any) => ({
+        name: `${user.first_name}${user.last_name ? ' ' + user.last_name : ''}`,
+        avatar: user.photo_100
+      }));
+    } catch (error) {
+      console.error('Ошибка получения подписчиков:', error);
+      return [];
+    }
   }
 } 

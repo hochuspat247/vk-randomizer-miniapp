@@ -17,6 +17,12 @@ export interface RaffleCard {
   nickname: string;
   membersCountNested: string;
   adminType: 'owner' | 'admin';
+  imageSrc?: string;
+  channelAvatarSrc?: string;
+  channelName?: string;
+  description?: string;
+  endTime?: string;
+  communityId?: string;
 }
 
 export interface CreateRaffleRequest {

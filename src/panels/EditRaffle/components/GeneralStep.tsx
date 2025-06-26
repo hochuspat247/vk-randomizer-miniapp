@@ -15,14 +15,20 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
   setPrizeDescription,
   photos,
   onPhotosChange,
+  communityDisabled = false,
 }) => {
   const { data: communities } = useCommunities();
+  const selectedCommunity = communities?.find(c => c.nickname === community);
+  const communityName = selectedCommunity?.name || '';
+  console.log('community:', community);
+  console.log('communities:', communities);
+  console.log('selectedCommunity:', selectedCommunity);
 
   const communityOptions = useMemo(() => {
     if (!communities) return [];
     return communities.map(community => ({
       label: community.name,
-      value: community.name
+      value: community.id
     }));
   }, [communities]);
 
@@ -38,20 +44,19 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
       </FormItem>
 
       <FormItem className={styles.formItem} top="Сообщество *">
-        <CustomSelect
-          value={community}
-          onChange={(e) => setCommunity(e.target.value)}
-          options={communityOptions}
-          placeholder="Выберите сообщество"
+        <Input
+          value={communityName}
+          disabled
+          placeholder="Сообщество"
         />
       </FormItem>
 
-      <FormItem className={styles.formItem} top="Описание приза *">
+      <FormItem className={styles.formItem} top="текст конкурсного поста *">
         <Input
           type="text"
           value={prizeDescription}
           onChange={(e) => setPrizeDescription(e.target.value)}
-          placeholder="Введите описание приза"
+          placeholder="Введите текст конкурсного поста"
         />
       </FormItem>
 

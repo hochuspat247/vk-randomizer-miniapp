@@ -23,6 +23,7 @@ interface NestedCommunityCardProps {
   nickname: string;
   membersCount: string;
   adminType: 'owner' | 'admin' | 'editor' | 'moderator' | 'member' | 'advertiser'; // обновленные роли
+  avatarUrl?: string; // добавлено поле для аватара
 }
 
 // Функция для получения иконки роли
@@ -52,6 +53,7 @@ const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
   statusText,
   membersCount,
   adminType,
+  avatarUrl,
 }) => {
   const statusClassMap: Record<'green' | 'yellow' | 'red', string> = {
     green: styles.badgeGreen,
@@ -65,6 +67,9 @@ const NestedCommunityCard: React.FC<NestedCommunityCardProps> = ({
     <div className={styles.card}>
       <div className={styles.cardTop}>
         <div className={styles.avatarInfo}>
+          {avatarUrl && (
+            <img src={avatarUrl} alt={name} className={styles.avatar} width={36} height={36} style={{ borderRadius: 8, marginRight: 8 }} />
+          )}
           <span className={styles.name}>{name}</span>
           <span 
             className={styles.nickname} 

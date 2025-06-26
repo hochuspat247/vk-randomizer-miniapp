@@ -299,4 +299,40 @@ export function useNotifications() {
     markAsRead,
     markAllAsRead,
   };
+}
+
+const ACTIVE_COMMUNITIES_KEY = 'active_community_ids';
+
+export function useActiveCommunities() {
+  const [activeIds, setActiveIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(ACTIVE_COMMUNITIES_KEY);
+    if (stored) {
+      setActiveIds(JSON.parse(stored));
+    }
+  }, []);
+
+  const addCommunity = useCallback((id: string) => {
+    setActiveIds(prev => {
+      const updated = prev.includes(id) ? prev : [...prev, id];
+      localStorage.setItem(ACTIVE_COMMUNITIES_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const removeCommunity = useCallback((id: string) => {
+    setActiveIds(prev => {
+      const updated = prev.filter(cid => cid !== id);
+      localStorage.setItem(ACTIVE_COMMUNITIES_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const clearCommunities = useCallback(() => {
+    setActiveIds([]);
+    localStorage.removeItem(ACTIVE_COMMUNITIES_KEY);
+  }, []);
+
+  return { activeIds, addCommunity, removeCommunity, clearCommunities };
 } 

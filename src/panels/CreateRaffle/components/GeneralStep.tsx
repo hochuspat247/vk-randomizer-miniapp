@@ -32,7 +32,7 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
     if (!communities) return [];
     return communities.map(community => ({
       label: community.name,
-      value: community.name
+      value: community.id
     }));
   }, [communities]);
 
@@ -57,12 +57,12 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
           />
         </FormItem>
 
-        <FormItem className={styles.formItem} top="Описание приза *">
+        <FormItem className={styles.formItem} top="текст конкурсного поста *">
           <Input
             type="text"
             value={prizeDescription}
             onChange={(e) => setPrizeDescription(e.target.value)}
-            placeholder="Введите описание приза"
+            placeholder="Введите текст конкурсного поста"
           />
         </FormItem>
       </ConfigProvider>
