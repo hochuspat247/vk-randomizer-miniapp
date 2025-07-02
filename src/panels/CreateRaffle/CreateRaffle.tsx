@@ -26,6 +26,7 @@ import { VKApi } from '@/api/vkApi';
 import { rafflesApi } from '@/api/raffle';
 import { RaffleCard } from '@/types/raffle';
 import persikImage from '@/assets/images/persik.png';
+import { useAutoSaveRaffle } from './hooks/useAutoSave';
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
@@ -159,6 +160,14 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const handlePhotosChange = useCallback((photos: File[]) => {
     setFormData(prev => ({ ...prev, photos }));
   }, []);
+
+  // Автосохранение
+  const draftId = useAutoSaveRaffle(formData);
+
+  useEffect(() => {
+    if (draftId) console.log('Черновик создан, ID =', draftId);
+  }, [draftId]);
+
 
   const renderStepContent = () => {
     console.log('renderStepContent: currentStep =', currentStep, 'shouldShowPreview =', shouldShowPreview);

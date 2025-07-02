@@ -18,7 +18,9 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
   communityDisabled = false,
 }) => {
   const { data: communities } = useCommunities();
-  const selectedCommunity = communities?.find(c => c.nickname === community);
+  const selectedCommunity = communities?.find(
+   c => String(c.id) === String(community)
+ );
   const communityName = selectedCommunity?.name || '';
   console.log('community:', community);
   console.log('communities:', communities);
@@ -44,10 +46,11 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
       </FormItem>
 
       <FormItem className={styles.formItem} top="Сообщество *">
-        <Input
-          value={communityName}
-          disabled
+        <CustomSelect
+          value={community}
+          onChange={(e) => {setCommunity(e.target.value);}}
           placeholder="Сообщество"
+          options={communityOptions}
         />
       </FormItem>
 

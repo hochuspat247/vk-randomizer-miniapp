@@ -22,17 +22,17 @@ export const rafflesApi = {
 
   // Создать новый розыгрыш
   async createRaffle(raffleData: CreateRaffleRequest): Promise<RaffleCard> {
-    return httpClient.post<RaffleCard>(`${RAFFLES_API_BASE}/cards`, raffleData);
+    return httpClient.post<RaffleCard>(`${RAFFLES_API_BASE}/`, raffleData);
   },
 
   // Полностью обновить розыгрыш
   async updateRaffle(raffleId: string, raffleData: CreateRaffleRequest): Promise<RaffleCard> {
-    return httpClient.put<RaffleCard>(`${RAFFLES_API_BASE}/cards/${raffleId}`, raffleData);
+    return httpClient.put<RaffleCard>(`${RAFFLES_API_BASE}/${raffleId}`, raffleData);
   },
 
   // Частично обновить розыгрыш
   async patchRaffle(raffleId: string, raffleData: UpdateRaffleRequest): Promise<RaffleCard> {
-    return httpClient.patch<RaffleCard>(`${RAFFLES_API_BASE}/cards/${raffleId}`, raffleData);
+    return httpClient.patch<RaffleCard>(`${RAFFLES_API_BASE}/${raffleId}`, raffleData);
   },
 
   // Удалить розыгрыш
