@@ -21,11 +21,14 @@ import { useFormData }    from './hooks/useFormData';
 import { useSteps }       from './hooks/useSteps';
 import { useCanProceed }  from './hooks/useCanProceed';
 import { useProgress }    from './hooks/useProgress';
+import { useKeyboardVisible } from './hooks/useKeyboardVisible';
 
 const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const nav = useRouteNavigator();
   const params = useParams();
   const raffleId = params?.id;
+  // открыта ли клавиатура или нет
+  const keyboardOpen = useKeyboardVisible();
 
   // Состояние загрузки
   const [isLoading, setIsLoading] = useState(true);
@@ -272,43 +275,48 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
       <div className={styles.container}>
         <ProgressBadge type={currentStep} progress={progress} />
 
-        <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <form 
+            className={styles.formContainer} 
+            onSubmit={handleSubmit}
+        >
           <div className={styles.formLayout}>
             {renderStepContent()}
           </div>
 
-          <div className={styles.navigationContainer}>
-            {currentStep !== 'General' && (
-              <button
-                type="button"
-                className={styles.backButton}
-                onClick={handlePrev}
-              >
-                <ChevronLeftIcon />
-                <span className={styles.buttonText}>Назад</span>
-              </button>
-            )}
+          {!keyboardOpen && (
+            <div className={styles.navigationContainer}>
+                {currentStep !== 'General' && (
+                <button
+                    type="button"
+                    className={styles.backButton}
+                    onClick={handlePrev}
+                >
+                    <ChevronLeftIcon />
+                    <span className={styles.buttonText}>Назад</span>
+                </button>
+                )}
 
-            {currentStep !== 'Addons' ? (
-              <button
-                type="button"
-                className={styles.nextButton2}
-                disabled={!canProceed}
-                onClick={handleNext}
-              >
-                <span className={styles.buttonText}>Далее</span>
-                <ChevronRightIcon />
-              </button>
-            ) : (
-              <button 
-                type="button" 
-                className={styles.nextButton}
-                onClick={() => nav.push("/raffles")}
-              >
-                <span className={styles.buttonText}>Завершить</span>
-              </button>
+                {currentStep !== 'Addons' ? (
+                <button
+                    type="button"
+                    className={styles.nextButton2}
+                    disabled={!canProceed}
+                    onClick={handleNext}
+                >
+                    <span className={styles.buttonText}>Далее</span>
+                    <ChevronRightIcon />
+                </button>
+                ) : (
+                <button 
+                    type="button" 
+                    className={styles.nextButton}
+                    onClick={() => nav.push("/raffles")}
+                >
+                    <span className={styles.buttonText}>Завершить</span>
+                </button>
+                )}
+            </div> 
             )}
-          </div>
         </form>
       </div>
     </Panel>
