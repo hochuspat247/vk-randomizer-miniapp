@@ -1,0 +1,47 @@
+/* src/components/MenuSettings/MenuSettings.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background: #000; /* подложка, при необходимости */
+}
+
+.divider {
+  height: 0.5px;
+  margin: 10px 16px;
+  background: var(--Dark-Stroke-Separator-Primary, #363738);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 10px 16px;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 12px;
+  color: var(--Green, #D4F94E);
+}
+
+.label {
+  color: var(--Dark-Text-Text-Primary, #E1E3E6);
+  font-family: "VK Sans Display", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.1px;
+}
