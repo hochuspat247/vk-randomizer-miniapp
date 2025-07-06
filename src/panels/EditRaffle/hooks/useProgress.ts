@@ -8,13 +8,15 @@ export const useProgress = (formData: FormData) => {
   const initialEnd   = useRef(formData.endDateTime);
 
   useEffect(() => {
-    const totalFields = 10; // 10 обязательных полей
-    const progressPerField = 100 / totalFields;
-
+    let totalFields = 7; // General + Condition
     let filledFields = 0;
 
+    console.log('useProgress effect: formData.community =', formData.community)
+
+    
+
     // General
-    if (formData.community) filledFields += 1;
+    if (formData.community !== "") filledFields += 1;
     if (formData.giveawayName.trim()) filledFields += 1;
     if (formData.prizeDescription.trim()) filledFields += 1;
     if (formData.photos.length > 0) filledFields += 1;
@@ -23,14 +25,25 @@ export const useProgress = (formData: FormData) => {
     if (formData.participationConditions.length > 0) filledFields += 1;
     if (formData.requiredCommunities.length > 0) filledFields += 1;
     if (formData.numberWinners.trim()) filledFields += 1;
-    if (formData.blackListSel.length > 0) filledFields += 1;
 
     // DateTime
-    if (formData.startDateTime !== initialStart.current) filledFields += 1;
-    if (formData.endDateTime   !== initialEnd.current)   filledFields += 1;
+    if (formData.endByParticipants) {
+      totalFields += 2; // startDateTime и memberMax
+      if (formData.startDateTime) filledFields += 1;
+      if (formData.memberMax.trim()) filledFields += 1;
+    } else {
+      totalFields += 2; // startDateTime и endDateTime
+      if (formData.startDateTime) filledFields += 1;
+      if (formData.endDateTime) filledFields += 1;
+    }
 
-    const newProgress = Math.round(filledFields * progressPerField);
-    setProgress(newProgress);
+    let newProgress = Math.round((filledFields / totalFields) * 100);
+    if (newProgress > 100) newProgress = 100;
+    if (newProgress >= 100) {
+      setProgress(100);
+    } else {
+      setProgress(newProgress);
+    }
   }, [formData]);
 
   return progress;

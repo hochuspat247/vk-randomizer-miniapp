@@ -32,6 +32,8 @@ export interface FormData {
   isSelectedEndTime: string;
   startDateLabel: string;
   endDateLabel: string;
+  telegramChannel: string[];
+  setTelegramChannel: (value: string[]) => void;
 } 
 
 export interface AddonsStepProps {
@@ -64,6 +66,8 @@ export interface ConditionStepProps {
   communityTagOptions: string[];
   communityPartnersTags: string[];
   blackListOptions: string[];
+  telegramChannel: string[];
+  setTelegramChannel: (value: string[]) => void;
 }
 
 export interface DateTimeStepProps {

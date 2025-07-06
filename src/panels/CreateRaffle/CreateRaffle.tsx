@@ -26,12 +26,17 @@ import { VKApi } from '@/api/vkApi';
 import { rafflesApi } from '@/api/raffle';
 import { RaffleCard } from '@/types/raffle';
 import persikImage from '@/assets/images/persik.png';
+import { useKeyboardVisible } from './hooks/useKeyboardVisible';
+import { useAutoSaveRaffle } from './hooks/useAutoSave';
 
 const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const routeNavigator = useRouteNavigator();
   const [currentStep, setCurrentStep] = useState<CreateRaffleStep>('General');
   const [loading, setLoading] = useState(false);
   const [shouldShowPreview, setShouldShowPreview] = useState(false);
+
+  // открыта ли клавиатура или нет
+    const keyboardOpen = useKeyboardVisible();
 
   // Состояния формы
   const [formData, setFormData] = useState<FormData>({
@@ -160,6 +165,14 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     setFormData(prev => ({ ...prev, photos }));
   }, []);
 
+  // Автосохранение
+  const draftId = useAutoSaveRaffle(formData);
+
+  useEffect(() => {
+    if (draftId) console.log('Черновик создан, ID =', draftId);
+  }, [draftId]);
+
+
   const renderStepContent = () => {
     console.log('renderStepContent: currentStep =', currentStep, 'shouldShowPreview =', shouldShowPreview);
     switch (currentStep) {
@@ -274,49 +287,61 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         <form className={styles.formContainer} onSubmit={handleSubmit}>
           {!shouldShowPreview && <div className={styles.formLayout}>{renderStepContent()}</div>}
 
-          {!shouldShowPreview && currentStep === 'General' && (
-            <div className={styles.navigationContainer}>
-              <button
-                type="button"
-                className={styles.nextButton}
-                disabled={!isStepComplete(currentStep, formData) || shouldShowPreview}
-                onClick={handleNextStep}
-              >
-                <span className={styles.nextText}>Далее</span>
-                <ChevronRightIcon />
-              </button>
-            </div>
-          )}
-
-          {!shouldShowPreview && currentStep !== 'General' && (
-            <div className={styles.navigationContainer}>
-              <button type="button" className={styles.backButton} onClick={handlePrevStep} disabled={shouldShowPreview}>
-                <ChevronLeftIcon />
-                <span className={styles.buttonText}>Назад</span>
-              </button>
-
-              {currentStep !== 'Addons' ? (
-                <button
-                  type="button"
-                  className={styles.nextButton2}
-                  disabled={!canProceed || shouldShowPreview}
-                  onClick={handleNextStep}
-                >
-                  <span className={styles.buttonText}>Далее</span>
-                  <ChevronRightIcon />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className={styles.nextButton}
-                  disabled={progress < 100 || shouldShowPreview}
-                  onClick={handleSubmit}
-                >
-                  <span className={styles.buttonText}>Завершить</span>
-                </button>
+        {!keyboardOpen && (
+            <>
+              {/* Навигация на шаге General */}
+              {!shouldShowPreview && currentStep === 'General' && (
+                <div className={styles.navigationContainer}>
+                  <button
+                    type="button"
+                    className={styles.nextButton}
+                    disabled={!isStepComplete(currentStep, formData) || shouldShowPreview}
+                    onClick={handleNextStep}
+                  >
+                    <span className={styles.nextText}>Далее</span>
+                    <ChevronRightIcon />
+                  </button>
+                </div>
               )}
-            </div>
+
+              {/* Навигация на остальных шагах */}
+              {!shouldShowPreview && currentStep !== 'General' && (
+                <div className={styles.navigationContainer}>
+                  <button
+                    type="button"
+                    className={styles.backButton}
+                    onClick={handlePrevStep}
+                    disabled={shouldShowPreview}
+                  >
+                    <ChevronLeftIcon />
+                    <span className={styles.buttonText}>Назад</span>
+                  </button>
+
+                  {currentStep !== 'Addons' ? (
+                    <button
+                      type="button"
+                      className={styles.nextButton2}
+                      disabled={!canProceed || shouldShowPreview}
+                      onClick={handleNextStep}
+                    >
+                      <span className={styles.buttonText}>Далее</span>
+                      <ChevronRightIcon />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className={styles.nextButton}
+                      disabled={progress < 100 || shouldShowPreview}
+                      onClick={handleSubmit}
+                    >
+                      <span className={styles.buttonText}>Завершить</span>
+                    </button>
+                  )}
+                </div>
+              )}
+            </>
           )}
+
         </form>
         {shouldShowPreview && (
           <div className={styles.loadingOverlay}>

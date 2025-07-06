@@ -8,7 +8,7 @@ export const useProgress = (formData: FormData) => {
   const initialEnd   = useRef(formData.endDateTime);
 
   useEffect(() => {
-    let totalFields = 8; // General + Condition
+    let totalFields = 7; // General + Condition
     let filledFields = 0;
 
     // General
@@ -21,11 +21,8 @@ export const useProgress = (formData: FormData) => {
     if (formData.participationConditions.length > 0) filledFields += 1;
     if (formData.requiredCommunities.length > 0) filledFields += 1;
     if (formData.numberWinners.trim()) filledFields += 1;
-    if (formData.blackListSel.length > 0) filledFields += 1;
 
     // DateTime
-    let bonus = 0;
-    if (formData.startDateTime) bonus += 10;
     if (formData.endByParticipants) {
       totalFields += 2; // startDateTime и memberMax
       if (formData.startDateTime) filledFields += 1;
@@ -36,7 +33,7 @@ export const useProgress = (formData: FormData) => {
       if (formData.endDateTime) filledFields += 1;
     }
 
-    let newProgress = Math.round((filledFields / totalFields) * 100) + bonus;
+    let newProgress = Math.round((filledFields / totalFields) * 100);
     if (newProgress > 100) newProgress = 100;
     if (newProgress >= 100) {
       setProgress(100);

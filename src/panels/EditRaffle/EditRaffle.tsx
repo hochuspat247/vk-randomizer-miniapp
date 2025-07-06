@@ -21,11 +21,16 @@ import { useFormData }    from './hooks/useFormData';
 import { useSteps }       from './hooks/useSteps';
 import { useCanProceed }  from './hooks/useCanProceed';
 import { useProgress }    from './hooks/useProgress';
+import { useKeyboardVisible } from './hooks/useKeyboardVisible';
+import { useActiveCommunities, useCommunities } from '@/api/hooks';
+import { VKApi } from '@/api/vkApi';
 
 const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const nav = useRouteNavigator();
   const params = useParams();
   const raffleId = params?.id;
+  // открыта ли клавиатура или нет
+  const keyboardOpen = useKeyboardVisible();
 
   // Состояние загрузки
   const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +41,26 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
   const { currentStep, nextStep, prevStep }     = useSteps();
   const canProceed                              = useCanProceed(currentStep, formData);
   const progress                                = useProgress(formData);
+
+  const { data: communities } = useCommunities();
+  const { activeIds } = useActiveCommunities();
+  const [subscriberTags, setSubscriberTags] = useState<string[]>([]);
+
+  // Получаем никнеймы активных сообществ
+    const activeCommunityTags = (communities || []).filter(c => activeIds.includes(c.id)).map(c => c.nickname.startsWith('@') ? c.nickname : '@' + c.nickname);
+
+     // Подгружаем подписчиков выбранного сообщества
+    useEffect(() => {
+    const selected = (communities || []).find(c => c.id === formData.community);
+    if (selected) {
+        VKApi.getCommunityMembers(selected.id).then(users => {
+        setSubscriberTags(users.map(u => u.name)); // или u.nickname если есть
+        });
+    } else {
+        setSubscriberTags([]);
+    }
+    }, [formData.community, communities]);
+
 
   // Загрузка реальных данных розыгрыша
   useEffect(() => {
@@ -64,7 +89,7 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
           throw new Error('Данные розыгрыша не найдены');
         }
 
-        const comm = raffle.nickname ? String(raffle.nickname).replace(/^@/, '') : '';
+        const comm = String(raffle.communityId);
         console.log('Community nickname for form:', comm);
         
         // Обновляем форму с данными с бэкенда
@@ -99,7 +124,10 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
         };
         
         console.log('Updating form with data:', formUpdate);
-        updateFields(formUpdate);
+        updateFields({
+        ...formUpdate,
+        community: '',
+      });
         setIsLoading(false);
       })
       .catch((error) => {
@@ -203,9 +231,11 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
             blackListSel={formData.blackListSel}
             setBlackListSel={v => updateField('blackListSel', v)}
             conditionOptions={formData.conditionOptions}
-            communityTagOptions={formData.communityTagOptions}
+            communityTagOptions={activeCommunityTags}
             communityPartnersTags={formData.communityPartnersTags}
-            blackListOptions={formData.blackListOptions}
+            blackListOptions={subscriberTags}
+            telegramChannel={formData.telegramChannel}
+            setTelegramChannel={v => updateField('telegramChannel', v)}
           />
         );
 
@@ -272,43 +302,48 @@ const EditRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
       <div className={styles.container}>
         <ProgressBadge type={currentStep} progress={progress} />
 
-        <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <form 
+            className={styles.formContainer} 
+            onSubmit={handleSubmit}
+        >
           <div className={styles.formLayout}>
             {renderStepContent()}
           </div>
 
-          <div className={styles.navigationContainer}>
-            {currentStep !== 'General' && (
-              <button
-                type="button"
-                className={styles.backButton}
-                onClick={handlePrev}
-              >
-                <ChevronLeftIcon />
-                <span className={styles.buttonText}>Назад</span>
-              </button>
-            )}
+          {!keyboardOpen && (
+            <div className={styles.navigationContainer}>
+                {currentStep !== 'General' && (
+                <button
+                    type="button"
+                    className={styles.backButton}
+                    onClick={handlePrev}
+                >
+                    <ChevronLeftIcon />
+                    <span className={styles.buttonText}>Назад</span>
+                </button>
+                )}
 
-            {currentStep !== 'Addons' ? (
-              <button
-                type="button"
-                className={styles.nextButton2}
-                disabled={!canProceed}
-                onClick={handleNext}
-              >
-                <span className={styles.buttonText}>Далее</span>
-                <ChevronRightIcon />
-              </button>
-            ) : (
-              <button 
-                type="button" 
-                className={styles.nextButton}
-                onClick={() => nav.push("/raffles")}
-              >
-                <span className={styles.buttonText}>Завершить</span>
-              </button>
+                {currentStep !== 'Addons' ? (
+                <button
+                    type="button"
+                    className={styles.nextButton2}
+                    disabled={!canProceed}
+                    onClick={handleNext}
+                >
+                    <span className={styles.buttonText}>Далее</span>
+                    <ChevronRightIcon />
+                </button>
+                ) : (
+                <button 
+                    type="button" 
+                    className={styles.nextButton}
+                    onClick={() => nav.push("/raffles")}
+                >
+                    <span className={styles.buttonText}>Завершить</span>
+                </button>
+                )}
+            </div> 
             )}
-          </div>
         </form>
       </div>
     </Panel>
