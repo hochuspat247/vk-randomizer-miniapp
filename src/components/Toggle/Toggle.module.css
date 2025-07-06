@@ -1,0 +1,45 @@
+/* src/components/Toggle/Toggle.module.css */
+
+/* сама “дорожка” */
+.track {
+  position: relative;
+  width: 40px;           /* можно подправить */
+  height: 16px;          /* узкая полоска */
+  border-radius: 8px;    /* полукруг по высоте */
+  cursor: pointer;
+  transition: background 0.2s;
+  outline: none;
+
+}
+
+.track.off {
+  background: #444444;   /* серый фон */
+}
+
+.track.on {
+  background: #6B7D2A;   /* ярко-зелёный фон */
+}
+
+/* кружок */
+.thumb {
+  position: absolute;
+  top: -4px;             /* чтобы кружок был выше дорожки */
+  left: 0;               /* в начальной позиции */
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+  background: #D4F94E;
+}
+
+/* серый кружок */
+.thumb.off {
+  background: #888888;
+  transform: translateX(0);
+}
+
+/* зелёный кружок смещён вправо */
+.thumb.on {
+  background: #d4f94e;
+  transform: translateX(16px); /* 40px − 24px = 16px */
+}

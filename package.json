@@ -18,8 +18,11 @@
     "@vkontakte/vk-mini-apps-router": "^1.7.6",
     "@vkontakte/vkui": "^7.0.0",
     "dayjs": "^1.11.13",
+    "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-ios-style-time-picker": "^0.0.12",
+    "react-ios-time-picker": "^0.2.2",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
