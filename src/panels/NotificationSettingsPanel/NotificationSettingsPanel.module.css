@@ -1,0 +1,10 @@
+.panel {
+    padding: 0 12px;
+}
+
+.divider {
+  height: 0.5px;
+  background: var(--Dark-Stroke-Separator-Primary, #363738);
+  width: 100%;
+  margin: 2px 0 10px 0; /* без внешних отступов */
+} 

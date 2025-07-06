@@ -1,0 +1,20 @@
+.content {
+    padding: 0 12px;
+}
+
+.headerContent {
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+}
+
+.panelHeader {
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+
+}
