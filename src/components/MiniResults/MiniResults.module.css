@@ -1,0 +1,102 @@
+/* src/components/MiniResults/MiniResults.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;      /* займёт 100% высоты родителя */
+  max-height: 100vh; /* не больше, чем окно браузера */
+
+  /* height: 400px;  */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 8px 8px 18px 8px;
+}
+
+.headerCont {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 9px;
+}
+
+.title {
+  color: var(--Dark-Text-Primary, #e1e3e6);
+  font-family: "VK Sans Display Expanded", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.countBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 12px;
+  background: var(--Dark-Icons-Icon-Tertiary, #5d5f61);
+  color: var(--Dark-Text-Text-Contrast, #fff);
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0.2px;
+}
+
+.listWrapper {
+  flex: 1;          /* занимает всё доступное пространство */
+  min-height: 0;    /* важно для корректной работы overflow внутри flex-контейнера */
+  overflow-y: auto; /* вертикальная прокрутка при переполнении */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name {
+    flex: 1;
+    color: var(--Dark-Text-Text-Primary, #E1E3E6);
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-family: Roboto;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 133.333% */
+    letter-spacing: -0.15px;
+}
+
+.moreIcon {
+  color: var(--Dark-Icons-Icon-Tertiary, #D4F94E);
+}
