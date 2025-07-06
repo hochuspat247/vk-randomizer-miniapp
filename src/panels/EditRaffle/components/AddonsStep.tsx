@@ -25,14 +25,14 @@ export const AddonsStep: React.FC<AddonsStepProps> = ({
           label="Опубликовать пост с итогами"
           checked={publishResults}
           onChange={setPublishResults}
-          showAdditionalIcon={true}
+          showAdditionalIcon={false}
         />
 
         <CustomCheckbox
           label="Скрыть количество участников"
           checked={hideParticipantsCount}
           onChange={setHideParticipantsCount}
-          showAdditionalIcon={true}
+          showAdditionalIcon={false}
         />
 
 
