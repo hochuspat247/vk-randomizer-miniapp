@@ -16,6 +16,7 @@ import PreviewPanel from '@/panels/PreviewPanel/PreviewPanel';
 import { DontDisturbPanelPanel } from '@/panels/DontDisturbPanel/DontDisturbPanel';
 import SettingsPanel from '@/panels/SettingsPanel/SettingsPanel';
 import NotificationSettingsPanel from '@/panels/NotificationSettingsPanel/NotificationSettingsPanel';
+import ResultsPanel from '@/panels/ResultsPanel/ResultsPanel';
 
 const Navigation: React.FC = () => {
   const routeNavigator = useRouteNavigator();
@@ -39,6 +40,7 @@ const Navigation: React.FC = () => {
             <DontDisturbPanelPanel id={PANELS.DONT_DISTURB} />
             <SettingsPanel id={PANELS.SETTINGS_PANEL} />
             <NotificationSettingsPanel id={PANELS.NOTIFICATION_SETTINGS_PANEL} />
+            <ResultsPanel id={PANELS.RESULTS_PANEL} />
           </View>
         </Epic>
       </ConfigProvider>
