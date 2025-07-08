@@ -198,7 +198,7 @@ const RaffleCard: React.FC<RaffleCardProps> = ({
         </div>
 
         <div className={styles.footer}>
-          <button type="button" className={styles.btnRes}>Подвести итоги</button>
+          <button type="button" onClick={() => {router.push('/resultspanel')}} className={styles.btnRes}>Подвести итоги</button>
           <span className={styles.hint}>{FINISH_NOW_HINT}</span>
         </div>
       </div>

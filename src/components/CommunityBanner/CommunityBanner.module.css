@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  background: var(--Dark-Background-Background-Content, #2D2D2E);
+background: var(--StickyCard-Backgroung, linear-gradient(0deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.12) 100%), rgba(0, 0, 0, 0.90));
   border-radius: 8px;
   cursor: pointer;
   user-select: none;
@@ -13,7 +13,6 @@
 
   border-radius: 8px;
 border: 1px solid rgba(255, 255, 255, 0.10);
-background: var(--Dark-Background-Background-Modal, #2D2D2E);
 }
 
 .left {

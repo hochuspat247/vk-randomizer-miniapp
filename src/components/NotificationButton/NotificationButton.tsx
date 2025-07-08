@@ -2,6 +2,7 @@
 import React, { ReactNode } from 'react';
 import styles from './NotificationButton.module.css';
 import { Icon28MuteOutline } from '@vkontakte/icons';
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 
 interface NotificationButtonProps {
   title?: string;         // Название действия, например "Временно отключить"
@@ -14,12 +15,15 @@ export const NotificationButton: React.FC<NotificationButtonProps> = ({
   description = <>Выберите, на какой срок вы хотите <br/> отключить push-уведомления</>,
   onClick
 }) => {
+
+    const router = useRouteNavigator();
+
   return (
     <>
       {/* Разделитель сверху */}
       <div className={styles.divider} />
 
-      <button className={styles.button} onClick={onClick}>
+      <button className={styles.button} onClick={() => router.push('/dontdisturb')}>
         <Icon28MuteOutline className={styles.icon} />
 
         <div className={styles.texts}>

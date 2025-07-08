@@ -38,7 +38,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         </button>
         <button
           className={styles.iconButton}
-          onClick={onSettingsClick}
+          onClick={() => router.push('/settingspanel')}
           aria-label="Настройки"
         >
           <Icon20GearOutline fill='#D4F94E' width={24} height={24}/>

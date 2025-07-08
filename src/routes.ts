@@ -56,6 +56,26 @@ export const router = createHashRouter([
     panel: 'testPanel',
     view: 'default',
   },
+  {
+    path: '/dontdisturb',
+    panel: 'dontdisturb',
+    view: 'default',
+  },
+  {
+    path: '/settingspanel',
+    panel: 'settingspanel',
+    view: 'default',
+  },
+  {
+    path: '/notificationsettingspanel',
+    panel: 'notificationsettingspanel',
+    view: 'default',
+  },
+  {
+    path: '/resultspanel',
+    panel: 'resultspanel',
+    view: 'default',
+  },
 ]);
 
 export const DEFAULT_VIEW = 'default';
@@ -70,5 +90,8 @@ export const PANELS = {
   FAQ_PANEL: 'faqpanel',
   EDIT_RAFFLE_PANEL: 'editrafflepanel',
   PREVIEW_PANEL: 'previewpanel',
-
+  DONT_DISTURB: 'dontdisturb',
+  SETTINGS_PANEL: 'settingspanel',
+  NOTIFICATION_SETTINGS_PANEL: 'notificationsettingspanel',
+  RESULTS_PANEL: 'resultspanel',
 };

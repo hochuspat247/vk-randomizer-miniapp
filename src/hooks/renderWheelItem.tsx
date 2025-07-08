@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import styles from './TimePicker.module.css';
+import styles from '@components/TimePicker/TimePicker.module.css';
 
 const ITEM_H = 40;
 const GAP = 8;
