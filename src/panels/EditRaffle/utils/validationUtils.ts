@@ -37,14 +37,21 @@ export const isStepComplete = (
         isDigits(formData.numberWinners)
       );
 
-    case 'DateTime':
+    case 'DateTime': {
       if (formData.endByParticipants) {
-        // режим «По дате» — надо заполнить обе даты
-        return !!formData.startDateTime && !!formData.endDateTime;
+        return !!formData.startDateTime && !!formData.memberMax.trim();
       } else {
-        // режим «По участникам» — достаточно ввести memberMax
-        return !!formData.memberMax.trim() && isDigits(formData.memberMax);
+        if (!formData.startDateTime || !formData.endDateTime) return false;
+
+        const start = new Date(formData.startDateTime);
+        const end = new Date(formData.endDateTime);
+
+        //Проверка: конец позже начала
+        if (end <= start) return false;
+
+        return true;
       }
+    }
     case 'Addons':
       return true;
 
