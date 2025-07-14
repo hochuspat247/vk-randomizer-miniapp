@@ -11,3 +11,29 @@
     #0d0d0d 100%
   );
 }
+
+.panelHeaderOverride {
+    background: #1f1f1f !important;
+    border-bottom: 1px solid #333;
+}
+
+.panelHeaderContentOverride {
+    color: #fff !important;
+}
+
+.panelHeaderText {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.backIcon {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.backIcon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

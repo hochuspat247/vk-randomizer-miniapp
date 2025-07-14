@@ -5,51 +5,61 @@ import { rafflesApi } from '@/api/raffle';
 import { CreateRaffleRequest, UpdateRaffleRequest } from '@/types/raffle';
 import { FormData } from '../types';
 import { RaffleCard } from '@/types/raffle'; // убедитесь что импортируете RaffleCard
+import { usePlatformContext } from '@/contexts/PlatformContext';
 
 export function useAutoSaveRaffle(
   formData: FormData,
   debounceMs = 1000
 ): string | undefined {
   const [draftId, setDraftId] = useState<string>();
+  const { userId } = usePlatformContext();
 
   // 1. При монтировании создаём черновик
   useEffect(() => {
     const createDraft = async () => {
-      const now = new Date().toLocaleString('ru-RU', {
-        day: '2-digit', month: '2-digit', year: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-      });
+      const now = new Date().toISOString();
 
-      const payload: CreateRaffleRequest = {
-        raffleId:         String(Date.now()),
-        name:             '',
-        textRaffleState:  'Активно',
-        winnersCount:     0,
-        mode:             'time',
-        memberCount:      undefined,
-        timeLeft:         undefined,
-        progress:         0,
-        lastModified:     now,
-        modifiedBy:       'Администратор',
-        statusСommunity:  'connected',
-        statusNestedCard: 'green',
-        statusNestedText: '',
-        nickname:         '',
-        membersCountNested: '',
-        adminType:        'admin',
+      if (!userId) {
+        console.error('vk_user_id отсутствует! Черновик не будет создан.');
+        return;
+      }
+
+      // Формируем payload ровно по новому примеру пользователя
+      const payload = {
+        vk_user_id: userId,
+        name: 'Название розыгрыша',
+        community_id: '213206326',
+        contest_text: 'Описание конкурса',
+        photos: [],
+        require_community_subscription: true,
+        require_telegram_subscription: false,
+        telegram_channel: null,
+        required_communities: [],
+        partner_tags: [],
+        winners_count: 1,
+        blacklist_participants: [],
+        start_date: '2025-07-09T14:33:00',
+        end_date: '2025-08-09T11:33:00',
+        max_participants: null,
+        publish_results: true,
+        hide_participants_count: false,
+        exclude_me: false,
+        exclude_admins: false,
       };
 
+      console.log('[AUTO-SAVE] Payload отправки черновика на бэк:', payload);
+
       try {
-    const response = await rafflesApi.createRaffleCard(payload) as { raffle: RaffleCard };
-    setDraftId(response.raffle.raffleId);
-    console.log('Черновик создан, ID =', response.raffle.raffleId);
-    } catch (err) {
-    console.error('Не удалось создать черновик:', err);
-    } 
+        const response = await rafflesApi.createRaffleCard(payload);
+        setDraftId(response.raffleId || response.id);
+        console.log('Черновик создан, ID =', response.raffleId || response.id);
+      } catch (err) {
+        console.error('Не удалось создать черновик:', err);
+      }
     };
 
     createDraft();
-  }, []); // пустой deps → вызывается один раз
+  }, [userId]);
 
   // 2. Подготовка дебаунс-функции для patch
   const debouncedUpdate = useRef(

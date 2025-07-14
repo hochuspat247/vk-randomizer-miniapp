@@ -11,6 +11,8 @@ export interface CommunityCard {
   status: 'green' | 'yellow' | 'red';
   buttonDesc: string;
   stateText: string;
+  vk_user_id: string;
+  isActive?: boolean; // Добавляем опциональное поле для fallback данных
 }
 
 export interface CommunityBanner {

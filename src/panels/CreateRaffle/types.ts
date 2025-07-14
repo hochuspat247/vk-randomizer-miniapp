@@ -8,7 +8,7 @@ export interface FormData {
   community: string;
   giveawayName: string;
   prizeDescription: string;
-  photos: File[];
+  photos: string[]; // теперь массив url
   participationConditions: string[];
   requiredCommunities: string[];
   numberWinners: string;

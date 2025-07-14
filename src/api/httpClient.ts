@@ -1,6 +1,6 @@
 // Базовый HTTP клиент для работы с API
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://randomizer.avenir-team.ru';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 class HttpClient {
   private baseURL: string;
@@ -63,6 +63,25 @@ class HttpClient {
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
     });
+  }
+
+  async postFormData<T>(endpoint: string, formData: FormData): Promise<T> {
+    const url = `${this.baseURL}${endpoint}`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`Ошибка загрузки файла: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Неизвестная ошибка при загрузке файла');
+    }
   }
 
   async put<T>(endpoint: string, data?: any): Promise<T> {

@@ -5,55 +5,57 @@ import styles from './PhotoUpload.module.css';
 interface PhotoUploadProps {
   onPhotosChange?: (photos: File[]) => void;
   maxPhotos?: number;
-  initialPhotos?: File[]; // Добавляем пропс для начальных фото
+  initialPhotos?: File[];
+  previewUrls?: string[];
 }
 
-const PhotoUpload: React.FC<PhotoUploadProps> = ({ 
-  onPhotosChange, 
+const PhotoUpload: React.FC<PhotoUploadProps> = ({
+  onPhotosChange,
   maxPhotos = 3,
-  initialPhotos = []
+  initialPhotos = [],
+  previewUrls = [],
 }) => {
   const [photoFiles, setPhotoFiles] = React.useState<File[]>(initialPhotos);
-  const [photoPreviews, setPhotoPreviews] = React.useState<string[]>([]);
+  const [filePreviews, setFilePreviews] = React.useState<string[]>([]);
 
-  // Sync with initialPhotos prop changes
+  // Генерация превью только для локальных файлов
   useEffect(() => {
-    setPhotoFiles(initialPhotos);
-  }, [initialPhotos]);
+    // Генерируем превью только если нет previewUrls и есть локальные файлы
+    if (photoFiles.length > 0 && (!previewUrls || previewUrls.length === 0)) {
+      const generatePreviews = async () => {
+        const previews = await Promise.all(
+          photoFiles.map(file => {
+            return new Promise<string>((resolve) => {
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                resolve(event.target?.result as string);
+              };
+              reader.readAsDataURL(file);
+            });
+          })
+        );
+        setFilePreviews(previews);
+      };
+      generatePreviews();
+    } else if (!photoFiles.length) {
+      setFilePreviews([]);
+    }
+  }, [photoFiles]); // Убираем previewUrls из зависимостей!
 
-  // Генерация превью для фото
   useEffect(() => {
-    const generatePreviews = async () => {
-      const previews = await Promise.all(
-        photoFiles.map(file => {
-          return new Promise<string>((resolve) => {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-              resolve(event.target?.result as string);
-            };
-            reader.readAsDataURL(file);
-          });
-        })
-      );
-      setPhotoPreviews(previews);
-    };
-
-    generatePreviews();
-  }, [photoFiles]);
-
-  useEffect(() => {
-    onPhotosChange?.(photoFiles);
+    if (photoFiles.length > 0) {
+      onPhotosChange?.(photoFiles);
+    }
+    // eslint-disable-next-line
   }, [photoFiles]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const files = Array.from(e.target.files);
       const newFiles = [...photoFiles];
-      
       files.slice(0, maxPhotos - photoFiles.length).forEach(file => {
         newFiles.push(file);
       });
-      
       setPhotoFiles(newFiles);
     }
   };
@@ -64,29 +66,33 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
     setPhotoFiles(newFiles);
   };
 
+  // Показываем либо previewUrls (если есть), либо filePreviews
+  const previewsToShow = (previewUrls && previewUrls.length > 0) ? previewUrls : filePreviews;
+
   return (
     <div className={styles.container}>
       <div className={styles.label}>Фото (до {maxPhotos} шт) *</div>
-      
       <div className={styles.photosContainer}>
-        {photoPreviews.map((preview, index) => (
+        {previewsToShow.map((preview, index) => (
           <div key={index} className={styles.photoWrapper}>
-            <img 
-              src={preview} 
-              alt={`Фото ${index + 1}`} 
+            <img
+              src={preview}
+              alt={`Фото ${index + 1}`}
               className={styles.photo}
             />
-            <button 
-              type='button'
-              className={styles.removeButton}
-              onClick={() => removePhoto(index)}
-            >
-              ×
-            </button>
+            {/* Кнопка удаления только для локальных файлов */}
+            {(!previewUrls || previewUrls.length === 0) && (
+              <button
+                type='button'
+                className={styles.removeButton}
+                onClick={() => removePhoto(index)}
+              >
+                ×
+              </button>
+            )}
           </div>
         ))}
-        
-        {photoPreviews.length < maxPhotos && (
+        {previewsToShow.length < maxPhotos && (!previewUrls || previewUrls.length === 0) && (
           <label className={styles.uploadButton}>
             <Icon28AddOutline />
             <input

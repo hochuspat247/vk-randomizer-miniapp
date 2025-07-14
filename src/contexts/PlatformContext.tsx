@@ -6,6 +6,7 @@ type PlatformType = 'ios' | 'android' | 'web' | undefined;
 // Создаем контекст
 interface PlatformContextType {
   platform: PlatformType;
+  userId?: string;
 }
 
 const PlatformContext = createContext<PlatformContextType | undefined>(undefined);
@@ -13,12 +14,13 @@ const PlatformContext = createContext<PlatformContextType | undefined>(undefined
 // Создаем провайдер
 interface PlatformProviderProps {
   platform: PlatformType;
+  userId?: string;
   children: ReactNode;
 }
 
-export const PlatformProvider: React.FC<PlatformProviderProps> = ({ platform, children }) => {
+export const PlatformProvider: React.FC<PlatformProviderProps> = ({ platform, userId, children }) => {
   return (
-    <PlatformContext.Provider value={{ platform }}>
+    <PlatformContext.Provider value={{ platform, userId }}>
       {children}
     </PlatformContext.Provider>
   );

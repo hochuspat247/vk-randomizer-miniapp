@@ -28,6 +28,17 @@ export const DateTimeStep: React.FC<DateTimeStepProps> = ({
   setEndDateLabel, 
   setStartDateLabel,
 }) => {
+  console.log('DateTimeStep props:', {
+    endByParticipants,
+    startDateTime,
+    endDateTime,
+    memberMax,
+    isSelectedStartTime,
+    isSelectedEndTime,
+    startDateLabel,
+    endDateLabel
+  });
+  
   const [startOption, setStartOption] = useState<string>('');
   const [endOption,   setEndOption]   = useState<string>('');
   const [startLabel,  setStartLabel]  = useState<string>('');

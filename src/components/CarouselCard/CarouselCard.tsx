@@ -3,12 +3,21 @@ import React, { useState, useRef } from 'react';
 import styles from './CarouselCard.module.css';
 import { Icon20Add } from '@vkontakte/icons';
 
-import RaffleCarouselCard, {
-  RaffleCarouselCardProps
-} from '../RaffleCarouselCard/RaffleCarouselCard';
+import RaffleCarouselCard from '../RaffleCarouselCard/RaffleCarouselCard';
 import CommunityBanner, {
   CommunityBannerProps
 } from '../CommunityBanner/CommunityBanner';
+
+// Добавить локально тип пропсов для raffle
+interface RaffleCarouselCardProps {
+  raffleId: string;
+  name: string;
+  status: 'active' | 'pending' | 'results' | 'resultsWhite' | 'deleted' | 'draft' | 'completed';
+  stateText: string;
+  members: string;
+  endDate: string;
+  updatedAt: string;
+}
 
 interface BaseCarouselCardProps {
   title: string;
@@ -35,6 +44,9 @@ const CarouselCard: React.FC<BaseCarouselCardProps> = ({
 }) => {
   // выбираем тот массив, который сейчас нужен
   const items = variant === 'raffle' ? raffleItems : communityItems;
+  if (variant === 'community') {
+    console.log('CarouselCard communityItems:', communityItems);
+  }
   const [current, setCurrent] = useState(0);
   const [dragX, setDragX] = useState(0);
   const startX = useRef(0);
@@ -92,9 +104,10 @@ const CarouselCard: React.FC<BaseCarouselCardProps> = ({
         >
           {items.map((item, idx) => (
             <div
-              key={variant === 'raffle'
-                ? (item as RaffleCarouselCardProps).raffleId
-                : (item as CommunityBannerProps).name /* ключ для баннера */
+              key={
+                variant === 'raffle'
+                  ? (item as RaffleCarouselCardProps).raffleId
+                  : (item as CommunityBannerProps).name + '_' + ((item as CommunityBannerProps).avatarUrl || idx)
               }
               className={styles.slide}
               style={{

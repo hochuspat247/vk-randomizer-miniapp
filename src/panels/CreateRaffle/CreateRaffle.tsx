@@ -43,7 +43,7 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     community: '',
     giveawayName: '',
     prizeDescription: '',
-    photos: [],
+    photos: [], // теперь массив строк (url)
     participationConditions: [],
     requiredCommunities: [],
     numberWinners: '',
@@ -108,61 +108,27 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    console.log('handleSubmit вызван', e);
-    e.preventDefault();
-    if (progress < 100) {
-      alert('Заполните все обязательные поля!');
+  // Загрузка фото на сервер и сохранение url
+  const handlePhotosChange = useCallback(async (files: File[]) => {
+    if (!files || files.length === 0) {
+      setFormData(prev => ({ ...prev, photos: [] }));
       return;
     }
-    setShouldShowPreview(true); // Ставим флаг, чтобы скрыть форму и показать спиннер
+    setLoading(true);
     try {
-      // Найти выбранное сообщество
-      const selectedCommunity = (communities || []).find(c => String(c.id) === String(formData.community));
-      console.log('selectedCommunity:', selectedCommunity, 'formData.community:', formData.community, 'communities:', communities);
-      // Получить фото розыгрыша
-      let imageSrc = '';
-      if (formData.photos && formData.photos.length > 0) {
-        imageSrc = URL.createObjectURL(formData.photos[0]);
+      const urls: string[] = [];
+      for (const file of files) {
+        const res = await rafflesApi.uploadRafflePhoto(file);
+        // абсолютный url для отображения
+        const url = res.url.startsWith('http') ? res.url : `http://localhost:8000${res.url}`;
+        urls.push(url);
       }
-      if (!imageSrc) {
-        imageSrc = persikImage;
-      }
-      // Формируем объект для API
-      const raffleCard: RaffleCard = {
-        raffleId: String(Date.now()),
-        name: formData.giveawayName,
-        textRaffleState: 'Активно',
-        winnersCount: Number(formData.numberWinners),
-        mode: formData.endByParticipants ? 'members' : 'time',
-        timeLeft: '14Д 0Ч',
-        progress: 0,
-        lastModified: new Date().toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-        modifiedBy: 'Администратор',
-        statusСommunity: 'connected',
-        statusNestedCard: 'green',
-        statusNestedText: 'Все работает',
-        nickname: selectedCommunity?.nickname || '',
-        membersCountNested: selectedCommunity?.membersCount || '100K',
-        adminType: selectedCommunity?.adminType === 'owner' ? 'owner' : 'admin',
-        imageSrc,
-        channelAvatarSrc: selectedCommunity?.avatarUrl || '',
-        channelName: selectedCommunity?.name || '',
-        description: formData.prizeDescription,
-        endTime: formData.endDateTime,
-        communityId: selectedCommunity?.id,
-      };
-      // Жестко: переход к предпросмотру только после submit (только здесь!)
-      const response = await rafflesApi.createRaffleCard(raffleCard) as { raffle: RaffleCard };
-      routeNavigator.push(`/previewpanel/${response.raffle.raffleId}`); // <-- Только после 'Завершить'!
+      setFormData(prev => ({ ...prev, photos: urls }));
     } catch (e) {
-      alert('Ошибка при создании розыгрыша!');
-      setShouldShowPreview(false); // Сбросить флаг при ошибке
+      alert('Ошибка загрузки фото!');
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const handlePhotosChange = useCallback((photos: File[]) => {
-    setFormData(prev => ({ ...prev, photos }));
   }, []);
 
   // Автосохранение
@@ -172,6 +138,46 @@ const CreateRaffle: React.FC<CreateRaffleProps> = ({ id }) => {
     if (draftId) console.log('Черновик создан, ID =', draftId);
   }, [draftId]);
 
+  const handleSubmit = async (e: React.FormEvent | React.MouseEvent) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (progress < 100) {
+      alert('Заполните все обязательные поля!');
+      return;
+    }
+    setShouldShowPreview(true);
+    try {
+      // Найти выбранное сообщество
+      const selectedCommunity = (communities || []).find(c => String(c.id) === String(formData.community));
+      // Формируем payload строго по схеме RaffleCreate
+      const payload = {
+        vk_user_id: selectedCommunity?.vk_user_id || '',
+        name: formData.giveawayName,
+        community_id: selectedCommunity?.id || '',
+        contest_text: formData.prizeDescription,
+        photos: formData.photos, // массив url
+        require_community_subscription: true, // или из формы, если есть
+        require_telegram_subscription: false, // или из формы, если есть
+        telegram_channel: null, // или из формы, если есть
+        required_communities: formData.requiredCommunities || [],
+        partner_tags: formData.partnersTags || [],
+        winners_count: Number(formData.numberWinners) || 1,
+        blacklist_participants: formData.blackListSel || [],
+        start_date: formData.startDateTime || new Date().toISOString(),
+        end_date: formData.endDateTime || new Date(Date.now() + 3600_000).toISOString(),
+        max_participants: formData.memberMax ? Number(formData.memberMax) : null,
+        publish_results: formData.publishResults,
+        hide_participants_count: formData.hideParticipantsCount,
+        exclude_me: formData.excludeMe,
+        exclude_admins: formData.excludeAdmins,
+      };
+      console.log('[SUBMIT] Payload отправки розыгрыша на бэк:', payload);
+      const response = await rafflesApi.createRaffleCard(payload);
+      routeNavigator.push(`/previewpanel/${response.id}`);
+    } catch (e) {
+      alert('Ошибка при создании розыгрыша!');
+      setShouldShowPreview(false);
+    }
+  };
 
   const renderStepContent = () => {
     console.log('renderStepContent: currentStep =', currentStep, 'shouldShowPreview =', shouldShowPreview);

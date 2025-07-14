@@ -63,7 +63,7 @@ export class VKApi {
     try {
       const result = await vkBridge.send('VKWebAppGetAuthToken', {
         app_id: VK_APP_ID,
-        scope: 'groups'
+        scope: 'groups,friends'
       });
       return result.access_token;
     } catch (error) {
@@ -397,16 +397,51 @@ export class VKApi {
     try {
       const response = await this.makeVKRequest('groups.getMembers', {
         group_id: groupId,
-        fields: 'photo_100,first_name,last_name',
-        count: 8 // для примера, можно увеличить до 100
+        count: 1000,
+        fields: 'photo_100,first_name,last_name'
       });
-      return (response.items || []).map((user: any) => ({
-        name: `${user.first_name}${user.last_name ? ' ' + user.last_name : ''}`,
-        avatar: user.photo_100
+
+      return response.items.map((member: any) => ({
+        name: `${member.first_name} ${member.last_name}`,
+        avatar: member.photo_100
       }));
     } catch (error) {
-      console.error('Ошибка получения подписчиков:', error);
-      return [];
+      console.error('Ошибка получения участников сообщества:', error);
+      throw error;
+    }
+  }
+
+  // Получить информацию о пользователе
+  static async getUserInfo(userId: number): Promise<{
+    id: number;
+    first_name: string;
+    last_name: string;
+    photo_200?: string;
+    photo_100?: string;
+    photo_50?: string;
+  }> {
+    try {
+      const response = await this.makeVKRequest('users.get', {
+        user_ids: userId,
+        fields: 'photo_200,photo_100,photo_50'
+      });
+
+      if (response && response.length > 0) {
+        const user = response[0];
+        return {
+          id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          photo_200: user.photo_200,
+          photo_100: user.photo_100,
+          photo_50: user.photo_50
+        };
+      } else {
+        throw new Error('Пользователь не найден');
+      }
+    } catch (error) {
+      console.error('Ошибка получения информации о пользователе:', error);
+      throw error;
     }
   }
 } 

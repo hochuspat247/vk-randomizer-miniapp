@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Raffles.module.css';
 
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
@@ -18,7 +18,25 @@ interface RafflesProps {
 const Raffles: React.FC<RafflesProps> = ({ id }) => {
 
 const router = useRouteNavigator();
-const { data: raffles, loading, error } = useRaffleCards();
+const { data: raffles, loading, error, refresh } = useRaffleCards();
+
+// Автоматическое обновление при фокусе на странице
+useEffect(() => {
+  const handleFocus = () => {
+    console.log('Raffles panel focused, refreshing data...');
+    refresh();
+  };
+
+  // Обновляем при монтировании
+  refresh();
+
+  // Добавляем обработчик фокуса
+  window.addEventListener('focus', handleFocus);
+  
+  return () => {
+    window.removeEventListener('focus', handleFocus);
+  };
+}, [refresh]);
 
 // Маппинг RaffleCard -> RaffleCarouselCardProps
 function mapRaffleToCarouselCardProps(raffle: EnrichedRaffleCard) {
@@ -67,6 +85,7 @@ function mapRaffleToCarouselCardProps(raffle: EnrichedRaffleCard) {
                     <RaffleCard
                     key={raffle.raffleId}
                     {...raffle}
+                    raffleId={raffle.raffleId}
                     />
                 ))}
 
@@ -76,7 +95,6 @@ function mapRaffleToCarouselCardProps(raffle: EnrichedRaffleCard) {
                     {loading && <Spinner size="s" />}
                     {error && <div style={{ color: 'red', padding: 8 }}>{error}</div>}
                     {!loading && !error && raffles && raffles
-                        .filter(raffle => raffle.statusNestedCard === 'green')
                         .sort((a, b) => {
                           const dateA = new Date(a.lastModified).getTime();
                           const dateB = new Date(b.lastModified).getTime();
@@ -98,7 +116,6 @@ function mapRaffleToCarouselCardProps(raffle: EnrichedRaffleCard) {
                         {loading && <Spinner size="s" />}
                         {error && <div style={{ color: 'red', padding: 8 }}>{error}</div>}
                         {!loading && !error && raffles && raffles
-                            .filter(raffle => raffle.statusNestedCard === 'red' || raffle.statusNestedCard === 'yellow')
                             .map((raffle) => (
                                 <RaffleCarouselCard
                                     key={raffle.raffleId}

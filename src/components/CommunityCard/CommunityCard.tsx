@@ -92,7 +92,10 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
         <div className={styles.badge}>
           {getRoleIcon(adminType)}
           <span className={styles.text}>
-            {getRoleDisplayName(adminType)}
+            {(() => { console.log('CommunityCard adminType:', adminType); return null; })()}
+            {['owner','admin','editor','moderator','member','advertiser'].includes(adminType)
+              ? getRoleDisplayName(adminType)
+              : 'Неизвестно'}
           </span>
         </div>
 

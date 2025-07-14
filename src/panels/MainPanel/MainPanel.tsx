@@ -45,8 +45,9 @@ const MainPanel: React.FC<MainPanelProps> = ({ id, initialTab = 'main' }) => {
       const banners: CommunityBanner[] = filtered.map(community => ({
         avatarUrl: community.avatarUrl,
         name: community.name,
-        adminType: getRoleDisplayName(community.adminType)
+        adminType: community.adminType // <-- теперь это VK-роль, а не строка-описание
       }));
+      console.log('communityBanners:', banners);
       setCommunityBanners(banners);
       console.log('Обновлены баннеры сообществ:', {
         totalCommunities: communities.length,

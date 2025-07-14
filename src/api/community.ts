@@ -11,15 +11,42 @@ import {
 import httpClient from './httpClient';
 
 export const communitiesApi = {
-  // Получить список всех карточек сообществ из VK API (включая все роли)
-  async getCards(): Promise<CommunityCard[]> {
-    try {
-      // Получаем все сообщества, где у пользователя есть права (админ, редактор, модератор, рекламодатель)
-      const vkGroups = await VKApi.getUserGroupsWithRights();
-      return transformVKGroupsToCommunityCards(vkGroups);
-    } catch (error) {
-      console.error('Ошибка получения сообществ из VK API:', error);
-      throw error;
+  // Получить список всех карточек сообществ из VK API (включая все роли) или с бэкенда по userId
+  async getCards(userId?: string): Promise<CommunityCard[]> {
+    if (userId) {
+      try {
+        // Получаем список карточек с бэкенда
+        const backendCards = await httpClient.get(`/api/v1/communities/cards?vk_user_id=${userId}`) as any[];
+        // Для каждого id подтягиваем данные из VK только для enrichment
+        const enriched = await Promise.all(
+          backendCards.map(async (card: any) => {
+            try {
+              const vkGroup = await VKApi.getGroupInfo(Number(card.id));
+              return {
+                ...card, // основа — данные с бэка!
+                avatarUrl: vkGroup?.photo_200 || card.avatarUrl,
+                membersCount: vkGroup?.members_count?.toLocaleString('ru-RU') || card.membersCount,
+                // adminType и остальные поля — только из card!
+              };
+            } catch (e) {
+              return card;
+            }
+          })
+        );
+        return enriched;
+      } catch (error) {
+        console.error('Ошибка получения сообществ с бэкенда:', error);
+        throw error;
+      }
+    } else {
+      // Старое поведение — только VK API
+      try {
+        const vkGroups = await VKApi.getUserGroupsWithRights();
+        return transformVKGroupsToCommunityCards(vkGroups);
+      } catch (error) {
+        console.error('Ошибка получения сообществ из VK API:', error);
+        throw error;
+      }
     }
   },
 
@@ -42,23 +69,6 @@ export const communitiesApi = {
       return transformVKGroupsToCommunityCards(adminGroups);
     } catch (error) {
       console.error('Ошибка получения всех сообществ пользователя:', error);
-      throw error;
-    }
-  },
-
-  // Получить карточку сообщества по ID из VK API
-  async getCardById(cardId: string): Promise<CommunityCard> {
-    try {
-      const groupId = parseInt(cardId);
-      if (isNaN(groupId)) {
-        throw new Error('Неверный ID сообщества');
-      }
-      
-      const vkGroup = await VKApi.getGroupInfo(groupId);
-      const communityCards = transformVKGroupsToCommunityCards([vkGroup]);
-      return communityCards[0];
-    } catch (error) {
-      console.error('Ошибка получения сообщества по ID:', error);
       throw error;
     }
   },
@@ -97,6 +107,20 @@ export const communitiesApi = {
     } catch (error) {
       console.error('Ошибка получения баннеров сообществ:', error);
       throw error;
+    }
+  },
+
+  // Получить карточку сообщества по ID с бэка
+  async getCardById(cardId: string): Promise<CommunityCard | null> {
+    try {
+      const card = await httpClient.get(`/api/v1/communities/cards/${cardId}`);
+      const c: any = card;
+      // Проверяем, что card содержит все обязательные поля
+      if (!c || !c.id || !c.name || !c.nickname || !c.membersCount) return null;
+      return c as CommunityCard;
+    } catch (error) {
+      console.error('Ошибка получения сообщества по ID с бэка:', error);
+      return null;
     }
   },
 

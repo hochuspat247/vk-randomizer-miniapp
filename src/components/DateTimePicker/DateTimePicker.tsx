@@ -84,40 +84,39 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
 
         {isPickerOpen && (
           <div className={`popout show`}>
-            <Calendar
-              value={draftDate}
-              onChange={handleCalendarChange}
-              className="calendar"
-              min={min}
-            />
+            <div className="popout-content">
+              <Calendar
+                value={draftDate}
+                onChange={handleCalendarChange}
+                className="calendar"
+              />
 
-            <div className="timeControls">
-              <CustomSelect
-                className="customSelect"
-                placeholder="Часы"
-                options={Array.from({ length: 24 }, (_, i) => ({
-                  label: `${i}`.padStart(2, '0'),
-                  value: i,
-                }))}
-                multiple={false}
-                value={draftDate.getHours()}
-                onChange={e => handleHourChange(+e.target.value)}
-              />
-              <CustomSelect
-                placeholder="Минуты"
-                options={Array.from({ length: 60 }, (_, i) => ({
-                  label: `${i}`.padStart(2, '0'),
-                  value: i,
-                }))}
-                multiple={false}
-                value={draftDate.getMinutes()}
-                onChange={e => handleMinuteChange(+e.target.value)}
-              />
+              <div className="timeControls">
+                <CustomSelect
+                  className="customSelect"
+                  placeholder="Часы"
+                  options={Array.from({ length: 24 }, (_, i) => ({
+                    label: `${i}`.padStart(2, '0'),
+                    value: i,
+                  }))}
+                  value={draftDate.getHours()}
+                  onChange={e => handleHourChange(+e.target.value)}
+                />
+                <CustomSelect
+                  placeholder="Минуты"
+                  options={Array.from({ length: 60 }, (_, i) => ({
+                    label: `${i}`.padStart(2, '0'),
+                    value: i,
+                  }))}
+                  value={draftDate.getMinutes()}
+                  onChange={e => handleMinuteChange(+e.target.value)}
+                />
+              </div>
+
+              <button className="btn" onClick={handleDone}>
+                Готово
+              </button>
             </div>
-
-            <button className="btn" onClick={handleDone}>
-              Готово
-            </button>
           </div>
         )}
       </div>

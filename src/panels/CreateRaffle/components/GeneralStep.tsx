@@ -13,8 +13,8 @@ interface GeneralStepProps {
   setGiveawayName: (value: string) => void;
   prizeDescription: string;
   setPrizeDescription: (value: string) => void;
-  photos: File[];
-  onPhotosChange: (photos: File[]) => void;
+  photos: string[];
+  onPhotosChange: (files: File[]) => void;
 }
 
 export const GeneralStep: React.FC<GeneralStepProps> = ({
@@ -77,7 +77,8 @@ export const GeneralStep: React.FC<GeneralStepProps> = ({
           <PhotoUpload
             onPhotosChange={onPhotosChange}
             maxPhotos={5}
-            initialPhotos={photos}
+            initialPhotos={[]}
+            previewUrls={photos}
           />
         </div>
       </FormItem>

@@ -7,6 +7,7 @@ import { notificationsApi } from './notifications';
 import { formatErrorMessage } from './utils';
 import { CommunityCard } from '../types/community';
 import { VKApi } from './vkApi';
+import { usePlatformContext } from '@/contexts/PlatformContext';
 
 // Общий интерфейс для состояния загрузки
 interface LoadingState<T> {
@@ -17,6 +18,7 @@ interface LoadingState<T> {
 
 // Хук для работы с сообществами
 export function useCommunities() {
+  const { userId } = usePlatformContext();
   const [state, setState] = useState<{
     data: CommunityCard[] | null;
     loading: boolean;
@@ -36,7 +38,7 @@ export function useCommunities() {
         VKApi.clearCache();
       }
       
-      const data = await communitiesApi.getCards();
+      const data = await communitiesApi.getCards(userId);
       setState({ data, loading: false, error: null });
     } catch (error: any) {
       const errorMessage = error.message || 'Ошибка загрузки сообществ';
@@ -46,7 +48,7 @@ export function useCommunities() {
         error: errorMessage 
       }));
     }
-  }, []);
+  }, [userId]);
 
   const refetch = useCallback(() => fetchCommunities(false), [fetchCommunities]);
   const refresh = useCallback(() => fetchCommunities(true), [fetchCommunities]);
@@ -55,7 +57,14 @@ export function useCommunities() {
     setState(prev => ({ ...prev, loading: true, error: null }));
     
     try {
-      const newCommunity = await communitiesApi.createCard(communityData);
+      let newCommunity: CommunityCard;
+      if (userId) {
+        // Добавляем vk_user_id в данные
+        const payload = { ...communityData, vk_user_id: userId };
+        newCommunity = await communitiesApi.createCardInDB(payload) as CommunityCard;
+      } else {
+        throw new Error('userId отсутствует — невозможно добавить сообщество');
+      }
       setState(prev => ({ 
         data: prev.data ? [...prev.data, newCommunity] : [newCommunity], 
         loading: false, 
@@ -71,7 +80,7 @@ export function useCommunities() {
       }));
       throw error;
     }
-  }, []);
+  }, [userId]);
 
   const updateCommunity = useCallback(async (id: string, communityData: any) => {
     setState(prev => ({ ...prev, loading: true, error: null }));
@@ -121,6 +130,13 @@ export function useCommunities() {
   useEffect(() => {
     fetchCommunities();
   }, [fetchCommunities]);
+
+  // Новый useEffect: если userId появился/изменился — делаем запрос
+  useEffect(() => {
+    if (userId) {
+      fetchCommunities();
+    }
+  }, [userId]);
 
   return {
     ...state,

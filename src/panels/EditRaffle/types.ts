@@ -1,3 +1,5 @@
+import { CommunityCard } from '@/types/community';
+
 export interface CreateRaffleProps {
   id: string;
 }
@@ -8,7 +10,7 @@ export interface FormData {
   community: string;
   giveawayName: string;
   prizeDescription: string;
-  photos: File[];
+  photos: string[]; // теперь массив url
   conditionOptions: string[];
   communityTagOptions: string[];
   participationConditions: string[];
@@ -99,7 +101,8 @@ export interface GeneralStepProps {
   setGiveawayName: (value: string) => void;
   prizeDescription: string;
   setPrizeDescription: (value: string) => void;
-  photos: File[];
+  photos: string[]; // теперь массив url
   onPhotosChange: (photos: File[]) => void;
   communityDisabled?: boolean;
+  additionalCommunityData?: CommunityCard | null; // Добавляем дополнительные данные сообщества
 }

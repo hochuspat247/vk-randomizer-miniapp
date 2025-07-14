@@ -4,6 +4,7 @@ import styles from './CommunityBanner.module.css';
 import { Icon20ChevronRight } from '@vkontakte/icons';
 import LockIcon from '@/assets/icons/LockG'; // ваша иконка замка (зелёная)
 import DefaultAvatar from '@/assets/images/Picture(1).png'; 
+import { getRoleDisplayName } from '@/utils/vkTransformers';
 
 export interface CommunityBannerProps {
   /** URL аватара сообщества */
@@ -22,6 +23,8 @@ const CommunityBanner: React.FC<CommunityBannerProps> = ({
   adminType,
   onClick,
 }) => {
+  console.log('CommunityBanner adminType:', adminType);
+  console.log('getRoleDisplayName(adminType):', getRoleDisplayName(adminType as any));
 
     const [imgError, setImgError] = useState(false);
 
@@ -44,7 +47,7 @@ const CommunityBanner: React.FC<CommunityBannerProps> = ({
         </div>
         <div className={styles.texts}>
           <div className={styles.name}>{name}</div>
-          <div className={styles.role}>{adminType}</div>
+          <div className={styles.role}>{getRoleDisplayName(adminType as any)}</div>
         </div>
       </div>
         <Icon20ChevronRight width={24} height={24} fill="#D4F94E" />
