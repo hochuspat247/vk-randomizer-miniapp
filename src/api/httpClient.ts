@@ -1,6 +1,6 @@
 // Базовый HTTP клиент для работы с API
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://randomizer.avenir-team.ru';
 
 class HttpClient {
   private baseURL: string;

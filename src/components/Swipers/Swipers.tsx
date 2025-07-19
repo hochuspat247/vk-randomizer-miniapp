@@ -1,6 +1,6 @@
 // src/components/Swipers/Swipers.tsx
 import React, { ReactNode } from 'react';
-import { Cell, Group, Headline } from '@vkontakte/vkui';
+import { Headline } from '@vkontakte/vkui';
 import styles from './Swipers.module.css';
 import { Toggle } from '../Toggle/Toggle';
 
@@ -26,19 +26,24 @@ interface SwipersProps {
 
 export const Swipers: React.FC<SwipersProps> = ({ title, options }) => {
   return (
-    <Group separator="hide" header={<Headline className={styles.header}>{title}</Headline>}>
+    // Обертка блока с настройками (вместо Group)
+    <div className={styles.container}>
+      {/* Заголовок секции */}
+      <Headline className={styles.header}>{title}</Headline>
+
+      {/* Список переключателей */}
       {options.map(opt => (
-        <div
-          key={opt.id}
-          className={styles.cell}
-        >
+        <div key={opt.id} className={styles.cell}>
+          {/* Текстовая часть: заголовок + при необходимости подзаголовок */}
           <div className={styles.texts}>
             <span className={styles.label}>{opt.label}</span>
             {opt.subtitle && <span className={styles.subtitle}>{opt.subtitle}</span>}
           </div>
+
+          {/* Сам тумблер */}
           <Toggle checked={opt.checked} onChange={opt.onChange} />
         </div>
       ))}
-    </Group>
+    </div>
   );
 };
