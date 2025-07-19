@@ -4,45 +4,45 @@ import { SwiperOption } from '@/components/Swipers/Swipers';
 
 export const staticOptions1: Omit<SwiperOption, 'checked' | 'onChange'>[] = [
   {
-    id: 'win',
+    id: 'win_notify',      
     label: 'О победе в розыгрыше',
     subtitle: (
       <>
         Получайте оповещение, если вы <br/>
         стали победителем конкурса.
       </>
-    )
+    ),
   },
   {
-    id: 'start',
+    id: 'start_notify',
     label: 'О старте розыгрыша',
     subtitle: (
       <>
         Напомним, когда начнётся ваш <br/>
         собственный розыгрыш.
       </>
-    )
+    ),
   },
   {
-    id: 'complete',
+    id: 'finish_notify',
     label: 'О завершении розыгрыша',
     subtitle: (
       <>
         Узнайте, когда конкурс завершился <br/>
         и пора подвести итоги.
       </>
-    )
+    ),
   },
   {
-    id: 'error',
+    id: 'widget_notify',
     label: 'О сбоях виджета',
     subtitle: (
       <>
         Мгновенно узнавайте о сбоях и проблемах <br/>
         в подключённых сообществах.
       </>
-    )
-  }
+    ),
+  },
 ];
 
 export const staticOptions2: Omit<SwiperOption, 'checked' | 'onChange'>[] = [
